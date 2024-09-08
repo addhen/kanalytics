@@ -1,5 +1,6 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics
 
 import kotlin.test.BeforeTest
