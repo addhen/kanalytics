@@ -4,6 +4,8 @@
 package com.addhen.kanalytics
 
 import kotlin.reflect.KClass
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 /**
  * KAnalytics is a multiplatform analytics library that provides a simple way to track events.
@@ -13,18 +15,12 @@ import kotlin.reflect.KClass
  * .addInterceptor(AnalyticsInterceptor())
  * .build()
  */
-public class KAnalytics private constructor(
-  trackers: List<Tracker>,
-  interceptors: List<Interceptor>,
-) {
+public class KAnalytics internal constructor(builder: Builder) {
 
-  private val trackers: MutableList<Tracker> = mutableListOf()
-  private val interceptors: MutableList<Interceptor> = mutableListOf()
+  public val trackers: ImmutableList<Tracker> = builder.trackers.toImmutableList()
+  public val interceptors: ImmutableList<Interceptor> = builder.interceptors.toImmutableList()
 
-  init {
-    this.trackers.addAll(trackers)
-    this.interceptors.addAll(interceptors)
-  }
+  public constructor() : this(Builder())
 
   public fun send(event: KAnalyticsEvent) {
     send(trackers, event)
@@ -44,7 +40,9 @@ public class KAnalytics private constructor(
     send(event)
   }
 
-  public fun send(trackers: List<Tracker>, event: KAnalyticsEvent) {
+  public fun newBuilder(): Builder = Builder(this)
+
+  private fun send(trackers: List<Tracker>, event: KAnalyticsEvent) {
     if (trackers.isEmpty()) return
 
     interceptors.forEach { it.intercept(event) }
@@ -54,11 +52,15 @@ public class KAnalytics private constructor(
   /**
    * Builder class for KAnalytics
    */
-  public class Builder {
+  public class Builder() {
 
-    private val trackers: MutableList<Tracker> = mutableListOf()
+    internal val trackers: MutableList<Tracker> = mutableListOf()
+    internal val interceptors: MutableList<Interceptor> = mutableListOf()
 
-    private val interceptors: MutableList<Interceptor> = mutableListOf()
+    internal constructor(kAnalytics: KAnalytics) : this() {
+      this.trackers += kAnalytics.trackers
+      this.interceptors += kAnalytics.interceptors
+    }
 
     /**
      * Add a tracker to the list of trackers
@@ -77,8 +79,6 @@ public class KAnalytics private constructor(
     /**
      * Build the KAnalytics instance
      */
-    public fun build(): KAnalytics {
-      return KAnalytics(trackers, interceptors)
-    }
+    public fun build(): KAnalytics = KAnalytics(this)
   }
 }
