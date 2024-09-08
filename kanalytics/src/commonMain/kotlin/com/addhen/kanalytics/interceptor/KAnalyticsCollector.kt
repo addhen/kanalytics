@@ -3,4 +3,7 @@
 
 package com.addhen.kanalytics.interceptor
 
-class KAnalyticsCollector
+public class KAnalyticsCollector {
+
+  public fun collect(): Unit = Unit
+}
