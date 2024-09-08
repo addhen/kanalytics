@@ -1,20 +1,20 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 pluginManagement {
-    includeBuild("convention-plugins")
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
+  includeBuild("convention-plugins")
+  repositories {
+    google()
+    mavenCentral()
+    gradlePluginPortal()
+  }
 }
 
 dependencyResolutionManagement {
-    repositories {
-        google()
-        mavenCentral()
-        mavenLocal()
-    }
+  repositories {
+    google()
+    mavenCentral()
+    mavenLocal()
+  }
 }
 
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
@@ -26,5 +26,5 @@ enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 rootProject.name = "kanalytics-lib"
 
 include(
-    ":kanalytics",
+  ":kanalytics",
 )
