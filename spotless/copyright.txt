@@ -1,0 +1,2 @@
+// Copyright $YEAR, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
