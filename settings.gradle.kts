@@ -29,4 +29,5 @@ rootProject.name = "kanalytics-lib"
 
 include(
   ":kanalytics",
+  ":kanalytics-interceptor",
 )

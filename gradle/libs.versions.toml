@@ -24,6 +24,7 @@ lifecycle-viewmodel-compose = "2.8.0"
 kermit = "2.0.4"
 moko-permissions = "0.18.0"
 kotlinx-collections-immutable = "0.3.7"
+kotlinx-datetime = "0.6.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -49,6 +50,7 @@ touchlab-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko-permissions" }
 moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko-permissions" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
+kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

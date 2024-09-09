@@ -1,6 +1,7 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
+
 plugins {
   id("convention.plugin.android.library")
   id("convention.plugin.kotlin.multiplatform")
@@ -13,8 +14,18 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
+        implementation(project(":kanalytics"))
         implementation(libs.kotlinx.coroutines.core)
         implementation(libs.kotlinx.collections.immutable)
+        implementation(libs.kotlinx.datetime)
+      }
+    }
+
+    androidMain {
+      dependencies {
+        implementation(libs.androidx.core.ktx)
+        implementation(libs.play.services.location)
+        implementation(libs.kotlinx.coroutines.play.services)
       }
     }
 
