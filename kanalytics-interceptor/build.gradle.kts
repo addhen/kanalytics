@@ -6,29 +6,11 @@ plugins {
   id("convention.plugin.android.library")
   id("convention.plugin.kotlin.multiplatform")
   id("org.jetbrains.dokka")
-  id("convention.plugin.maven.publication")
   id("convention.plugin.metalava")
 }
 
 kotlin {
   sourceSets {
-    commonMain {
-      dependencies {
-        implementation(project(":kanalytics"))
-        implementation(libs.kotlinx.coroutines.core)
-        implementation(libs.kotlinx.collections.immutable)
-        implementation(libs.kotlinx.datetime)
-      }
-    }
-
-    androidMain {
-      dependencies {
-        implementation(libs.androidx.core.ktx)
-        implementation(libs.play.services.location)
-        implementation(libs.kotlinx.coroutines.play.services)
-      }
-    }
-
     commonTest {
       dependencies {
         implementation(libs.kotlin.test)
@@ -38,7 +20,7 @@ kotlin {
 }
 
 android {
-  namespace = "com.addhen.kanalytics"
+  namespace = "com.addhen.kanalytics.interceptor"
   defaultConfig {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -46,18 +28,6 @@ android {
   testOptions {
     unitTests {
       isIncludeAndroidResources = true
-    }
-  }
-}
-
-publishing {
-  // Configure all publications
-  publications.withType<MavenPublication> {
-
-    // Provide artifacts information required by Maven Central
-    pom {
-      name.set("KAnalytics")
-      description.set("A kotlin multiplatform library for getting a device's location")
     }
   }
 }

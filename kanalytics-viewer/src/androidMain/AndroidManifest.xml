@@ -1,0 +1,13 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+  <uses-permission android:name="android.permission.INTERNET" />
+
+  <application>
+  <activity
+    android:name="com.addhen.kanalytics.viewer.android.MainActivity"
+    android:label="KAnalytics Interceptor"
+    android:launchMode="singleTask"
+    android:taskAffinity="com.addhen.kanalytics.viewer.android.task"
+    android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+  </application>
+</manifest>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+  <string name="app_name">KAnalytics Sample</string>
+  <string name="request_location_permission_rationale">We need your device\'s location to be able to fetch you all the interesting locations nearby. \nPlease kindly grant us your location. Thank you</string>
+  <string name="request_location_permission">It seems you haven\'t given us permission for your device\'s location. \nPlease kindly grant us the device\'s location. Thank you</string>
+  <string name="request_permission">Request permissions</string>
+  <string name="request_fine_permission">Allow precise location</string>
+</resources>

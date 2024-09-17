@@ -3,6 +3,8 @@
 
 package com.addhen.kanalytics
 
+import com.addhen.kanalytics.interceptor.KAnalyticsEvent
+
 public interface Tracker {
 
   public fun send(event: KAnalyticsEvent)

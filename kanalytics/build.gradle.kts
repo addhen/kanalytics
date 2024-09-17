@@ -13,6 +13,7 @@ kotlin {
   sourceSets {
     commonMain {
       dependencies {
+        api(projects.kanalyticsInterceptor)
         implementation(libs.kotlinx.coroutines.core)
         implementation(libs.kotlinx.collections.immutable)
       }
