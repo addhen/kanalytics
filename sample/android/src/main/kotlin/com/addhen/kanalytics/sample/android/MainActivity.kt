@@ -12,8 +12,8 @@ import androidx.navigation.compose.rememberNavController
 import co.touchlab.kermit.Logger
 import com.addhen.kanalytics.KAnalytics
 import com.addhen.kanalytics.Tracker
-import com.addhen.kanalytics.interceptor.KAnalyticsEvent
-import com.addhen.kanalytics.viewer.KAnalyticsInterceptor
+import com.addhen.kanalytics.KAnalyticsEvent
+import com.addhen.kanalytics.KAnalyticsInterceptor
 import com.addhen.kanalytics.sample.shared.LocationScreen
 import com.addhen.kanalytics.sample.shared.SampleApp
 import com.addhen.kanalytics.sample.shared.SampleViewModel

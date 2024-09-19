@@ -1,11 +1,9 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics.viewer
+package com.addhen.kanalytics
 
 import co.touchlab.kermit.Logger
-import com.addhen.kanalytics.interceptor.Interceptor
-import com.addhen.kanalytics.interceptor.KAnalyticsEvent
 
 @Suppress("UnusedPrivateMember", "UNUSED_PARAMETER")
 public class KAnalyticsInterceptor private constructor(builder: Builder): Interceptor {

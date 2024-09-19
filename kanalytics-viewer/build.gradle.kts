@@ -49,7 +49,7 @@ kotlin {
 }
 
 android {
-  namespace = "com.addhen.kanalytics.interceptor"
+  namespace = "com.addhen.kanalytics"
   defaultConfig {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }

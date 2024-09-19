@@ -30,7 +30,6 @@ rootProject.name = "kanalytics-lib"
 include(
   ":kanalytics",
   ":kanalytics-viewer",
-  ":kanalytics-interceptor",
   ":sample:android",
   ":sample:shared",
   ":sample:ios-framework",

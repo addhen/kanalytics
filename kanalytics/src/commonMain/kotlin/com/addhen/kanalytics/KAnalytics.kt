@@ -3,8 +3,6 @@
 
 package com.addhen.kanalytics
 
-import com.addhen.kanalytics.interceptor.Interceptor
-import com.addhen.kanalytics.interceptor.KAnalyticsEvent
 import kotlin.reflect.KClass
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
