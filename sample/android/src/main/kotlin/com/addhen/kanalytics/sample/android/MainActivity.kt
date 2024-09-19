@@ -3,6 +3,7 @@
 
 package com.addhen.kanalytics.sample.android
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -36,7 +37,11 @@ class MainActivity : ComponentActivity() {
         ).create(SampleViewModel::class.java)
         LocationScreen(
           viewModel
-        )
+        ) {
+          startActivity(
+            Intent(this, com.addhen.kanalytics.viewer.android.MainActivity::class.java)
+            .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
+        }
       }
     }
   }

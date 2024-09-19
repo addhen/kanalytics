@@ -5,5 +5,5 @@ package com.addhen.kanalytics.interceptor
 
 public interface Interceptor {
 
-  public fun intercept(event: KAnalyticsEvent)
+  public fun intercept(event: KAnalyticsEvent): KAnalyticsEvent
 }

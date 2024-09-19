@@ -47,8 +47,14 @@ public class KAnalytics internal constructor(builder: Builder) {
   private fun send(trackers: List<Tracker>, event: KAnalyticsEvent) {
     if (trackers.isEmpty()) return
 
-    interceptors.forEach { it.intercept(event) }
-    trackers.forEach { it.send(event) }
+    if (!interceptors.isEmpty()) {
+      interceptors.forEach { interceptor ->
+        val interceptedEvent = interceptor.intercept(event.copy())
+        trackers.forEach { it.send(interceptedEvent) }
+      }
+      return
+    }
+    trackers.forEach { it.send(event.copy()) }
   }
 
   /**

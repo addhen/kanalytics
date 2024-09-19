@@ -16,6 +16,7 @@ import androidx.compose.ui.Modifier
 @Composable
 public fun LocationScreen(
   locationViewModel: SampleViewModel,
+  onClick: () -> Unit
 ) {
   // Showing how to consume location updates and last known location without compose [State]
   val uiState by locationViewModel.viewState.collectAsState()
@@ -27,9 +28,9 @@ public fun LocationScreen(
       Samples(
         currentLocation = uiState.state,
         lastKnownLocation = uiState.state,
+        onAnalytics = onClick,
       ) {
         locationViewModel.sendAnalyticsEvent()
-
       }
     }
   }

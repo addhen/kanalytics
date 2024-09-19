@@ -33,7 +33,8 @@ public fun SamplesTheme(
 public fun Samples(
   currentLocation: String,
   lastKnownLocation: String,
-  onStopClick: () -> Unit,
+  onAnalytics: () -> Unit,
+  onStopClick: () -> Unit
 ) {
   Column(
     modifier = Modifier.padding(16.dp).fillMaxSize(),
@@ -43,7 +44,11 @@ public fun Samples(
     Text("Last known location: $lastKnownLocation")
     HorizontalDivider(thickness = 2.dp)
     Button(onClick = { onStopClick() }) {
-      Text("Stop")
+      Text("Start analytics")
+    }
+
+    Button(onClick = { onAnalytics() }) {
+      Text("Start viewer")
     }
   }
 }

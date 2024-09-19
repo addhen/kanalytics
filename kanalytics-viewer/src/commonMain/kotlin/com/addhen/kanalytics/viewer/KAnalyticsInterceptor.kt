@@ -3,6 +3,7 @@
 
 package com.addhen.kanalytics.viewer
 
+import co.touchlab.kermit.Logger
 import com.addhen.kanalytics.interceptor.Interceptor
 import com.addhen.kanalytics.interceptor.KAnalyticsEvent
 
@@ -11,8 +12,9 @@ public class KAnalyticsInterceptor private constructor(builder: Builder): Interc
 
   public constructor() : this(Builder())
 
-  public override fun intercept(event: KAnalyticsEvent): Unit {
-
+  public override fun intercept(event: KAnalyticsEvent): KAnalyticsEvent {
+    Logger.d("Intercepting eventsss: $event")
+    return event
   }
 
   public fun redactHeaders(vararg keyNames: String): KAnalyticsInterceptor {
