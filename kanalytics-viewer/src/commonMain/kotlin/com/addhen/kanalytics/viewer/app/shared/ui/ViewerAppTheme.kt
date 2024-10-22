@@ -167,7 +167,7 @@ public fun AnalyticsEventsScreen() {
       leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") }
     )
 
-    Spacer(modifier = Modifier.height(8.dp))
+    Spacer(modifier = Modifier.height(16.dp))
 
     LazyColumn {
       items(events) { event ->
@@ -200,7 +200,7 @@ private fun EventCard(event: AnalyticsEvent, isExpanded: Boolean, onToggleExpand
           Text(event.timestamp, style = MaterialTheme.typography.labelMedium)
           SuggestionChip(
             onClick = { },
-            label = { Text(event.key, color = Color.Blue) },
+            label = { Text(event.key) },
           )
         }
         IconButton(onClick = onToggleExpand) {
