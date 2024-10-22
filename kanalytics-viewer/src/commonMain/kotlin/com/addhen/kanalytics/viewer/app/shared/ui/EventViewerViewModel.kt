@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 
-public class LocationViewModel() : ViewModel() {
+public class EventViewerViewModel() : ViewModel() {
   private val viewStateEmitter =
     MutableStateFlow(LocationUiState(flag = LocationUiState.Flag.LOADING))
 
@@ -31,7 +31,7 @@ public class LocationViewModel() : ViewModel() {
     flow { emit("Hey my location") }
       .distinctUntilChanged()
       .onEach { state ->
-        Logger.d(LocationViewModel::class.simpleName.toString()) { "state $state" }
+        Logger.d(EventViewerViewModel::class.simpleName.toString()) { "state $state" }
         viewStateEmitter.update { currentUiState ->
           currentUiState.copy(
             flag = LocationUiState.Flag.IDLE,

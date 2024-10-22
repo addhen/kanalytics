@@ -20,6 +20,7 @@ kotlin {
         implementation(compose.material3)
         implementation(compose.runtime)
         implementation(compose.components.resources)
+        implementation(compose.materialIconsExtended)
         implementation(libs.moko.permissions)
         implementation(libs.kotlinx.coroutines.core)
         implementation(libs.kotlinx.collections.immutable)

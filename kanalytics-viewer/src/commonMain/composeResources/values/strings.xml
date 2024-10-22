@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="app_name">KAnalytics Interceptor</string>
+  <string name="search_term_placeHolder">Enter a session, a speaker or a term</string>
 </resources>
