@@ -17,6 +17,7 @@ import com.addhen.kanalytics.viewer.app.shared.ui.ViewerApp
 import dev.icerock.moko.permissions.PermissionsController
 
 public class MainActivity : ComponentActivity() {
+
   override fun onCreate(savedInstanceState: Bundle?) {
     // Navigation icon color can be changed since API 26(O)
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
@@ -42,15 +43,6 @@ public class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     val permissionsController = PermissionsController(this)
     permissionsController.bind(this)
-    setContent {
-      val navController = rememberNavController()
-      ViewerApp(
-        navController,
-        permissionScreen = {},
-        locationScreen = {
-          EventViewerScreen()
-        },
-      )
-    }
+    setContent { ViewerApp() }
   }
 }

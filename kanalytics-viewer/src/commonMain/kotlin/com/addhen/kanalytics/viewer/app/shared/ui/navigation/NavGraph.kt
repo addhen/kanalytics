@@ -11,25 +11,21 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
+import com.addhen.kanalytics.viewer.app.shared.ui.EventViewerScreen
 import kotlin.reflect.KClass
 
 @Composable
 public fun AppNavGraph(
   navController: NavHostController,
   startDestination: KClass<*>,
-  permissionScreen: @Composable () -> Unit,
-  locationScreen: @Composable () -> Unit,
 ) {
   NavHost(
     navController = navController,
     startDestination = startDestination,
   ) {
-    composable<LocationPermissionRoute> {
-      permissionScreen()
-    }
 
-    composable<LocationRoute> {
-      locationScreen()
+    composable<EventViewerRoute> {
+      EventViewerScreen()
     }
   }
 }

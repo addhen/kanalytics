@@ -6,7 +6,4 @@ package com.addhen.kanalytics.viewer.app.shared.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data object LocationRoute
-
-@Serializable
-public data object LocationPermissionRoute
+public data object EventViewerRoute

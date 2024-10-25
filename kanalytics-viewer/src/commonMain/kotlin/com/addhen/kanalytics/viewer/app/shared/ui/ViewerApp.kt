@@ -5,23 +5,20 @@ package com.addhen.kanalytics.viewer.app.shared.ui
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSurface
 import com.addhen.kanalytics.viewer.app.shared.ui.navigation.AppNavGraph
-import com.addhen.kanalytics.viewer.app.shared.ui.navigation.LocationRoute
+import com.addhen.kanalytics.viewer.app.shared.ui.navigation.EventViewerRoute
 
 @Composable
 public fun ViewerApp(
-  navController: NavHostController,
-  permissionScreen: @Composable () -> Unit,
-  locationScreen: @Composable () -> Unit,
+  navController: NavHostController = rememberNavController(),
 ) {
   ViewerAppTheme {
     AppSurface {
       AppNavGraph(
         navController = navController,
-        LocationRoute::class,
-        permissionScreen = permissionScreen,
-        locationScreen = locationScreen,
+        EventViewerRoute::class
       )
     }
   }

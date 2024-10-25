@@ -1,13 +1,16 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools">
 
   <uses-permission android:name="android.permission.INTERNET" />
 
-  <application>
+  <application
+    tools:targetApi="tiramisu">
   <activity
     android:name="com.addhen.kanalytics.viewer.android.MainActivity"
     android:label="KAnalytics Interceptor"
     android:launchMode="singleTask"
     android:taskAffinity="com.addhen.kanalytics.viewer.android.task"
-    android:theme="@android:style/Theme.Material.Light.NoActionBar" />
+    android:theme="@style/Theme.ViewerApp" />
   </application>
 </manifest>
