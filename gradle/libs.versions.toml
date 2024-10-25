@@ -13,7 +13,6 @@ cacheFixPlugin = "3.0.1"
 dokka = "1.9.20"
 coroutines = "1.9.0"
 androidx-core-ktx = "1.13.1"
-play-services-location = "21.3.0"
 androidx-activity-compose = "1.9.3"
 material = "1.12.0"
 appcompat = "1.7.0"
@@ -37,8 +36,6 @@ metalava-gradlePlugin = { module = "me.tylerbwong.gradle.metalava:plugin", versi
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "androidx-core-ktx" }
-play-services-location = { module = "com.google.android.gms:play-services-location", version.ref = "play-services-location" }
-kotlinx-coroutines-play-services = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-play-services", version.ref = "coroutines" }
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
