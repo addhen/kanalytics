@@ -10,8 +10,8 @@ CREATE TABLE IF NOT EXISTS `event_data` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `event_name` TEXT NOT NULL,
   `event_description` TEXT DEFAULT NULL,
-  `event_created_date` TEXT AS Instant,
-  `event_properties` TEXT AS Map<String, Any>
+  `event_created_date` TEXT AS Instant NOT NULL,
+  `event_properties` TEXT AS Map<String, Any> NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS index_event_data_event_name ON event_data (event_name);
@@ -19,6 +19,7 @@ CREATE INDEX IF NOT EXISTS index_event_data_event_created_date ON event_data (ev
 CREATE INDEX IF NOT EXISTS index_event_data_event_description ON event_data (event_description);
 
 -- insert
+insertEventData:
 INSERT OR REPLACE INTO `event_data`(
   `event_name`,
   `event_description`,
