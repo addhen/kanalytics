@@ -1,0 +1,40 @@
+import kotlin.String;
+import kotlin.Any;
+import kotlin.collections.Map;
+import kotlinx.datetime.Instant;
+
+
+PRAGMA user_version = 3;
+
+-- create
+CREATE TABLE IF NOT EXISTS `event_data` (
+  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `event_name` TEXT NOT NULL,
+  `event_description` TEXT DEFAULT NULL,
+  `event_created_date` TEXT AS Instant,
+  `event_properties` TEXT AS Map<String, Any>
+);
+
+CREATE INDEX IF NOT EXISTS index_event_data_event_name ON event_data (event_name);
+CREATE INDEX IF NOT EXISTS index_event_data_event_created_date ON event_data (event_created_date);
+CREATE INDEX IF NOT EXISTS index_event_data_event_description ON event_data (event_description);
+
+-- insert
+INSERT OR REPLACE INTO `event_data`(
+  `event_name`,
+  `event_description`,
+  `event_created_date`,
+  `event_properties`
+) VALUES (
+  ?,
+  ?,
+  ?,
+  ?
+);
+
+-- queries
+getAllEventData:
+SELECT * FROM `event_data` ORDER BY event_created_date DESC LIMIT :limit OFFSET :offset;
+
+deleteAllEventData:
+DELETE FROM `event_data`;

@@ -3,8 +3,6 @@
 
 package com.addhen.kanalytics
 
-import com.addhen.kanalytics.interceptor.Interceptor
-import com.addhen.kanalytics.interceptor.KAnalyticsEvent
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
@@ -126,17 +124,17 @@ class KAnalyticsTest {
     assertEquals(1, firebaseTracker.analyticsEvents.size)
     assertEquals(1, adjustTracker.analyticsEvents.size)
     assertEquals(event, mockTrackerIntercept.event)
-    assertEquals(3, mockTrackerIntercept.event?.parameters?.size)
+    assertEquals(3, mockTrackerIntercept.event?.properties?.size)
     assertHasEvents(firebaseTracker.analyticsEvents)
     assertHasEvents(adjustTracker.analyticsEvents)
   }
 
   private fun assertHasEvent(event: KAnalyticsEvent) {
     assertEquals(EVENT_NAME, event.eventName)
-    assertEquals(3, event.parameters.size)
-    assertEquals(SCREEN_NAME, event.parameters[SCREEN_NAME])
-    assertEquals(VALUE_ONE, event.parameters[KEY_ONE])
-    assertEquals(VALUE_TWO, event.parameters[KEY_TWO])
+    assertEquals(3, event.properties.size)
+    assertEquals(SCREEN_NAME, event.properties[SCREEN_NAME])
+    assertEquals(VALUE_ONE, event.properties[KEY_ONE])
+    assertEquals(VALUE_TWO, event.properties[KEY_TWO])
   }
 
   private fun assertHasEvents(events: List<KAnalyticsEvent>) {
@@ -148,9 +146,9 @@ class KAnalyticsTest {
     assertTrue(events.isNotEmpty())
     events.forEach { event ->
       assertEquals(EVENT_NAME, event.eventName)
-      assertEquals(SCREEN_NAME, event.parameters[SCREEN_NAME])
-      assertEquals(3, event.parameters.size)
-      assertEquals(VALUE_ONE, event.parameters[KEY_ONE])
+      assertEquals(SCREEN_NAME, event.properties[SCREEN_NAME])
+      assertEquals(3, event.properties.size)
+      assertEquals(VALUE_ONE, event.properties[KEY_ONE])
     }
   }
 

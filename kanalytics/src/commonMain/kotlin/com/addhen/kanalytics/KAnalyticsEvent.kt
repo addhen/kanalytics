@@ -8,28 +8,28 @@ private const val DEFAULT_EVENT_PARAM_VALUE = "NA"
 public class KAnalyticsEvent(
   public val eventName: String,
   public val eventDescription: String = DEFAULT_EVENT_PARAM_VALUE,
-  public val parameters: MutableMap<String, Any?> = mutableMapOf(),
+  public val properties: MutableMap<String, Any?> = mutableMapOf(),
 ) {
 
   public fun addParameter(parameterName: String, value: Any?): KAnalyticsEvent = apply {
-    parameters[parameterName] = value
+    properties[parameterName] = value
   }
 
   public fun addParameters(map: Map<String, Any?>): KAnalyticsEvent = apply {
-    parameters.putAll(map)
+    properties.putAll(map)
   }
 
   public fun copy(
     eventName: String = this.eventName,
     eventDescription: String = this.eventDescription,
-    parameters: MutableMap<String, Any?> = this.parameters,
+    parameters: MutableMap<String, Any?> = this.properties,
   ):KAnalyticsEvent = KAnalyticsEvent(eventName, eventDescription, parameters)
 
   override fun toString(): String {
     return "KAnalyticsEvent(" +
       "eventName='$eventName', " +
       "eventDescription='$eventDescription', " +
-      "parameters=$parameters" +
+      "properties=$properties" +
       ")"
   }
 
