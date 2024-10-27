@@ -10,13 +10,14 @@ plugins {
   id("convention.plugin.compose")
   id("convention.plugin.metalava")
   alias(libs.plugins.kotlin.serialization)
+  alias(libs.plugins.sqldelight)
 }
 
 kotlin {
   sourceSets {
     commonMain {
       dependencies {
-        api(project.projects.kanalytics)
+        api(projects.kanalytics)
         implementation(compose.material3)
         implementation(compose.runtime)
         implementation(compose.components.resources)
@@ -32,12 +33,21 @@ kotlin {
         implementation(libs.moko.permissions)
         implementation(libs.moko.permissions.compose)
         implementation(libs.kotlinx.serialization)
+        implementation(libs.sqldelight.coroutines)
+        implementation(libs.sqldelight.primitive)
       }
     }
 
     androidMain {
       dependencies {
         implementation(libs.androidx.core.ktx)
+        implementation(libs.sqldelight.android)
+      }
+    }
+
+    iosMain {
+      dependencies {
+        implementation(libs.sqldelight.native)
       }
     }
 
@@ -50,7 +60,7 @@ kotlin {
 }
 
 android {
-  namespace = "com.addhen.kanalytics"
+  namespace = "com.addhen.kanalytics.viewer.app.shared"
   defaultConfig {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -58,6 +68,14 @@ android {
   testOptions {
     unitTests {
       isIncludeAndroidResources = true
+    }
+  }
+}
+
+sqldelight {
+  databases {
+    create("EventViewer") {
+      packageName = "com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight"
     }
   }
 }
