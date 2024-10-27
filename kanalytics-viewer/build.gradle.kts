@@ -41,6 +41,7 @@ kotlin {
     androidMain {
       dependencies {
         implementation(libs.androidx.core.ktx)
+        implementation(libs.androidx.startup.runtime)
         implementation(libs.sqldelight.android)
       }
     }
@@ -74,7 +75,7 @@ android {
 
 sqldelight {
   databases {
-    create("EventViewer") {
+    create("EventViewerDatabase") {
       packageName = "com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight"
     }
   }

@@ -3,7 +3,6 @@ import kotlin.Any;
 import kotlin.collections.Map;
 import kotlinx.datetime.Instant;
 
-
 PRAGMA user_version = 3;
 
 -- create

@@ -11,8 +11,6 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.navigation.compose.rememberNavController
-import com.addhen.kanalytics.viewer.app.shared.ui.EventViewerScreen
 import com.addhen.kanalytics.viewer.app.shared.ui.ViewerApp
 import dev.icerock.moko.permissions.PermissionsController
 
