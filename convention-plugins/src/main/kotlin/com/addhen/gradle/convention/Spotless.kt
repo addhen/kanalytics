@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+  // Copyright 2024, Addhen Ltd and the k-location project contributors
 // SPDX-License-Identifier: Apache-2.0
 package com.addhen.gradle.convention
 
@@ -7,6 +7,7 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 
 fun Project.configureSpotless() {
+  if (path.startsWith(":paging-compose")) return
   with(pluginManager) { apply("com.diffplug.spotless") }
 
   spotless {
