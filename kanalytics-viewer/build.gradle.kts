@@ -18,6 +18,7 @@ kotlin {
     commonMain {
       dependencies {
         api(projects.kanalytics)
+        implementation(projects.pagingCompose.androidx.paging.compose)
         implementation(compose.material3)
         implementation(compose.runtime)
         implementation(compose.components.resources)
@@ -35,6 +36,8 @@ kotlin {
         implementation(libs.kotlinx.serialization)
         implementation(libs.sqldelight.coroutines)
         implementation(libs.sqldelight.primitive)
+        implementation(libs.sqldelight.paging)
+        implementation(libs.paging.common)
       }
     }
 

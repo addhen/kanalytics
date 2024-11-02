@@ -5,6 +5,7 @@ import kotlinx.datetime.Instant
 public class EventData(
   public val id: Long,
   public val name: String,
+  public val provider: String,
   public val description: String?,
   public val createdAt: Instant,
   public val properties: Map<String, Any>,

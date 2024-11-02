@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ExpandLess
 import androidx.compose.material.icons.filled.ExpandMore
@@ -38,6 +37,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.itemKey
+import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
+import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.ColorContrast
 
@@ -49,54 +53,20 @@ public fun ViewerAppTheme(
   AppTheme(colorContrast, content)
 }
 
-public data class AnalyticsEvent(
-  val name: String,
-  val timestamp: String,
-  val provider: String,
-  val keyValueMap: Map<String, String>
-)
-
 @Composable
-public fun AnalyticsEventsScreen() {
+public fun AnalyticsEventsScreen(
+  lazyPagingItems: LazyPagingItems<EventData>
+) {
   var expandedEventIndex by remember { mutableStateOf<Int?>(null) }
   var searchQuery by remember { mutableStateOf("") }
 
-  val events = remember {
-    listOf(
-      AnalyticsEvent(
-        "Button Click",
-        "2023-10-21 14:30:22",
-        "Google Analytics",
-        mapOf(
-          "buttonId" to "submit-form",
-          "pageLocation" to "/checkout",
-          "userType" to "registered"
-        )
-      ),
-      AnalyticsEvent(
-        "Page View",
-        "2023-10-21 14:30:10",
-        "Mixpanel",
-        mapOf(
-          "pageName" to "Home",
-          "referrer" to "https://google.com",
-          "deviceType" to "mobile"
-        )
-      ),
-      AnalyticsEvent(
-        "Form Submit",
-        "2023-10-21 14:29:55",
-        "Amplitude",
-        mapOf(
-          "formId" to "contact-us",
-          "formCompletionTime" to "45s",
-          "formErrors" to "0"
-        )
-      )
-    )
-  }
-
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh != LoadState.Loading) {
+        EmptyContent(
+          title = { Text("No events found") },
+          modifier = Modifier.fillMaxWidth()
+        )
+    } else {
     Text("Analytics Events", style = MaterialTheme.typography.bodyMedium)
     Spacer(modifier = Modifier.height(8.dp))
 
@@ -111,22 +81,46 @@ public fun AnalyticsEventsScreen() {
     Spacer(modifier = Modifier.height(16.dp))
 
     LazyColumn {
-      items(events) { event ->
-        EventCard(
-          event = event,
-          isExpanded = events.indexOf(event) == expandedEventIndex,
-          onToggleExpand = {
-            expandedEventIndex = if (events.indexOf(event) == expandedEventIndex) null else events.indexOf(event)
-          }
-        )
-        Spacer(modifier = Modifier.height(8.dp))
+
+      if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh != LoadState.Loading) {
+        item {
+          EmptyContent(
+            title = { Text("No events found") },
+            modifier = Modifier
+              .fillMaxSize()
+              .padding(vertical = 64.dp),
+          )
+        }
       }
+
+      items(
+        count = lazyPagingItems.itemCount,
+        key = lazyPagingItems.itemKey { it.id},
+      ) { index ->
+        val event = lazyPagingItems[index]
+        if (event != null) {
+          EventCard(
+            event = event,
+            isExpanded = index == expandedEventIndex,
+            onToggleExpand = {
+              expandedEventIndex =
+                if (index == expandedEventIndex) null else index
+            }
+          )
+          Spacer(modifier = Modifier.height(8.dp))
+        }
+      }
+    }
     }
   }
 }
 
 @Composable
-private fun EventCard(event: AnalyticsEvent, isExpanded: Boolean, onToggleExpand: () -> Unit) {
+private fun EventCard(
+  event: EventData,
+  isExpanded: Boolean,
+  onToggleExpand: () -> Unit
+) {
   Card(
     modifier = Modifier.fillMaxWidth()
   ) {
@@ -138,7 +132,7 @@ private fun EventCard(event: AnalyticsEvent, isExpanded: Boolean, onToggleExpand
       ) {
         Column {
           Text(event.name, style = MaterialTheme.typography.titleMedium)
-          Text(event.timestamp, style = MaterialTheme.typography.labelMedium)
+          Text(event.createdAt.toString(), style = MaterialTheme.typography.labelMedium)
           Spacer(modifier = Modifier.height(8.dp))
           SuggestionChip(
             onClick = { },
@@ -157,10 +151,10 @@ private fun EventCard(event: AnalyticsEvent, isExpanded: Boolean, onToggleExpand
         Spacer(modifier = Modifier.height(8.dp))
         HorizontalDivider()
         Spacer(modifier = Modifier.height(8.dp))
-        event.keyValueMap.forEach { (key, value) ->
+        event.properties.forEach { (key, value) ->
           KeyValueView(
             key = key,
-            value = value,
+            value = value.toString(),
             textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
             modifier = Modifier.fillMaxWidth()
           )

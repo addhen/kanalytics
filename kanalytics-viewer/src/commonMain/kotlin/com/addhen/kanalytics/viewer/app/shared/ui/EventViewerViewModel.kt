@@ -5,54 +5,48 @@ package com.addhen.kanalytics.viewer.app.shared.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.flow.stateIn
-import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.flow.filterIsInstance
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.onStart
 
+@OptIn(ExperimentalCoroutinesApi::class)
 internal class EventViewerViewModel(
-  eventRepository: EventDataRepository,
+  private val eventRepository: EventDataRepository,
 ) : ViewModel() {
-  private val viewStateEmitter =
-    MutableStateFlow(LocationUiState(flag = LocationUiState.Flag.LOADING))
 
-  val viewState: StateFlow<LocationUiState> = viewStateEmitter
-    .stateIn(
-      viewModelScope,
-      started = SharingStarted.WhileSubscribed(5_000),
-      viewStateEmitter.value,
-    )
+  private val uiAction = MutableSharedFlow<UiAction>()
+  val eventPagingData: Flow<PagingData<EventData>>
 
   init {
-    eventRepository.getAll(10, 0)
+    eventPagingData = uiAction
+      .filterIsInstance<UiAction.LoadEvents>()
+      .onStart { emit(UiAction.LoadEvents) }
+      .flatMapLatest { loadEvents() }
       .distinctUntilChanged()
-      .onEach { eventDataList ->
-        Logger.d(EventViewerViewModel::class.simpleName.toString()) { "state $eventDataList" }
-        viewStateEmitter.update { currentUiState ->
-          currentUiState.copy(
-            flag = LocationUiState.Flag.IDLE,
-            events = eventDataList,
-          )
-        }
-      }.launchIn(viewModelScope)
+      .cachedIn(viewModelScope)
   }
 
-  public data class LocationUiState(
-      public val events: List<EventData> = emptyList(),
-      public val flag: Flag = Flag.IDLE,
-  ) {
-    public enum class Flag {
-      LOADING,
-      ERROR,
-      IDLE,
-    }
+  private fun loadEvents(
+    pagingConfig: PagingConfig = PAGING_CONFIG
+  ): Flow<PagingData<EventData>> = eventRepository.getAll(pagingConfig)
+
+  sealed interface UiAction {
+    data object LoadEvents : UiAction
+  }
+
+  companion object {
+    private val PAGING_CONFIG = PagingConfig(
+      pageSize = 10,
+      initialLoadSize = 32,
+    )
   }
 }

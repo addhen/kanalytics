@@ -9,6 +9,7 @@ PRAGMA user_version = 3;
 CREATE TABLE IF NOT EXISTS `event_data` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `event_name` TEXT NOT NULL,
+  `event_provider` TEXT NOT NULL,
   `event_description` TEXT DEFAULT NULL,
   `event_created_date` TEXT AS Instant NOT NULL,
   `event_properties` TEXT AS Map<String, Any> NOT NULL
@@ -23,9 +24,11 @@ insertEventData:
 INSERT OR REPLACE INTO `event_data`(
   `event_name`,
   `event_description`,
+  `event_provider`,
   `event_created_date`,
   `event_properties`
 ) VALUES (
+  ?,
   ?,
   ?,
   ?,
@@ -35,6 +38,9 @@ INSERT OR REPLACE INTO `event_data`(
 -- queries
 getAllEventData:
 SELECT * FROM `event_data` ORDER BY event_created_date DESC LIMIT :limit OFFSET :offset;
+
+countAllEventData:
+SELECT COUNT(*) FROM `event_data`;
 
 deleteAllEventData:
 DELETE FROM `event_data`;

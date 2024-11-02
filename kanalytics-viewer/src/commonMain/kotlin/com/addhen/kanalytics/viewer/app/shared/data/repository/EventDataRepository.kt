@@ -1,5 +1,9 @@
 package com.addhen.kanalytics.viewer.app.shared.data.repository
 
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import app.cash.paging.map
 import com.addhen.kanalytics.viewer.app.shared.data.database.EventDataDao
 import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataEntity
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
@@ -10,17 +14,19 @@ internal class EventDataRepository(
   private val eventDataDao: EventDataDao
 ) {
 
-  fun getAll(limit: Long, offset: Long): Flow<List<EventData>> {
-    return eventDataDao.getAll(limit, offset).map { list ->
-      list.map { eventDataEntity ->
-        EventData(
-          id = eventDataEntity.id,
-          name = eventDataEntity.name,
-          description = eventDataEntity.description,
-          createdAt = eventDataEntity.createdAt,
-          properties = eventDataEntity.properties,
-        )
-      }
+  fun getAll(pagingConfig: PagingConfig): Flow<PagingData<EventData>> = Pager(
+      config = pagingConfig,
+      pagingSourceFactory = { eventDataDao.getAll() }
+  ).flow.map { pagingData ->
+    pagingData.map { eventDataEntity ->
+      EventData(
+        id = eventDataEntity.id,
+        name = eventDataEntity.name,
+        provider = eventDataEntity.provider,
+        description = eventDataEntity.description,
+        createdAt = eventDataEntity.createdAt,
+        properties = eventDataEntity.properties
+      )
     }
   }
 
@@ -29,6 +35,7 @@ internal class EventDataRepository(
       EventDataEntity(
         id = eventData.id,
         name = eventData.name,
+        provider = eventData.provider,
         description = eventData.description,
         createdAt = eventData.createdAt,
         properties = eventData.properties
@@ -37,4 +44,12 @@ internal class EventDataRepository(
   }
 
   suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
+
+  companion object {
+    val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+      EventDataRepository(
+        eventDataDao = EventDataDao.Instance
+      )
+    }
+  }
 }

@@ -13,7 +13,7 @@ internal expect object DriverFactory {
 }
 
 
-internal fun createDatabase(sqlDriver: SqlDriver): EventViewerDatabase {
+internal fun createDatabase(): EventViewerDatabase {
 
   return EventViewerDatabase(
       driver = DriverFactory.createDbDriver(),
