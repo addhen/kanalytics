@@ -13,11 +13,11 @@ import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
-internal class EventDataRepository(
+public class EventDataRepository(
   private val eventDataDao: EventDataDao,
 ) {
 
-  fun getAll(pagingConfig: PagingConfig): Flow<PagingData<EventData>> = Pager(
+  internal fun getAll(pagingConfig: PagingConfig): Flow<PagingData<EventData>> = Pager(
     config = pagingConfig,
     pagingSourceFactory = { eventDataDao.getAll() },
   ).flow.map { pagingData ->
@@ -25,7 +25,7 @@ internal class EventDataRepository(
       EventData(
         id = eventDataEntity.id,
         name = eventDataEntity.name,
-        provider = eventDataEntity.provider,
+        trackerName = eventDataEntity.trackerName,
         description = eventDataEntity.description,
         createdAt = eventDataEntity.createdAt,
         properties = eventDataEntity.properties,
@@ -33,12 +33,12 @@ internal class EventDataRepository(
     }
   }
 
-  suspend fun insert(eventData: EventData) {
+  internal suspend fun insert(eventData: EventData) {
     eventDataDao.insert(
       EventDataEntity(
         id = eventData.id,
         name = eventData.name,
-        provider = eventData.provider,
+        trackerName = eventData.trackerName,
         description = eventData.description,
         createdAt = eventData.createdAt,
         properties = eventData.properties,
@@ -46,9 +46,9 @@ internal class EventDataRepository(
     )
   }
 
-  suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
+  internal suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
 
-  companion object {
+  internal companion object {
     val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
       EventDataRepository(
         eventDataDao = EventDataDao.Instance,

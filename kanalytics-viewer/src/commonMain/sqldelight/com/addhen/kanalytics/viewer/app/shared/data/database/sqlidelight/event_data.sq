@@ -9,13 +9,14 @@ PRAGMA user_version = 3;
 CREATE TABLE IF NOT EXISTS `event_data` (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `event_name` TEXT NOT NULL,
-  `event_provider` TEXT NOT NULL,
+  `tracker_name` TEXT NOT NULL,
   `event_description` TEXT DEFAULT NULL,
   `event_created_date` TEXT AS Instant NOT NULL,
   `event_properties` TEXT AS Map<String, Any> NOT NULL
 );
 
 CREATE INDEX IF NOT EXISTS index_event_data_event_name ON event_data (event_name);
+CREATE INDEX IF NOT EXISTS index_event_data_tracker_name ON event_data (tracker_name);
 CREATE INDEX IF NOT EXISTS index_event_data_event_created_date ON event_data (event_created_date);
 CREATE INDEX IF NOT EXISTS index_event_data_event_description ON event_data (event_description);
 
@@ -24,7 +25,7 @@ insertEventData:
 INSERT OR REPLACE INTO `event_data`(
   `event_name`,
   `event_description`,
-  `event_provider`,
+  `tracker_name`,
   `event_created_date`,
   `event_properties`
 ) VALUES (

@@ -95,7 +95,7 @@ public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
 
         items(
           count = lazyPagingItems.itemCount,
-          key = lazyPagingItems.itemKey { it.id },
+          key = lazyPagingItems.itemKey { it.id ?: 0 },
         ) { index ->
           val event = lazyPagingItems[index]
           if (event != null) {
@@ -132,7 +132,7 @@ private fun EventCard(event: EventData, isExpanded: Boolean, onToggleExpand: () 
           Spacer(modifier = Modifier.height(8.dp))
           SuggestionChip(
             onClick = { },
-            label = { Text(event.provider) },
+            label = { Text(event.trackerName) },
           )
         }
         IconButton(onClick = onToggleExpand) {

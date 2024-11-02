@@ -11,12 +11,12 @@ import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.EventVi
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.createDatabase
 import kotlinx.coroutines.withContext
 
-internal class EventDataDao(
+public class EventDataDao(
   private val database: EventViewerDatabase,
   private val appCoroutineDispatchers: AppCoroutineDispatchers,
 ) {
 
-  fun getAll(): PagingSource<Int, EventDataEntity> = QueryPagingSource(
+  internal fun getAll(): PagingSource<Int, EventDataEntity> = QueryPagingSource(
     countQuery = database.event_dataQueries.countAllEventData(),
     transacter = database.event_dataQueries,
     context = appCoroutineDispatchers.io,
@@ -29,7 +29,7 @@ internal class EventDataDao(
         EventDataEntity(
           id = id,
           name = name,
-          provider = provider,
+          trackerName = provider,
           description = description,
           createdAt = created_at,
           properties = properties,
@@ -38,23 +38,23 @@ internal class EventDataDao(
     },
   )
 
-  suspend fun insert(eventData: EventDataEntity) =
+  internal suspend fun insert(eventData: EventDataEntity) =
     withContext(appCoroutineDispatchers.databaseWrite) {
       database.event_dataQueries.insertEventData(
         event_name = eventData.name,
-        event_provider = eventData.provider,
+        tracker_name = eventData.trackerName,
         event_description = eventData.description,
         event_created_date = eventData.createdAt,
         event_properties = eventData.properties,
       )
     }
 
-  suspend fun deleteAll() = withContext(appCoroutineDispatchers.databaseWrite) {
+  internal suspend fun deleteAll() = withContext(appCoroutineDispatchers.databaseWrite) {
     database.event_dataQueries.deleteAllEventData()
   }
 
-  companion object {
-    val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+  public companion object {
+    public val Instance: EventDataDao by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
       EventDataDao(
         database = createDatabase(),
         appCoroutineDispatchers = AppCoroutineDispatchers(),
