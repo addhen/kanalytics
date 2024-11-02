@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.sample.shared
@@ -14,10 +14,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-public fun LocationScreen(
-  locationViewModel: SampleViewModel,
-  onClick: () -> Unit
-) {
+public fun LocationScreen(locationViewModel: SampleViewModel, onClick: () -> Unit) {
   // Showing how to consume location updates and last known location without compose [State]
   val uiState by locationViewModel.viewState.collectAsState()
 

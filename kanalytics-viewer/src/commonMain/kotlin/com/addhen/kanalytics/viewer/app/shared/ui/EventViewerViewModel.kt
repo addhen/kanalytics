@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.viewer.app.shared.ui
@@ -35,9 +35,8 @@ internal class EventViewerViewModel(
       .cachedIn(viewModelScope)
   }
 
-  private fun loadEvents(
-    pagingConfig: PagingConfig = PAGING_CONFIG
-  ): Flow<PagingData<EventData>> = eventRepository.getAll(pagingConfig)
+  private fun loadEvents(pagingConfig: PagingConfig = PAGING_CONFIG): Flow<PagingData<EventData>> =
+    eventRepository.getAll(pagingConfig)
 
   sealed interface UiAction {
     data object LoadEvents : UiAction

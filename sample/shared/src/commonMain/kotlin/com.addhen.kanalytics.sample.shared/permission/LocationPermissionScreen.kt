@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.sample.shared.permission
@@ -22,13 +22,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.addhen.kanalytics.sample.shared.ScaffoldSample
+import com.addhen.kanalytics.sample.shared.navigation.LocationRoute
+import com.addhen.kanalytics.sample.shared.navigation.buildNavOptions
 import com.addhen.kanalytics.shared.generated.resources.Res
 import com.addhen.kanalytics.shared.generated.resources.ic_launcher_foreground
 import com.addhen.kanalytics.shared.generated.resources.request_location_permission_rationale
 import com.addhen.kanalytics.shared.generated.resources.request_permission
-import com.addhen.kanalytics.sample.shared.ScaffoldSample
-import com.addhen.kanalytics.sample.shared.navigation.LocationRoute
-import com.addhen.kanalytics.sample.shared.navigation.buildNavOptions
 import dev.icerock.moko.permissions.compose.BindEffect
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.DrawableResource

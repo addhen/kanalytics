@@ -9,7 +9,7 @@ public class RetentionPolicyManager(
   period: Period = Period.ONE_DAY,
 ) {
 
-  private val dateTimeUnit: DateTimeUnit =period.toMillis()
+  private val dateTimeUnit: DateTimeUnit = period.toMillis()
 
   public fun manage(): Unit = Unit
 

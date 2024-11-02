@@ -6,7 +6,7 @@ package com.addhen.kanalytics
 import co.touchlab.kermit.Logger
 
 @Suppress("UnusedPrivateMember", "UNUSED_PARAMETER")
-public class KAnalyticsInterceptor private constructor(builder: Builder): Interceptor {
+public class KAnalyticsInterceptor private constructor(builder: Builder) : Interceptor {
 
   public constructor() : this(Builder())
 

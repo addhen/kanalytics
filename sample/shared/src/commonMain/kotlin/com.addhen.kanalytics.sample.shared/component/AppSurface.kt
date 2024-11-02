@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.sample.shared.component
@@ -30,10 +30,7 @@ private fun AppFrame(appNavHost: @Composable () -> Unit) {
 }
 
 @Composable
-private fun AppBackground(
-  modifier: Modifier = Modifier,
-  content: @Composable () -> Unit
-) {
+private fun AppBackground(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
   Surface(
     color = MaterialTheme.colorScheme.background,
     modifier = modifier,

@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.sample.shared.navigation
@@ -23,7 +23,6 @@ public fun AppNavGraph(
     navController = navController,
     startDestination = startDestination,
   ) {
-
     composable<LocationRoute> {
       locationScreen()
     }

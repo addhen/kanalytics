@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.sample.shared
@@ -34,7 +34,7 @@ public fun Samples(
   currentLocation: String,
   lastKnownLocation: String,
   onAnalytics: () -> Unit,
-  onStopClick: () -> Unit
+  onStopClick: () -> Unit,
 ) {
   Column(
     modifier = Modifier.padding(16.dp).fillMaxSize(),

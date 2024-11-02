@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.viewer.app.shared.ui.navigation
@@ -15,15 +15,11 @@ import com.addhen.kanalytics.viewer.app.shared.ui.EventViewerScreen
 import kotlin.reflect.KClass
 
 @Composable
-public fun AppNavGraph(
-  navController: NavHostController,
-  startDestination: KClass<*>,
-) {
+public fun AppNavGraph(navController: NavHostController, startDestination: KClass<*>) {
   NavHost(
     navController = navController,
     startDestination = startDestination,
   ) {
-
     composable<EventViewerRoute> {
       EventViewerScreen()
     }

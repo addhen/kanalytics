@@ -23,7 +23,7 @@ public class KAnalyticsEvent(
     eventName: String = this.eventName,
     eventDescription: String = this.eventDescription,
     parameters: MutableMap<String, Any?> = this.properties,
-  ):KAnalyticsEvent = KAnalyticsEvent(eventName, eventDescription, parameters)
+  ): KAnalyticsEvent = KAnalyticsEvent(eventName, eventDescription, parameters)
 
   override fun toString(): String {
     return "KAnalyticsEvent(" +
@@ -32,5 +32,4 @@ public class KAnalyticsEvent(
       "properties=$properties" +
       ")"
   }
-
 }

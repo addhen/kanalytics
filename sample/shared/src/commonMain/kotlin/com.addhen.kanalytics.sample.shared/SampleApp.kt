@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.sample.shared
@@ -10,12 +10,8 @@ import com.addhen.kanalytics.sample.shared.navigation.AppNavGraph
 import com.addhen.kanalytics.sample.shared.navigation.LocationRoute
 
 @Composable
-public fun SampleApp(
-  navController: NavHostController,
-  locationScreen: @Composable () -> Unit,
-) {
+public fun SampleApp(navController: NavHostController, locationScreen: @Composable () -> Unit) {
   SamplesTheme {
-
     AppSurface {
       AppNavGraph(
         navController = navController,

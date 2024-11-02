@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.viewer.app.shared.ui
@@ -14,6 +14,8 @@ import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataReposito
 public fun EventViewerScreen() {
   val viewModel = viewModel { EventViewerViewModel(EventDataRepository.Instance) }
   // Showing how to consume location updates and last known location without compose [State]
-  val lazyPagingItems: LazyPagingItems<EventData> = viewModel.eventPagingData.collectAsLazyPagingItems()
+  val lazyPagingItems: LazyPagingItems<EventData> = viewModel
+    .eventPagingData
+    .collectAsLazyPagingItems()
   AnalyticsEventsScreen(lazyPagingItems = lazyPagingItems)
 }

@@ -1,4 +1,4 @@
-// Copyright 2024, Addhen Ltd and the k-location project contributors
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.viewer.app.shared.ui
@@ -48,87 +48,83 @@ import com.addhen.kanalytics.viewer.app.shared.ui.theme.ColorContrast
 @Composable
 public fun ViewerAppTheme(
   colorContrast: ColorContrast = ColorContrast.Default,
-  content: @Composable () -> Unit
+  content: @Composable () -> Unit,
 ) {
   AppTheme(colorContrast, content)
 }
 
 @Composable
-public fun AnalyticsEventsScreen(
-  lazyPagingItems: LazyPagingItems<EventData>
-) {
+public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
   var expandedEventIndex by remember { mutableStateOf<Int?>(null) }
   var searchQuery by remember { mutableStateOf("") }
 
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
     if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh != LoadState.Loading) {
-        EmptyContent(
-          title = { Text("No events found") },
-          modifier = Modifier.fillMaxWidth()
-        )
+      EmptyContent(
+        title = { Text("No events found") },
+        modifier = Modifier.fillMaxWidth(),
+      )
     } else {
-    Text("Analytics Events", style = MaterialTheme.typography.bodyMedium)
-    Spacer(modifier = Modifier.height(8.dp))
+      Text("Analytics Events", style = MaterialTheme.typography.bodyMedium)
+      Spacer(modifier = Modifier.height(8.dp))
 
-    OutlinedTextField(
-      value = searchQuery,
-      onValueChange = { searchQuery = it },
-      placeholder = { Text("Search events...") },
-      modifier = Modifier.fillMaxWidth(),
-      leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") }
-    )
+      OutlinedTextField(
+        value = searchQuery,
+        onValueChange = { searchQuery = it },
+        placeholder = { Text("Search events...") },
+        modifier = Modifier.fillMaxWidth(),
+        leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
+      )
 
-    Spacer(modifier = Modifier.height(16.dp))
+      Spacer(modifier = Modifier.height(16.dp))
 
-    LazyColumn {
+      LazyColumn {
+        if (
+          lazyPagingItems.itemCount == 0 &&
+          lazyPagingItems.loadState.refresh != LoadState.Loading
+        ) {
+          item {
+            EmptyContent(
+              title = { Text("No events found") },
+              modifier = Modifier
+                .fillMaxSize()
+                .padding(vertical = 64.dp),
+            )
+          }
+        }
 
-      if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh != LoadState.Loading) {
-        item {
-          EmptyContent(
-            title = { Text("No events found") },
-            modifier = Modifier
-              .fillMaxSize()
-              .padding(vertical = 64.dp),
-          )
+        items(
+          count = lazyPagingItems.itemCount,
+          key = lazyPagingItems.itemKey { it.id },
+        ) { index ->
+          val event = lazyPagingItems[index]
+          if (event != null) {
+            EventCard(
+              event = event,
+              isExpanded = index == expandedEventIndex,
+              onToggleExpand = {
+                expandedEventIndex =
+                  if (index == expandedEventIndex) null else index
+              },
+            )
+            Spacer(modifier = Modifier.height(8.dp))
+          }
         }
       }
-
-      items(
-        count = lazyPagingItems.itemCount,
-        key = lazyPagingItems.itemKey { it.id},
-      ) { index ->
-        val event = lazyPagingItems[index]
-        if (event != null) {
-          EventCard(
-            event = event,
-            isExpanded = index == expandedEventIndex,
-            onToggleExpand = {
-              expandedEventIndex =
-                if (index == expandedEventIndex) null else index
-            }
-          )
-          Spacer(modifier = Modifier.height(8.dp))
-        }
-      }
-    }
     }
   }
 }
 
 @Composable
-private fun EventCard(
-  event: EventData,
-  isExpanded: Boolean,
-  onToggleExpand: () -> Unit
-) {
+private fun EventCard(event: EventData, isExpanded: Boolean, onToggleExpand: () -> Unit) {
   Card(
-    modifier = Modifier.fillMaxWidth()
+    modifier = Modifier.fillMaxWidth(),
   ) {
     Column(modifier = Modifier.padding(16.dp)) {
       Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
       ) {
         Column {
           Text(event.name, style = MaterialTheme.typography.titleMedium)
@@ -142,7 +138,7 @@ private fun EventCard(
         IconButton(onClick = onToggleExpand) {
           Icon(
             if (isExpanded) Icons.Default.ExpandLess else Icons.Default.ExpandMore,
-            contentDescription = if (isExpanded) "Collapse" else "Expand"
+            contentDescription = if (isExpanded) "Collapse" else "Expand",
           )
         }
       }
@@ -156,14 +152,13 @@ private fun EventCard(
             key = key,
             value = value.toString(),
             textStyle = MaterialTheme.typography.bodyMedium.copy(fontFamily = FontFamily.Monospace),
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
           )
         }
       }
     }
   }
 }
-
 
 @Composable
 private fun KeyValueView(
@@ -176,13 +171,13 @@ private fun KeyValueView(
     Text(
       text = "$key:",
       style = textStyle.copy(fontWeight = FontWeight.Bold),
-      modifier = Modifier.widthIn(min = 60.dp).weight(3f)
+      modifier = Modifier.widthIn(min = 60.dp).weight(3f),
     )
     Spacer(Modifier.width(2.dp))
     Text(
       text = value ?: "",
       style = textStyle,
-      modifier = Modifier.weight(2f)
+      modifier = Modifier.weight(2f),
     )
   }
 }

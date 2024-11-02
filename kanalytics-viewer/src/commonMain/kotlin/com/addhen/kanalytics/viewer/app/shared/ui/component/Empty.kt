@@ -1,3 +1,6 @@
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.component
 
 import androidx.compose.foundation.layout.Box
@@ -9,10 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-public fun EmptyContent(
-  modifier: Modifier = Modifier,
-  title: @Composable () -> Unit,
-) {
+public fun EmptyContent(modifier: Modifier = Modifier, title: @Composable () -> Unit) {
   Box(modifier = modifier) {
     Column(modifier = Modifier.align(Alignment.Center)) {
       ProvideTextStyle(MaterialTheme.typography.headlineMedium) { title() }

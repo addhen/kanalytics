@@ -1,3 +1,6 @@
+// Copyright 2024, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.data.repository
 
 import androidx.paging.Pager
@@ -11,12 +14,12 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
 internal class EventDataRepository(
-  private val eventDataDao: EventDataDao
+  private val eventDataDao: EventDataDao,
 ) {
 
   fun getAll(pagingConfig: PagingConfig): Flow<PagingData<EventData>> = Pager(
-      config = pagingConfig,
-      pagingSourceFactory = { eventDataDao.getAll() }
+    config = pagingConfig,
+    pagingSourceFactory = { eventDataDao.getAll() },
   ).flow.map { pagingData ->
     pagingData.map { eventDataEntity ->
       EventData(
@@ -25,7 +28,7 @@ internal class EventDataRepository(
         provider = eventDataEntity.provider,
         description = eventDataEntity.description,
         createdAt = eventDataEntity.createdAt,
-        properties = eventDataEntity.properties
+        properties = eventDataEntity.properties,
       )
     }
   }
@@ -38,8 +41,8 @@ internal class EventDataRepository(
         provider = eventData.provider,
         description = eventData.description,
         createdAt = eventData.createdAt,
-        properties = eventData.properties
-      )
+        properties = eventData.properties,
+      ),
     )
   }
 
@@ -48,7 +51,7 @@ internal class EventDataRepository(
   companion object {
     val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
       EventDataRepository(
-        eventDataDao = EventDataDao.Instance
+        eventDataDao = EventDataDao.Instance,
       )
     }
   }
