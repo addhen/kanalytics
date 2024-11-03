@@ -64,7 +64,7 @@ kotlin {
 }
 
 android {
-  namespace = "com.addhen.kanalytics.viewer.app.shared"
+  namespace = "com.addhen.kanalytics.viewer.app.android"
   defaultConfig {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }

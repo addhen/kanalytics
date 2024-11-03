@@ -1,6 +1,3 @@
-// Copyright 2024, Addhen Ltd and the kanalytics project contributors
-// SPDX-License-Identifier: Apache-2.0
-
 package com.addhen.kanalytics.viewer.app
 
 import android.app.Notification
@@ -12,11 +9,12 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.addhen.kanalytics.viewer.app.android.ContextInitializer
 import com.addhen.kanalytics.viewer.app.android.MainActivity
+import com.addhen.kanalytics.viewer.app.android.R
 
-private const val CHANNEL_ID = "com.addhen.kanalytics.viewer.app"
+private const val CHANNEL_ID = "com.addhen.kanalytics.viewer.app.android.channel"
 
 internal actual fun NotificationManager(): NotificationManager {
-  return NotificationManagerImpl()
+    return NotificationManagerImpl()
 }
 
 internal class NotificationManagerImpl : NotificationManager {
@@ -25,22 +23,27 @@ internal class NotificationManagerImpl : NotificationManager {
     .applicationContext
     .getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
-  override fun showNotification(title: String, message: String) {
-    val context = ContextInitializer.applicationContext
+    override fun showNotification(title: String, message: String) {
+      val context = ContextInitializer.applicationContext
 
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      createNotificationChannel()
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+        createNotificationChannel()
+      }
+      notificationManager.notify(
+        notificationId,
+        createNotification(context, title, message)
+      )
     }
-    notificationManager.notify(
-      notificationId,
-      createNotification(context, title, message),
-    )
-  }
 
-  private fun createNotification(context: Context, title: String, message: String): Notification {
+  private fun createNotification(
+      context: Context,
+      title: String,
+      message: String
+  ): Notification {
     val notification = NotificationCompat.Builder(context, CHANNEL_ID)
       .setContentTitle(title)
       .setContentText(message)
+      .setSmallIcon((R.drawable.ic_app_icon))
       .setOnlyAlertOnce(true)
       .setChannelId(CHANNEL_ID)
       .setContentIntent(
@@ -48,8 +51,8 @@ internal class NotificationManagerImpl : NotificationManager {
           context,
           0,
           Intent(context, MainActivity::class.java),
-          PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
-        ),
+          PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT
+        )
       )
       .build()
     return notification
@@ -60,7 +63,7 @@ internal class NotificationManagerImpl : NotificationManager {
     val channel = android.app.NotificationChannel(
       CHANNEL_ID,
       "KAnalytics Viewer",
-      android.app.NotificationManager.IMPORTANCE_DEFAULT,
+      android.app.NotificationManager.IMPORTANCE_DEFAULT
     )
     notificationManager.createNotificationChannel(channel)
   }
