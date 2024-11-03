@@ -1,7 +1,7 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics.viewer.android
+package com.addhen.kanalytics.viewer.app.android
 
 import android.content.Context
 import androidx.startup.Initializer

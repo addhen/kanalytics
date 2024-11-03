@@ -2,24 +2,29 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools">
 
-  <uses-permission android:name="android.permission.INTERNET" />
+  <!-- To allow posting notifications on Android 13 -->
+  <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
 
-  <application
-    tools:targetApi="tiramisu">
+  <application>
     <provider
       android:name="androidx.startup.InitializationProvider"
       android:authorities="${applicationId}.androidx-startup"
-      android:exported="false"
-      tools:node="merge">
+      android:exported="false">
       <meta-data
-        android:name="com.addhen.kanalytics.viewer.android.ContextInitializer"
+        android:name="com.addhen.kanalytics.viewer.app.android.ContextInitializer"
         android:value="androidx.startup" />
     </provider>
-  <activity
-    android:name="com.addhen.kanalytics.viewer.android.MainActivity"
-    android:label="KAnalytics Interceptor"
-    android:launchMode="singleTask"
-    android:taskAffinity="com.addhen.kanalytics.viewer.android.task"
-    android:theme="@style/Theme.ViewerApp" />
+    <activity
+      android:name="com.addhen.kanalytics.viewer.app.android.MainActivity"
+      android:exported="true"
+      android:label="@string/app_name"
+      android:icon="@mipmap/ic_launcher"
+      android:theme="@style/Theme.ViewerApp"
+      android:taskAffinity="com.addhen.kanalytics.viewer.android.task">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW"/>
+        <category android:name="android.intent.category.DEFAULT"/>
+      </intent-filter>
+    </activity>
   </application>
 </manifest>

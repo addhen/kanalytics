@@ -3,6 +3,7 @@
 
 package com.addhen.kanalytics
 
+import com.addhen.kanalytics.viewer.app.NotificationManager
 import com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
@@ -11,8 +12,9 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
-public class KAnalyticsCollector(
+internal class KAnalyticsCollector(
   private val repository: EventDataRepository = EventDataRepository.Instance,
+  private val notificationManager: NotificationManager = NotificationManager(),
   private val appCoroutineDispatchers: AppCoroutineDispatchers = AppCoroutineDispatchers(),
 ) {
   private val scope = MainScope()
@@ -22,6 +24,10 @@ public class KAnalyticsCollector(
     eventProvider: String,
     onSentDate: Instant,
   ) {
+    notificationManager.showNotification(
+      title = "Event sent",
+      message = "Event sent: ${kAnalyticsEvent.eventName}",
+    )
     scope.launch {
       withContext(appCoroutineDispatchers.io) {
         repository.insert(

@@ -4,7 +4,7 @@
 package com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight
 
 import app.cash.sqldelight.db.SqlDriver
-import com.addhen.kanalytics.viewer.android.ContextInitializer
+import com.addhen.kanalytics.viewer.app.android.ContextInitializer
 
 internal actual object DriverFactory {
 

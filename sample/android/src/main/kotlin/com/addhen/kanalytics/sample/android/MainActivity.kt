@@ -17,6 +17,7 @@ import com.addhen.kanalytics.Tracker
 import com.addhen.kanalytics.sample.shared.LocationScreen
 import com.addhen.kanalytics.sample.shared.SampleApp
 import com.addhen.kanalytics.sample.shared.SampleViewModel
+import com.addhen.kanalytics.viewer.app.android.MainActivity
 
 class MainActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
           viewModel,
         ) {
           startActivity(
-            Intent(this, com.addhen.kanalytics.viewer.android.MainActivity::class.java)
+            Intent(this, MainActivity::class.java)
               .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
           )
         }

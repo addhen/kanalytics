@@ -21,7 +21,7 @@ public fun AppSurface(appNavHost: @Composable () -> Unit) {
 @Composable
 private fun AppFrame(appNavHost: @Composable () -> Unit) {
   ViewerAppScaffold(
-    title = "Sample Android App",
+    title = "KAnalytics Viewer",
   ) {
     Column(modifier = Modifier.fillMaxSize()) {
       appNavHost()
