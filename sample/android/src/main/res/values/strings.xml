@@ -5,4 +5,6 @@
   <string name="request_location_permission">It seems you haven\'t given us permission for your device\'s location. \nPlease kindly grant us the device\'s location. Thank you</string>
   <string name="request_permission">Request permissions</string>
   <string name="request_fine_permission">Allow precise location</string>
+  <string name="event_notification_title">Analytics Event Occurred!!</string>
+  <string name="event_notification_message">Analytics event: %1$s sent to %2$s</string>
 </resources>

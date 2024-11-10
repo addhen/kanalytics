@@ -19,7 +19,7 @@ internal actual fun NotificationManager(): NotificationManager {
 internal class NotificationManagerImpl : NotificationManager {
   private val notificationId: String = "com.gyanoba.inspektor.notification"
 
-  override fun showNotification(title: String, message: String) {
+  override fun showNotification(eventName: String, trackerName: String) {
     // Implement notification using notification center
     val notificationCenter = UNUserNotificationCenter.currentNotificationCenter()
     try {
@@ -37,8 +37,8 @@ internal class NotificationManagerImpl : NotificationManager {
       }
 
       val content = UNMutableNotificationContent().apply {
-        setTitle(title)
-        setBody(message)
+        setTitle(eventName)
+        setBody(trackerName)
       }
 
       // Create a new notification

@@ -27,7 +27,7 @@ internal class NotificationManagerImpl : NotificationManager {
       val context = ContextInitializer.applicationContext
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-        createNotificationChannel()
+        createNotificationChannel(context)
       }
       notificationManager.notify(
         notificationId,
@@ -37,12 +37,12 @@ internal class NotificationManagerImpl : NotificationManager {
 
   private fun createNotification(
       context: Context,
-      title: String,
-      message: String
+      eventName: String,
+      trackerName: String,
   ): Notification {
     val notification = NotificationCompat.Builder(context, CHANNEL_ID)
-      .setContentTitle(title)
-      .setContentText(message)
+      .setContentTitle(context.getString(R.string.notification_title))
+      .setContentText(context.getString(R.string.notification_message, eventName, trackerName))
       .setSmallIcon((R.drawable.ic_app_icon))
       .setOnlyAlertOnce(true)
       .setChannelId(CHANNEL_ID)
@@ -59,10 +59,10 @@ internal class NotificationManagerImpl : NotificationManager {
   }
 
   @RequiresApi(Build.VERSION_CODES.O)
-  private fun createNotificationChannel() {
+  private fun createNotificationChannel(context: Context) {
     val channel = android.app.NotificationChannel(
       CHANNEL_ID,
-      "KAnalytics Viewer",
+      context.getString(R.string.app_name),
       android.app.NotificationManager.IMPORTANCE_DEFAULT
     )
     notificationManager.createNotificationChannel(channel)

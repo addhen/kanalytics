@@ -19,14 +19,14 @@ internal class KAnalyticsCollector(
 ) {
   private val scope = MainScope()
 
-  public fun onEventSent(
+  fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,
     eventProvider: String,
     onSentDate: Instant,
   ) {
     notificationManager.showNotification(
-      title = "Event sent",
-      message = "Event sent: ${kAnalyticsEvent.eventName}",
+      eventName = kAnalyticsEvent.eventName,
+      trackerName = eventProvider
     )
     scope.launch {
       withContext(appCoroutineDispatchers.io) {
@@ -44,8 +44,8 @@ internal class KAnalyticsCollector(
     }
   }
 
-  public companion object {
-    public val Instance: KAnalyticsCollector by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+  companion object {
+    val instance: KAnalyticsCollector by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
       KAnalyticsCollector(
         repository = EventDataRepository.Instance,
       )

@@ -8,7 +8,7 @@ import kotlinx.datetime.Clock
 @Suppress("UnusedPrivateMember", "UNUSED_PARAMETER")
 public class KAnalyticsInterceptor private constructor(builder: Builder) : Interceptor {
 
-  private val collector = builder.collector ?: KAnalyticsCollector.Instance
+  private val collector = builder.collector ?: KAnalyticsCollector.instance
 
   public constructor() : this(Builder())
 
