@@ -123,7 +123,7 @@ class KAnalyticsTest {
 
     assertEquals(1, firebaseTracker.analyticsEvents.size)
     assertEquals(1, adjustTracker.analyticsEvents.size)
-    assertEquals(event, mockTrackerIntercept.event)
+    assertEquals(event.toString(), mockTrackerIntercept.event.toString())
     assertEquals(3, mockTrackerIntercept.event?.properties?.size)
     assertHasEvents(firebaseTracker.analyticsEvents)
     assertHasEvents(adjustTracker.analyticsEvents)
@@ -175,9 +175,12 @@ class KAnalyticsTest {
   inner class MockTrackerIntercept : Interceptor {
 
     var event: KAnalyticsEvent? = null
+    var tracker: Tracker? = null
 
-    override fun intercept(event: KAnalyticsEvent) {
+    override fun intercept(event: KAnalyticsEvent, tracker: Tracker): KAnalyticsEvent {
       this.event = event
+      this.tracker = tracker
+      return event
     }
   }
 }
