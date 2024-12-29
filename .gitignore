@@ -24,7 +24,7 @@ captures
 .idea/artifacts
 gradle.xml
 *.iml
-ios-app/Tivi/.idea/*
+ios-app/Fosdem/.idea/*
 .fleet
 
 # General
