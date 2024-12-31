@@ -38,6 +38,7 @@ kotlin {
         implementation(libs.sqldelight.primitive)
         implementation(libs.sqldelight.paging)
         implementation(libs.paging.common)
+        implementation(libs.data.table.material)
       }
     }
 
