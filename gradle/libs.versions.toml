@@ -27,6 +27,7 @@ kotlinx-datetime = "0.6.1"
 sqldelight = "2.0.2"
 startup-runtime = "1.2.0"
 paging = "3.3.5"
+composeDataTable = "0.10.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -58,6 +59,7 @@ sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", vers
 sqldelight-paging = { module = "app.cash.sqldelight:androidx-paging3-extensions", version.ref = "sqldelight" }
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
 paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
+data-table-material = { module = "com.seanproctor:data-table-material3", version.ref = "composeDataTable"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
