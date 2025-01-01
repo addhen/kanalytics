@@ -7,7 +7,7 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-internal fun Map<String, Any>.prettyPrintJson(): String {
+internal fun Map<String, Any>.toJsonString(): String {
   return try {
     Json.encodeToString(JsonElement.serializer(), this.toJsonElement())
   } catch (ignore: Exception) {

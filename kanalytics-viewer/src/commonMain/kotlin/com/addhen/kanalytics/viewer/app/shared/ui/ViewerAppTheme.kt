@@ -28,7 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
-import com.addhen.kanalytics.viewer.app.shared.data.prettyPrintJson
+import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.ColorContrast
@@ -97,7 +97,7 @@ public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
               }
               cell {
                 Text(
-                  event.properties.prettyPrintJson(),
+                  event.properties.toJsonString(),
                   maxLines = 2,
                   overflow = TextOverflow.Ellipsis,
                   )
