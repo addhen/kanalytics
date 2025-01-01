@@ -28,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
+import com.addhen.kanalytics.viewer.app.shared.data.prettyPrintJson
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.ColorContrast
@@ -80,7 +81,7 @@ public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
           },
         ),
         modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
-        state = rememberPaginatedDataTableState(5),
+        state = rememberPaginatedDataTableState(10),
       ) {
 
         for (rowIndex in 0 until lazyPagingItems.itemCount) {
@@ -96,8 +97,8 @@ public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
               }
               cell {
                 Text(
-                  event.properties.toString(),
-                  maxLines = 1,
+                  event.properties.prettyPrintJson(),
+                  maxLines = 2,
                   overflow = TextOverflow.Ellipsis,
                   )
               }
