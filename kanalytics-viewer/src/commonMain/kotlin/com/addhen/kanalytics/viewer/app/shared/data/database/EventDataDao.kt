@@ -10,6 +10,7 @@ import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataE
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.EventViewerDatabase
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.createDatabase
 import kotlinx.coroutines.withContext
+import kotlinx.datetime.Instant
 
 public class EventDataDao(
   private val database: EventViewerDatabase,
@@ -51,6 +52,11 @@ public class EventDataDao(
 
   internal suspend fun deleteAll() = withContext(appCoroutineDispatchers.databaseWrite) {
     database.event_dataQueries.deleteAllEventData()
+  }
+
+  internal suspend fun deleteAllOlderThan(date: Instant) =
+    withContext(appCoroutineDispatchers.databaseWrite) {
+      database.event_dataQueries.deleteAllEventDataOlderThan(date)
   }
 
   public companion object {

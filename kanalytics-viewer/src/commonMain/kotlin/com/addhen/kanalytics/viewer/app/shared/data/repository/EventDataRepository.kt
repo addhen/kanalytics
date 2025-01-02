@@ -12,6 +12,7 @@ import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataE
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import kotlinx.datetime.Instant
 
 public class EventDataRepository(
   private val eventDataDao: EventDataDao,
@@ -47,6 +48,8 @@ public class EventDataRepository(
   }
 
   internal suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
+
+  internal suspend fun deleteAllOlderThan(date: Instant): Unit = eventDataDao.deleteAllOlderThan(date)
 
   internal companion object {
     val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {

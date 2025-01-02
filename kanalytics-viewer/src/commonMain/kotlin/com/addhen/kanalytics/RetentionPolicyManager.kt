@@ -3,29 +3,22 @@
 
 package com.addhen.kanalytics
 
-import kotlinx.datetime.DateTimeUnit
+import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
 
 public class RetentionPolicyManager(
-  period: Period = Period.ONE_DAY,
+  private val clock: Clock = Clock.System,
+  private val dayDuration: DayDuration,
+  private val repository: EventDataRepository
 ) {
 
-  private val dateTimeUnit: DateTimeUnit = period.toMillis()
-
-  public fun manage(): Unit = Unit
-
-  private fun Period.toMillis(): DateTimeUnit {
-    return when (this) {
-      Period.ONE_HOUR -> DateTimeUnit.HOUR
-      Period.ONE_DAY -> DateTimeUnit.DAY
-      Period.ONE_WEEK -> DateTimeUnit.WEEK
-      Period.FOREVER -> DateTimeUnit.CENTURY
-    }
+  public suspend fun processDataRetention() {
+    val daysInMillis = dayDuration.numberOfDays * 24 * 60 * 60 * 1000L
+    val currentTimeInMillis = clock.now().toEpochMilliseconds()
+    val retentionDeadlineInMillis = currentTimeInMillis - daysInMillis
+    repository.deleteAllOlderThan(Instant.fromEpochMilliseconds(retentionDeadlineInMillis))
   }
 
-  public enum class Period {
-    ONE_HOUR,
-    ONE_DAY,
-    ONE_WEEK,
-    FOREVER,
-  }
+  public data class DayDuration(val numberOfDays: Int)
 }

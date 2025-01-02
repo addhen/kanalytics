@@ -14,6 +14,10 @@ import kotlinx.datetime.Instant
 
 internal class KAnalyticsCollector(
   private val repository: EventDataRepository = EventDataRepository.Instance,
+  private val retentionPolicyManager: RetentionPolicyManager = RetentionPolicyManager(
+    dayDuration = RetentionPolicyManager.DayDuration(numberOfDays = 7),
+    repository = repository,
+  ),
   private val notificationManager: NotificationManager = NotificationManager(),
   private val appCoroutineDispatchers: AppCoroutineDispatchers = AppCoroutineDispatchers(),
 ) {
@@ -24,10 +28,6 @@ internal class KAnalyticsCollector(
     eventProvider: String,
     onSentDate: Instant,
   ) {
-    notificationManager.showNotification(
-      eventName = kAnalyticsEvent.eventName,
-      trackerName = eventProvider
-    )
     scope.launch {
       withContext(appCoroutineDispatchers.io) {
         repository.insert(
@@ -40,6 +40,15 @@ internal class KAnalyticsCollector(
             properties = kAnalyticsEvent.properties.mapValues { it.value ?: "" },
           ),
         )
+      }
+
+      notificationManager.showNotification(
+        eventName = kAnalyticsEvent.eventName,
+        trackerName = eventProvider
+      )
+
+      withContext(appCoroutineDispatchers.io) {
+        retentionPolicyManager.processDataRetention()
       }
     }
   }

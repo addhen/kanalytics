@@ -45,3 +45,6 @@ SELECT COUNT(*) FROM `event_data`;
 
 deleteAllEventData:
 DELETE FROM `event_data`;
+
+deleteAllEventDataOlderThan:
+DELETE FROM `event_data` WHERE event_created_date < :date;
