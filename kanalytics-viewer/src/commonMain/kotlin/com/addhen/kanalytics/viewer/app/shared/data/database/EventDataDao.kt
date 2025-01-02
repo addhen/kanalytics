@@ -57,7 +57,7 @@ public class EventDataDao(
   internal suspend fun deleteAllOlderThan(date: Instant) =
     withContext(appCoroutineDispatchers.databaseWrite) {
       database.event_dataQueries.deleteAllEventDataOlderThan(date)
-  }
+    }
 
   public companion object {
     public val Instance: EventDataDao by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {

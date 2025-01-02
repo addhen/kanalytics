@@ -10,7 +10,7 @@ import kotlinx.datetime.Instant
 public class RetentionPolicyManager(
   private val clock: Clock = Clock.System,
   private val dayDuration: DayDuration,
-  private val repository: EventRepository
+  private val repository: EventRepository,
 ) {
 
   public suspend fun processDataRetention() {

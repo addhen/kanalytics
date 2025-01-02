@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics
 
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
@@ -26,7 +29,7 @@ class RetentionPolicyManagerTest {
     manager = RetentionPolicyManager(
       clock = clock,
       dayDuration = RetentionPolicyManager.DayDuration(numberOfDays = 30),
-      repository = repository
+      repository = repository,
     )
   }
 
@@ -52,7 +55,7 @@ class RetentionPolicyManagerTest {
     val sevenDayManager = RetentionPolicyManager(
       clock = clock,
       dayDuration = RetentionPolicyManager.DayDuration(numberOfDays = 7),
-      repository = repository
+      repository = repository,
     )
 
     val expectedRetentionDeadline = currentTimeMillis - (7L * 24 * 60 * 60 * 1000)

@@ -23,11 +23,7 @@ internal class KAnalyticsCollector(
 ) {
   private val scope = MainScope()
 
-  fun onEventSent(
-    kAnalyticsEvent: KAnalyticsEvent,
-    eventProvider: String,
-    onSentDate: Instant,
-  ) {
+  fun onEventSent(kAnalyticsEvent: KAnalyticsEvent, eventProvider: String, onSentDate: Instant) {
     scope.launch {
       withContext(appCoroutineDispatchers.io) {
         repository.insert(
@@ -44,7 +40,7 @@ internal class KAnalyticsCollector(
 
       notificationManager.showNotification(
         eventName = kAnalyticsEvent.eventName,
-        trackerName = eventProvider
+        trackerName = eventProvider,
       )
 
       withContext(appCoroutineDispatchers.io) {

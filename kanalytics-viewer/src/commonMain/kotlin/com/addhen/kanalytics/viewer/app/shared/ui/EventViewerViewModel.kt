@@ -35,9 +35,8 @@ internal class EventViewerViewModel(
       .cachedIn(viewModelScope)
   }
 
-  private fun loadEvents(
-    pagingConfig: PagingConfig = PAGING_CONFIG
-  ): Flow<PagingData<EventData>> = eventRepository.getAll(pagingConfig)
+  private fun loadEvents(pagingConfig: PagingConfig = PAGING_CONFIG): Flow<PagingData<EventData>> =
+    eventRepository.getAll(pagingConfig)
 
   sealed interface UiAction {
     data object LoadEvents : UiAction

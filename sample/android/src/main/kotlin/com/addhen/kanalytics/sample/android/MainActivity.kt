@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
 
   private val requestPermissionLauncher =
     registerForActivityResult(
-      ActivityResultContracts.RequestPermission()
+      ActivityResultContracts.RequestPermission(),
     ) { isGranted: Boolean ->
       if (isGranted) {
         // Permission granted, proceed with notification setup
@@ -39,7 +39,7 @@ class MainActivity : ComponentActivity() {
         // Permission denied, handle accordingly
         if (ActivityCompat.shouldShowRequestPermissionRationale(
             this,
-            Manifest.permission.POST_NOTIFICATIONS
+            Manifest.permission.POST_NOTIFICATIONS,
           )
         ) {
           // User denied permission, show rationale and request again
@@ -51,7 +51,6 @@ class MainActivity : ComponentActivity() {
         }
       }
     }
-
 
   override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()

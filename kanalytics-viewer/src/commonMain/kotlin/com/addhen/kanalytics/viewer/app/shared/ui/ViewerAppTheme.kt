@@ -83,7 +83,6 @@ public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
         modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
         state = rememberPaginatedDataTableState(10),
       ) {
-
         for (rowIndex in 0 until lazyPagingItems.itemCount) {
           val event = lazyPagingItems[rowIndex]
           if (event != null) {
@@ -100,7 +99,7 @@ public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
                   event.properties.toJsonString(),
                   maxLines = 2,
                   overflow = TextOverflow.Ellipsis,
-                  )
+                )
               }
             }
           }
