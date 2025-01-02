@@ -25,19 +25,23 @@ import androidx.compose.ui.graphics.Color
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-public fun ViewerAppScaffold(title: String, content: @Composable BoxScope.() -> Unit) {
+public fun ViewerAppScaffold(
+  title: String,
+  topBar: @Composable () -> Unit = {
+    TopAppBar(
+      title = { Text(text = title) },
+      navigationIcon = { },
+      colors = TopAppBarDefaults.topAppBarColors(
+        containerColor = Color.Transparent,
+        scrolledContainerColor = Color.Transparent,
+      ),
+      modifier = Modifier.fillMaxWidth(),
+    )
+  },
+  content: @Composable BoxScope.() -> Unit,
+) {
   Scaffold(
-    topBar = {
-      TopAppBar(
-        title = { Text(text = title) },
-        navigationIcon = { },
-        colors = TopAppBarDefaults.topAppBarColors(
-          containerColor = Color.Transparent,
-          scrolledContainerColor = Color.Transparent,
-        ),
-        modifier = Modifier.fillMaxWidth(),
-      )
-    },
+    topBar = topBar,
     modifier = Modifier.fillMaxSize(),
   ) { contentPadding ->
 

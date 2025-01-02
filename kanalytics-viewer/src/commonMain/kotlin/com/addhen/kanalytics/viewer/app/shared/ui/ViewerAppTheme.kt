@@ -4,24 +4,16 @@
 package com.addhen.kanalytics.viewer.app.shared.ui
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -30,11 +22,14 @@ import androidx.paging.compose.LazyPagingItems
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
+import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.ColorContrast
 import com.seanproctor.datatable.DataColumn
 import com.seanproctor.datatable.material3.PaginatedDataTable
 import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
+
+internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
 
 @Composable
 public fun ViewerAppTheme(
@@ -45,9 +40,28 @@ public fun ViewerAppTheme(
 }
 
 @Composable
-public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
-  var searchQuery by remember { mutableStateOf("") }
+public fun AnalyticsEventsScreen(
+  lazyPagingItems: LazyPagingItems<EventData>,
+  onSearchQueryChanged: (String) -> Unit = {},
+) {
+  val searchQuery by remember { mutableStateOf("") }
 
+  ViewerAppScaffold(
+    title = "",
+    topBar = {
+      SearchTextFieldAppBar(
+        searchQuery = searchQuery,
+        onSearchQueryChanged = onSearchQueryChanged,
+        testTag = SEARCH_SCREEN_TEST_TAG,
+      )
+    },
+  ) {
+    AnalyticsEventsContent(lazyPagingItems)
+  }
+}
+
+@Composable
+private fun AnalyticsEventsContent(lazyPagingItems: LazyPagingItems<EventData>) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
     if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh != LoadState.Loading) {
       EmptyContent(
@@ -55,19 +69,6 @@ public fun AnalyticsEventsScreen(lazyPagingItems: LazyPagingItems<EventData>) {
         modifier = Modifier.fillMaxWidth(),
       )
     } else {
-      Text("Analytics Events", style = MaterialTheme.typography.bodyMedium)
-      Spacer(modifier = Modifier.height(8.dp))
-
-      OutlinedTextField(
-        value = searchQuery,
-        onValueChange = { searchQuery = it },
-        placeholder = { Text("Search events...") },
-        modifier = Modifier.fillMaxWidth(),
-        leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
-      )
-
-      Spacer(modifier = Modifier.height(16.dp))
-
       PaginatedDataTable(
         columns = listOf(
           DataColumn {
