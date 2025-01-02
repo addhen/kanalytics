@@ -3,14 +3,14 @@
 
 package com.addhen.kanalytics
 
-import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
+import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
 public class RetentionPolicyManager(
   private val clock: Clock = Clock.System,
   private val dayDuration: DayDuration,
-  private val repository: EventDataRepository
+  private val repository: EventRepository
 ) {
 
   public suspend fun processDataRetention() {

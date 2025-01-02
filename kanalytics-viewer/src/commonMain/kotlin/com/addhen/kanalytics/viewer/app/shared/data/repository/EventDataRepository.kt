@@ -16,9 +16,9 @@ import kotlinx.datetime.Instant
 
 public class EventDataRepository(
   private val eventDataDao: EventDataDao,
-) {
+): EventRepository {
 
-  internal fun getAll(pagingConfig: PagingConfig): Flow<PagingData<EventData>> = Pager(
+  override fun getAll(pagingConfig: PagingConfig): Flow<PagingData<EventData>> = Pager(
     config = pagingConfig,
     pagingSourceFactory = { eventDataDao.getAll() },
   ).flow.map { pagingData ->
@@ -34,7 +34,7 @@ public class EventDataRepository(
     }
   }
 
-  internal suspend fun insert(eventData: EventData) {
+  override suspend fun insert(eventData: EventData) {
     eventDataDao.insert(
       EventDataEntity(
         id = eventData.id,
@@ -47,9 +47,9 @@ public class EventDataRepository(
     )
   }
 
-  internal suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
+  override suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
 
-  internal suspend fun deleteAllOlderThan(date: Instant): Unit = eventDataDao.deleteAllOlderThan(date)
+  override suspend fun deleteAllOlderThan(date: Instant): Unit = eventDataDao.deleteAllOlderThan(date)
 
   internal companion object {
     val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {

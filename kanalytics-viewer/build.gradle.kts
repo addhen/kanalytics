@@ -11,6 +11,7 @@ plugins {
   id("convention.plugin.metalava")
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.sqldelight)
+  alias(libs.plugins.mokkery)
 }
 
 kotlin {
@@ -59,6 +60,7 @@ kotlin {
     commonTest {
       dependencies {
         implementation(libs.kotlin.test)
+        implementation(libs.coroutines.test)
       }
     }
   }

@@ -28,6 +28,7 @@ sqldelight = "2.0.2"
 startup-runtime = "1.2.0"
 paging = "3.3.5"
 composeDataTable = "0.10.1"
+mokkery = "2.6.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -60,6 +61,7 @@ sqldelight-paging = { module = "app.cash.sqldelight:androidx-paging3-extensions"
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
 paging-common = { module = "androidx.paging:paging-common", version.ref = "paging" }
 data-table-material = { module = "com.seanproctor:data-table-material3", version.ref = "composeDataTable"}
+coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -77,3 +79,4 @@ dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
+mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
