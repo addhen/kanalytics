@@ -65,7 +65,7 @@ internal fun SearchTextFieldAppBar(
 @Composable
 private fun SearchTextField(
   modifier: Modifier = Modifier,
-  searchQuery: String = "",
+  searchQuery: String,
   onSearchQueryChanged: (String) -> Unit = {},
   enabled: Boolean = true,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },

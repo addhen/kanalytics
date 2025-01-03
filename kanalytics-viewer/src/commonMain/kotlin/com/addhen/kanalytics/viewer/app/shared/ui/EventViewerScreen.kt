@@ -17,5 +17,7 @@ public fun EventViewerScreen() {
   val lazyPagingItems: LazyPagingItems<EventData> = viewModel
     .eventPagingData
     .collectAsLazyPagingItems()
-  AnalyticsEventsScreen(lazyPagingItems = lazyPagingItems)
+  AnalyticsEventsScreen(lazyPagingItems = lazyPagingItems) {
+    //viewModel.search(it)
+  }
 }
