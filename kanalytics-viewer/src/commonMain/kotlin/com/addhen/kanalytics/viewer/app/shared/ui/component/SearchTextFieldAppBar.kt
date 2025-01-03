@@ -33,6 +33,10 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_icon_content_description
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_term_placeHolder
+import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -76,7 +80,7 @@ private fun SearchTextField(
       query = value
       onSearchQueryChanged(value)
     },
-    placeholder = { Text("Search events...") },
+    placeholder = { Text(stringResource(Res.string.search_term_placeHolder)) },
     modifier = modifier
       .fillMaxWidth()
       .padding(end = 8.dp)
@@ -84,7 +88,12 @@ private fun SearchTextField(
     enabled = enabled,
     textStyle = TextStyle(color = MaterialTheme.colorScheme.onSurface),
     singleLine = true,
-    leadingIcon = { Icon(Icons.Default.Search, contentDescription = "Search") },
+    leadingIcon = {
+      Icon(
+        Icons.Default.Search,
+        contentDescription = stringResource(Res.string.search_icon_content_description)
+      )
+    },
     trailingIcon = {
       if (searchQuery.isNotEmpty()) {
         Box(modifier = Modifier.offset(x = (-4).dp)) {
