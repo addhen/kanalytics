@@ -7,7 +7,9 @@ import com.addhen.gradle.convention.configureSpotless
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
 
 class KotlinMultiplatformConventionPlugin : Plugin<Project> {
   override fun apply(target: Project) = with(target) {
@@ -26,6 +28,22 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
       iosX64()
       iosArm64()
       iosSimulatorArm64()
+
+      targets.withType<KotlinNativeTarget>().configureEach {
+
+        compilations.configureEach {
+          compileTaskProvider.configure {
+            compilerOptions {
+              // Various opt-ins
+              freeCompilerArgs.addAll(
+                "-opt-in=kotlinx.cinterop.ExperimentalForeignApi",
+                "-opt-in=kotlinx.cinterop.BetaInteropApi",
+                "-Xexpect-actual-classes",
+              )
+            }
+          }
+        }
+      }
 
       configureSpotless()
       configureKotlin()

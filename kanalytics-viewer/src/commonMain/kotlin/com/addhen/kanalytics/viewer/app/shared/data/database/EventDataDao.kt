@@ -3,12 +3,13 @@
 
 package com.addhen.kanalytics.viewer.app.shared.data.database
 
-import androidx.paging.PagingSource
-import app.cash.sqldelight.paging3.QueryPagingSource
+import app.cash.sqldelight.coroutines.asFlow
 import com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers
 import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataEntity
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.EventViewerDatabase
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.createDatabase
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
@@ -17,27 +18,18 @@ public class EventDataDao(
   private val appCoroutineDispatchers: AppCoroutineDispatchers,
 ) {
 
-  internal fun getAll(): PagingSource<Int, EventDataEntity> = QueryPagingSource(
-    countQuery = database.event_dataQueries.countAllEventData(),
-    transacter = database.event_dataQueries,
-    context = appCoroutineDispatchers.io,
-    queryProvider = { limit: Long, offset: Long ->
-      database.event_dataQueries.getAllEventData(
-        limit = limit,
-        offset = offset,
-      ) {
-          id, name, provider, description, created_at, properties ->
-        EventDataEntity(
-          id = id,
-          name = name,
-          trackerName = provider,
-          description = description,
-          createdAt = created_at,
-          properties = properties,
-        )
-      }
-    },
-  )
+  internal fun getEvents(): Flow<List<EventDataEntity>> =
+    database.event_dataQueries.getAllEventData {
+        id, name, provider, description, created_at, properties ->
+      EventDataEntity(
+        id = id,
+        name = name,
+        trackerName = provider,
+        description = description,
+        createdAt = created_at,
+        properties = properties,
+      )
+    }.asFlow().map { it.executeAsList() }
 
   internal suspend fun insert(eventData: EventDataEntity) =
     withContext(appCoroutineDispatchers.databaseWrite) {

@@ -38,10 +38,7 @@ INSERT OR REPLACE INTO `event_data`(
 
 -- queries
 getAllEventData:
-SELECT * FROM `event_data` ORDER BY event_created_date DESC LIMIT :limit OFFSET :offset;
-
-countAllEventData:
-SELECT COUNT(*) FROM `event_data`;
+SELECT * FROM `event_data` ORDER BY event_created_date DESC;
 
 deleteAllEventData:
 DELETE FROM `event_data`;

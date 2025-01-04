@@ -3,10 +3,6 @@
 
 package com.addhen.kanalytics.viewer.app.shared.data.repository
 
-import androidx.paging.Pager
-import androidx.paging.PagingConfig
-import androidx.paging.PagingData
-import app.cash.paging.map
 import com.addhen.kanalytics.viewer.app.shared.data.database.EventDataDao
 import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataEntity
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
@@ -17,22 +13,6 @@ import kotlinx.datetime.Instant
 public class EventDataRepository(
   private val eventDataDao: EventDataDao,
 ) : EventRepository {
-
-  override fun getAll(pagingConfig: PagingConfig): Flow<PagingData<EventData>> = Pager(
-    config = pagingConfig,
-    pagingSourceFactory = { eventDataDao.getAll() },
-  ).flow.map { pagingData ->
-    pagingData.map { eventDataEntity ->
-      EventData(
-        id = eventDataEntity.id,
-        name = eventDataEntity.name,
-        trackerName = eventDataEntity.trackerName,
-        description = eventDataEntity.description,
-        createdAt = eventDataEntity.createdAt,
-        properties = eventDataEntity.properties,
-      )
-    }
-  }
 
   override suspend fun insert(eventData: EventData) {
     eventDataDao.insert(
@@ -49,9 +29,23 @@ public class EventDataRepository(
 
   override suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
 
-  override suspend fun deleteAllOlderThan(date: Instant): Unit = eventDataDao.deleteAllOlderThan(
-    date,
-  )
+  override suspend fun deleteAllOlderThan(date: Instant): Unit =
+    eventDataDao.deleteAllOlderThan(date)
+
+  override fun getAll(): Flow<List<EventData>> {
+    return eventDataDao.getEvents().map { eventDataEntities ->
+      eventDataEntities.map { eventDataEntity ->
+        EventData(
+          id = eventDataEntity.id,
+          name = eventDataEntity.name,
+          trackerName = eventDataEntity.trackerName,
+          description = eventDataEntity.description,
+          createdAt = eventDataEntity.createdAt,
+          properties = eventDataEntity.properties,
+        )
+      }
+    }
+  }
 
   internal companion object {
     val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {

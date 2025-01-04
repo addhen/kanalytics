@@ -24,9 +24,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
-import androidx.paging.LoadState
-import androidx.paging.compose.LazyPagingItems
-import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
@@ -47,11 +44,9 @@ public fun ViewerAppTheme(
 }
 
 @Composable
-public fun AnalyticsEventsScreen(
-  lazyPagingItems: LazyPagingItems<EventData>,
-  onSearchQueryChanged: (String) -> Unit = {
-
-  },
+internal fun AnalyticsEventsScreen(
+  uiState: EventViewerViewModel.EventViewerUiState,
+  onSearchQueryChanged: (String) -> Unit = {},
 ) {
   val searchQuery by remember { mutableStateOf("state") }
 
@@ -64,61 +59,66 @@ public fun AnalyticsEventsScreen(
         testTag = SEARCH_SCREEN_TEST_TAG,
       )
     },
-  ) {
-    AnalyticsEventsContent(lazyPagingItems, searchQuery)
-  }
+  ) { AnalyticsEventsContent(uiState, searchQuery) }
 }
 
 @Composable
 private fun AnalyticsEventsContent(
-  lazyPagingItems: LazyPagingItems<EventData>,
+  uiState: EventViewerViewModel.EventViewerUiState,
   searchText: String,
 ) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-    if (lazyPagingItems.itemCount == 0 && lazyPagingItems.loadState.refresh != LoadState.Loading) {
-      EmptyContent(
-        title = { Text("No events found") },
-        modifier = Modifier.fillMaxWidth(),
-      )
-    } else {
-      PaginatedDataTable(
-        columns = listOf(
-          DataColumn {
-            Text("Timestamp")
-          },
-          DataColumn {
-            Text("Event Name")
-          },
-          DataColumn {
-            Text("Properties")
-          },
-        ),
-        contentPadding = PaddingValues(horizontal = 8.dp),
-        modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
-        state = rememberPaginatedDataTableState(10),
-      ) {
-        for (rowIndex in 0 until lazyPagingItems.itemCount) {
-          val event = lazyPagingItems[rowIndex]
-          if (event != null) {
-            row {
-              onClick = { println("Row clicked: $rowIndex") }
-              cell {
-                Text(event.createdAt.toString())
-              }
-              cell {
-                Text(searchText.highlightText(event.name))
-              }
-              cell {
-                Text(
-                 searchText.highlightText(event.properties.toJsonString()),
-                  maxLines = 2,
-                  overflow = TextOverflow.Ellipsis,
-                )
+    when (uiState.flag) {
+      EventViewerViewModel.EventViewerUiState.Flag.LOADING -> {
+        Text("Loading events...")
+      }
+      EventViewerViewModel.EventViewerUiState.Flag.IDLE -> {
+        if (uiState.events.isEmpty()) {
+          EmptyContent(
+            title = { Text("No events found") },
+            modifier = Modifier.fillMaxWidth(),
+          )
+        } else {
+          PaginatedDataTable(
+            columns = listOf(
+              DataColumn {
+                Text("Timestamp")
+              },
+              DataColumn {
+                Text("Event Name")
+              },
+              DataColumn {
+                Text("Properties")
+              },
+            ),
+            contentPadding = PaddingValues(horizontal = 8.dp),
+            modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
+            state = rememberPaginatedDataTableState(10),
+          ) {
+            for (rowIndex in 0 until uiState.events.size) {
+              val event = uiState.events[rowIndex]
+                row {
+                  onClick = { println("Row clicked: $rowIndex") }
+                  isHeader = true
+                  cell {
+                    Text(event.createdAt.toString())
+                  }
+                  cell {
+                    Text(searchText.highlightText(event.name))
+                  }
+                  cell {
+                    Text(
+                      searchText.highlightText(event.properties.toJsonString()),
+                      maxLines = 2,
+                      overflow = TextOverflow.Ellipsis,
+                    )
+                }
               }
             }
           }
         }
       }
+      EventViewerViewModel.EventViewerUiState.Flag.ERROR -> TODO()
     }
   }
 }
