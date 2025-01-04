@@ -28,7 +28,6 @@ enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 rootProject.name = "kanalytics-lib"
 
 include(
-  ":paging-compose:androidx:paging:compose",
   ":kanalytics",
   ":kanalytics-viewer",
   ":sample:android",
