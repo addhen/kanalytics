@@ -14,6 +14,6 @@ public fun EventViewerScreen() {
   val viewModel = viewModel { EventViewerViewModel(EventDataRepository.Instance) }
   val uiState by viewModel.viewState.collectAsState()
   AnalyticsEventsScreen(uiState) {
-    //viewModel.search(it)
+    // viewModel.search(it)
   }
 }

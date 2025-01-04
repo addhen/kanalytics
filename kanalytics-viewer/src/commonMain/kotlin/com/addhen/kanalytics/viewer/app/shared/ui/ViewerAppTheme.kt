@@ -97,21 +97,21 @@ private fun AnalyticsEventsContent(
           ) {
             for (rowIndex in 0 until uiState.events.size) {
               val event = uiState.events[rowIndex]
-                row {
-                  onClick = { println("Row clicked: $rowIndex") }
-                  isHeader = true
-                  cell {
-                    Text(event.createdAt.toString())
-                  }
-                  cell {
-                    Text(searchText.highlightText(event.name))
-                  }
-                  cell {
-                    Text(
-                      searchText.highlightText(event.properties.toJsonString()),
-                      maxLines = 2,
-                      overflow = TextOverflow.Ellipsis,
-                    )
+              row {
+                onClick = { println("Row clicked: $rowIndex") }
+                isHeader = true
+                cell {
+                  Text(event.createdAt.toString())
+                }
+                cell {
+                  Text(searchText.highlightText(event.name))
+                }
+                cell {
+                  Text(
+                    searchText.highlightText(event.properties.toJsonString()),
+                    maxLines = 2,
+                    overflow = TextOverflow.Ellipsis,
+                  )
                 }
               }
             }
@@ -127,17 +127,17 @@ private fun AnalyticsEventsContent(
 private fun String.highlightText(text: String): AnnotatedString {
   return buildAnnotatedString {
     val highlightRange = text.getMatchIndexRange(this@highlightText)
-      append(text.take(highlightRange.first))
-      withStyle(
-        SpanStyle(
-          background = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
-          textDecoration = TextDecoration.Underline,
-        ),
-      ) {
-        append(text.substring(highlightRange))
-      }
-      append(text.takeLast(kotlin.math.max((text.lastIndex - highlightRange.last), 0)))
+    append(text.take(highlightRange.first))
+    withStyle(
+      SpanStyle(
+        background = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
+        textDecoration = TextDecoration.Underline,
+      ),
+    ) {
+      append(text.substring(highlightRange))
     }
+    append(text.takeLast(kotlin.math.max((text.lastIndex - highlightRange.last), 0)))
+  }
 }
 
 private fun String.getMatchIndexRange(queryText: String = ""): IntRange {

@@ -31,7 +31,7 @@ internal class EventViewerViewModel(
 
   private val uiAction = MutableSharedFlow<UiAction>()
   private val viewStateEmitter = MutableStateFlow(
-    EventViewerUiState(flag = EventViewerUiState.Flag.LOADING)
+    EventViewerUiState(flag = EventViewerUiState.Flag.LOADING),
   )
 
   val viewState: StateFlow<EventViewerUiState> = viewStateEmitter
@@ -46,7 +46,7 @@ internal class EventViewerViewModel(
         viewStateEmitter.update { currentUiState ->
           currentUiState.copy(
             flag = EventViewerUiState.Flag.IDLE,
-            events = it
+            events = it,
           )
         }
       }
@@ -70,7 +70,7 @@ internal class EventViewerViewModel(
     is UiAction.SearchEvents -> {
       // todo: implement search
       flow { emptyList<EventData>() }
-      //eventRepository.search(it.query)
+      // eventRepository.search(it.query)
     }
   }
 
@@ -94,12 +94,12 @@ internal class EventViewerViewModel(
   data class EventViewerUiState(
     val events: List<EventData> = emptyList(),
     val eventTotalCount: Long = 0,
-    val flag: Flag = Flag.IDLE
+    val flag: Flag = Flag.IDLE,
   ) {
     enum class Flag {
       LOADING,
       ERROR,
-      IDLE
+      IDLE,
     }
   }
 

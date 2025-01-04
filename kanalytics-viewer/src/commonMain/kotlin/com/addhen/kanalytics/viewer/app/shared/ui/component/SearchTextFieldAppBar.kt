@@ -91,7 +91,7 @@ private fun SearchTextField(
     leadingIcon = {
       Icon(
         Icons.Default.Search,
-        contentDescription = stringResource(Res.string.search_icon_content_description)
+        contentDescription = stringResource(Res.string.search_icon_content_description),
       )
     },
     trailingIcon = {
