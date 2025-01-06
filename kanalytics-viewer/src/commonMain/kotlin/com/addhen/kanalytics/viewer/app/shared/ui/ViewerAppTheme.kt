@@ -13,9 +13,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -24,6 +21,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
@@ -32,6 +30,8 @@ import com.addhen.kanalytics.viewer.app.shared.ui.theme.ColorContrast
 import com.seanproctor.datatable.DataColumn
 import com.seanproctor.datatable.material3.PaginatedDataTable
 import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.toImmutableList
 
 internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
 
@@ -48,18 +48,16 @@ internal fun AnalyticsEventsScreen(
   uiState: EventViewerViewModel.EventViewerUiState,
   onSearchQueryChanged: (String) -> Unit = {},
 ) {
-  val searchQuery by remember { mutableStateOf("state") }
-
   ViewerAppScaffold(
     title = "",
     topBar = {
       SearchTextFieldAppBar(
-        searchQuery = searchQuery,
+        searchQuery = uiState.searchQuery,
         onSearchQueryChanged = onSearchQueryChanged,
         testTag = SEARCH_SCREEN_TEST_TAG,
       )
     },
-  ) { AnalyticsEventsContent(uiState, searchQuery) }
+  ) { AnalyticsEventsContent(uiState, uiState.searchQuery) }
 }
 
 @Composable
@@ -79,46 +77,51 @@ private fun AnalyticsEventsContent(
             modifier = Modifier.fillMaxWidth(),
           )
         } else {
-          PaginatedDataTable(
-            columns = listOf(
-              DataColumn {
-                Text("Timestamp")
-              },
-              DataColumn {
-                Text("Event Name")
-              },
-              DataColumn {
-                Text("Properties")
-              },
-            ),
-            contentPadding = PaddingValues(horizontal = 8.dp),
-            modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
-            state = rememberPaginatedDataTableState(10),
-          ) {
-            for (rowIndex in 0 until uiState.events.size) {
-              val event = uiState.events[rowIndex]
-              row {
-                onClick = { println("Row clicked: $rowIndex") }
-                isHeader = true
-                cell {
-                  Text(event.createdAt.toString())
-                }
-                cell {
-                  Text(searchText.highlightText(event.name))
-                }
-                cell {
-                  Text(
-                    searchText.highlightText(event.properties.toJsonString()),
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis,
-                  )
-                }
-              }
-            }
-          }
+          PaginatedDataTableContent(uiState.events.toImmutableList(), searchText)
         }
       }
       EventViewerViewModel.EventViewerUiState.Flag.ERROR -> TODO()
+    }
+  }
+}
+
+@Composable
+private fun PaginatedDataTableContent(events: ImmutableList<EventData>, searchText: String) {
+  PaginatedDataTable(
+    columns = listOf(
+      DataColumn {
+        Text("Timestamp")
+      },
+      DataColumn {
+        Text("Event Name")
+      },
+      DataColumn {
+        Text("Properties")
+      },
+    ),
+    contentPadding = PaddingValues(horizontal = 8.dp),
+    modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
+    state = rememberPaginatedDataTableState(10),
+  ) {
+    for (rowIndex in 0 until events.size) {
+      val event = events[rowIndex]
+      row {
+        onClick = { println("Row clicked: $rowIndex") }
+        isHeader = true
+        cell {
+          Text(event.createdAt.toString())
+        }
+        cell {
+          Text(searchText.highlightText(event.name))
+        }
+        cell {
+          Text(
+            searchText.highlightText(event.properties.toJsonString()),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+          )
+        }
+      }
     }
   }
 }

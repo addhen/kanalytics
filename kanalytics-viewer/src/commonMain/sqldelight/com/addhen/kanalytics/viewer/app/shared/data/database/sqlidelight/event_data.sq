@@ -45,3 +45,46 @@ DELETE FROM `event_data`;
 
 deleteAllEventDataOlderThan:
 DELETE FROM `event_data` WHERE event_created_date < :date;
+
+-- search
+-- Create a virtual table for full-text search
+CREATE VIRTUAL TABLE event_data_index USING fts4(
+  event_name,
+  tracker_name,
+  event_properties
+);
+
+-- Trigger to insert data into the virtual table on insert
+CREATE TRIGGER event_data_index_insert_trigger
+AFTER INSERT ON event_data
+BEGIN
+  INSERT INTO event_data_index (docid, event_name, tracker_name, event_properties)
+  VALUES (new.id, new.event_name, new.tracker_name, new.event_properties);
+END;
+
+-- Trigger to update the virtual table on update
+-- Getting a stackoverflow issue so commenting it out for now
+--CREATE TRIGGER event_data_index_update_trigger
+--AFTER UPDATE ON event_data
+--BEGIN
+--  UPDATE event_data_index SET
+--    event_name = new.event_name,
+--    tracker_name = new.tracker_name,
+--    event_properties = new.event_properties
+--  WHERE docid = old.id;
+--END;
+
+-- Trigger to delete from the virtual table on delete
+CREATE TRIGGER event_data_delete_trigger
+AFTER DELETE ON event_data
+BEGIN
+  DELETE FROM event_data_index WHERE docid = old.id;
+END;
+
+-- Search query
+searchEvents:
+SELECT event_data.*
+FROM event_data_index
+JOIN event_data ON (event_data_index.docid = event_data.id)
+WHERE event_data_index MATCH :query || '*'
+ORDER BY event_created_date DESC;

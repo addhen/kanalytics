@@ -47,6 +47,21 @@ public class EventDataRepository(
     }
   }
 
+  override fun search(query: String): Flow<List<EventData>> {
+    return eventDataDao.search(query).map { eventDataEntities ->
+      eventDataEntities.map { eventDataEntity ->
+        EventData(
+          id = eventDataEntity.id,
+          name = eventDataEntity.name,
+          trackerName = eventDataEntity.trackerName,
+          description = eventDataEntity.description,
+          createdAt = eventDataEntity.createdAt,
+          properties = eventDataEntity.properties,
+        )
+      }
+    }
+  }
+
   internal companion object {
     val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
       EventDataRepository(

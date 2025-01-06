@@ -16,4 +16,6 @@ public interface EventRepository {
   public suspend fun deleteAllOlderThan(date: Instant)
 
   public fun getAll(): Flow<List<EventData>>
+
+  public fun search(query: String): Flow<List<EventData>>
 }

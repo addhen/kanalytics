@@ -75,7 +75,7 @@ private fun SearchTextField(
   var query by remember { mutableStateOf(searchQuery) }
 
   OutlinedTextField(
-    value = searchQuery,
+    value = query,
     onValueChange = { value: String ->
       query = value
       onSearchQueryChanged(value)

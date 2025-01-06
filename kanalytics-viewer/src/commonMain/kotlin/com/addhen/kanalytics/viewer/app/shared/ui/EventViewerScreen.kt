@@ -4,16 +4,16 @@
 package com.addhen.kanalytics.viewer.app.shared.ui
 
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
 
 @Composable
 public fun EventViewerScreen() {
-  val viewModel = viewModel { EventViewerViewModel(EventDataRepository.Instance) }
-  val uiState by viewModel.viewState.collectAsState()
+  val viewModel: EventViewerViewModel = viewModel(factory = EventViewerViewModel.Factory)
+  val uiState by viewModel.viewState.collectAsStateWithLifecycle()
+
   AnalyticsEventsScreen(uiState) {
-    // viewModel.search(it)
+    viewModel.action(EventViewerViewModel.UiAction.SearchEvents(it))
   }
 }

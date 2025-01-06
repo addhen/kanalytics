@@ -18,18 +18,29 @@ public class EventDataDao(
   private val appCoroutineDispatchers: AppCoroutineDispatchers,
 ) {
 
-  internal fun getEvents(): Flow<List<EventDataEntity>> =
-    database.event_dataQueries.getAllEventData {
-        id, name, provider, description, created_at, properties ->
-      EventDataEntity(
-        id = id,
-        name = name,
-        trackerName = provider,
-        description = description,
-        createdAt = created_at,
-        properties = properties,
-      )
-    }.asFlow().map { it.executeAsList() }
+  private val eventQueriesMapper = {
+      id: Long,
+      name: String,
+      trackerName: String,
+      description: String?,
+      createdAt: Instant,
+      properties: Map<String, Any>,
+    ->
+    EventDataEntity(
+      id = id,
+      name = name,
+      trackerName = trackerName,
+      description = description,
+      createdAt = createdAt,
+      properties = properties,
+    )
+  }
+
+  internal fun getEvents(): Flow<List<EventDataEntity>> = database
+    .event_dataQueries
+    .getAllEventData(eventQueriesMapper)
+    .asFlow()
+    .map { it.executeAsList() }
 
   internal suspend fun insert(eventData: EventDataEntity) =
     withContext(appCoroutineDispatchers.databaseWrite) {
@@ -50,6 +61,12 @@ public class EventDataDao(
     withContext(appCoroutineDispatchers.databaseWrite) {
       database.event_dataQueries.deleteAllEventDataOlderThan(date)
     }
+
+  internal fun search(query: String): Flow<List<EventDataEntity>> {
+    return database.event_dataQueries.searchEvents(query, eventQueriesMapper)
+      .asFlow()
+      .map { it.executeAsList() }
+  }
 
   public companion object {
     public val Instance: EventDataDao by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
