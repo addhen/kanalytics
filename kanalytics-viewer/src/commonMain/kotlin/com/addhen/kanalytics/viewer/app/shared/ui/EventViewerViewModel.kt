@@ -17,16 +17,21 @@ import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filterIsInstance
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 private const val LAST_SEARCH_QUERY: String = "last_search_query"
@@ -34,10 +39,14 @@ private const val LAST_SEARCH_QUERY: String = "last_search_query"
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 internal class EventViewerViewModel(
   private val eventRepository: EventDataRepository,
-  private val savedStateHandle: SavedStateHandle,
+  private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-  val viewState: StateFlow<EventViewerUiState>
+  private val viewStateEmitter = MutableStateFlow(
+    EventViewerUiState(flag = EventViewerUiState.Flag.LOADING)
+  )
+  val viewState: StateFlow<EventViewerUiState> = viewStateEmitter
+    .stateInWhileSubscribed(viewStateEmitter.value)
   val action: (UiAction) -> Unit
   private val uiAction = MutableSharedFlow<UiAction>()
 
@@ -48,7 +57,6 @@ internal class EventViewerViewModel(
       .filterIsInstance<UiAction.SearchEvents>()
       .debounce(600)
       .distinctUntilChanged()
-      .onStart { emit(UiAction.SearchEvents(query = initialQuery)) }
       .map { it.query }
       .stateInWhileSubscribed(initialValue = initialQuery)
 
@@ -61,9 +69,11 @@ internal class EventViewerViewModel(
       .filterIsInstance<UiAction.LoadEvents>()
       .distinctUntilChanged()
       .onStart { emit(UiAction.LoadEvents) }
-      .flatMapLatest { eventRepository.getAll() }
+      .flatMapLatest {
+        eventRepository.getAll()
+      }
 
-    viewState = combine(
+    combine(
       searchResults,
       loadEvents,
       currentQuery,
@@ -74,12 +84,24 @@ internal class EventViewerViewModel(
         events = events,
         searchQuery = query,
       )
-    }.stateInWhileSubscribed(
-      initialValue = EventViewerUiState(flag = EventViewerUiState.Flag.LOADING),
-    )
+    }.onEach {
+      viewStateEmitter.update { currentUiState ->
+        currentUiState.copy(
+          flag = EventViewerUiState.Flag.IDLE,
+          events = it.events,
+          searchQuery = it.searchQuery,
+        )
+      }
+    }.catch {
+      viewStateEmitter.update { currentUiState ->
+        currentUiState.copy(flag = EventViewerUiState.Flag.ERROR)
+      }
+    }.launchIn(viewModelScope)
 
     action = { action ->
-      viewModelScope.launch { uiAction.emit(action) }
+      viewModelScope.launch {
+        uiAction.emit(action)
+      }
     }
   }
 

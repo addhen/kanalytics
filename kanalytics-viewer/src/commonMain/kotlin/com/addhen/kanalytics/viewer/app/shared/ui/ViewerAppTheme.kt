@@ -11,8 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -21,8 +24,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.error_message
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
+import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSnackbarHost
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
@@ -32,6 +39,7 @@ import com.seanproctor.datatable.material3.PaginatedDataTable
 import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import org.jetbrains.compose.resources.stringResource
 
 internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
 
@@ -46,6 +54,8 @@ public fun ViewerAppTheme(
 @Composable
 internal fun AnalyticsEventsScreen(
   uiState: EventViewerViewModel.EventViewerUiState,
+  snackbarHostState: SnackbarHostState,
+  onRetry: (String) -> Unit = {},
   onSearchQueryChanged: (String) -> Unit = {},
 ) {
   ViewerAppScaffold(
@@ -57,13 +67,15 @@ internal fun AnalyticsEventsScreen(
         testTag = SEARCH_SCREEN_TEST_TAG,
       )
     },
-  ) { AnalyticsEventsContent(uiState, uiState.searchQuery) }
+    snackbarHost = { AppSnackbarHost(hostState = snackbarHostState) },
+  ) { AnalyticsEventsContent(uiState, snackbarHostState, onRetry) }
 }
 
 @Composable
 private fun AnalyticsEventsContent(
   uiState: EventViewerViewModel.EventViewerUiState,
-  searchText: String,
+  snackbarHostState: SnackbarHostState,
+  onRetry: (String) -> Unit = {},
 ) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
     when (uiState.flag) {
@@ -77,10 +89,22 @@ private fun AnalyticsEventsContent(
             modifier = Modifier.fillMaxWidth(),
           )
         } else {
-          PaginatedDataTableContent(uiState.events.toImmutableList(), searchText)
+          PaginatedDataTableContent(uiState.events.toImmutableList(), uiState.searchQuery)
         }
       }
-      EventViewerViewModel.EventViewerUiState.Flag.ERROR -> TODO()
+      EventViewerViewModel.EventViewerUiState.Flag.ERROR -> {
+        val errorMessageText: String = stringResource(Res.string.error_message)
+        val retryMessageText = stringResource(Res.string.retry)
+        LaunchedEffect(uiState.flag) {
+          val snackbarResult = snackbarHostState.showSnackbar(
+            message = errorMessageText,
+            actionLabel = retryMessageText
+          )
+          if (snackbarResult == SnackbarResult.ActionPerformed) {
+            onRetry(uiState.searchQuery)
+          }
+        }
+      }
     }
   }
 }

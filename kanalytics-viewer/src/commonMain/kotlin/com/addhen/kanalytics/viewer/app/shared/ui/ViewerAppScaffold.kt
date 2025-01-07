@@ -16,6 +16,8 @@ import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
@@ -38,11 +40,13 @@ public fun ViewerAppScaffold(
       modifier = Modifier.fillMaxWidth(),
     )
   },
+  snackbarHost: @Composable () -> Unit = { },
   content: @Composable BoxScope.() -> Unit,
 ) {
   Scaffold(
     topBar = topBar,
     modifier = Modifier.fillMaxSize(),
+    snackbarHost = snackbarHost,
   ) { contentPadding ->
 
     Box(
