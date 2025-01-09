@@ -95,7 +95,7 @@ private fun SearchTextField(
       )
     },
     trailingIcon = {
-      if (searchQuery.isNotEmpty()) {
+      if (query.isNotEmpty()) {
         Box(modifier = Modifier.offset(x = (-4).dp)) {
           IconButton(
             onClick = {

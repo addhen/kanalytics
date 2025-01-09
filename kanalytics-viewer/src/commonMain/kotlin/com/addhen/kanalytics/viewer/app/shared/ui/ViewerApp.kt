@@ -9,10 +9,11 @@ import androidx.navigation.compose.rememberNavController
 import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSurface
 import com.addhen.kanalytics.viewer.app.shared.ui.navigation.AppNavGraph
 import com.addhen.kanalytics.viewer.app.shared.ui.navigation.EventViewerRoute
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
 
 @Composable
 public fun ViewerApp(navController: NavHostController = rememberNavController()) {
-  ViewerAppTheme {
+  AppTheme {
     AppSurface {
       AppNavGraph(
         navController = navController,

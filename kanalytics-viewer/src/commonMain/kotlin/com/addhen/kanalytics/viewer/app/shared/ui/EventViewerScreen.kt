@@ -17,14 +17,12 @@ public fun EventViewerScreen() {
   AnalyticsEventsScreen(
     uiState,
     snackbarHostState = SnackbarHostState(),
-    onRetry = { searchQuery ->
-      if (searchQuery.isNotEmpty()) {
-        viewModel.action(EventViewerViewModel.UiAction.SearchEvents(searchQuery))
-      } else {
-        viewModel.action(EventViewerViewModel.UiAction.LoadEvents)
-      }
+    uiMessageStateHolder = viewModel.uiMessageStateHolder,
+  ) { searchQuery ->
+    if (searchQuery.isNotBlank()) {
+      viewModel.action(EventViewerViewModel.UiAction.SearchEvents(searchQuery))
+    } else {
+      viewModel.action(EventViewerViewModel.UiAction.LoadEvents)
     }
-  ) {
-    viewModel.action(EventViewerViewModel.UiAction.SearchEvents(it))
   }
 }

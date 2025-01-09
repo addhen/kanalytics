@@ -9,6 +9,7 @@ import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataE
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.EventViewerDatabase
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.createDatabase
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
@@ -66,6 +67,7 @@ public class EventDataDao(
     return database.event_dataQueries.searchEvents(query, eventQueriesMapper)
       .asFlow()
       .map { it.executeAsList() }
+      .flowOn(appCoroutineDispatchers.databaseRead)
   }
 
   public companion object {

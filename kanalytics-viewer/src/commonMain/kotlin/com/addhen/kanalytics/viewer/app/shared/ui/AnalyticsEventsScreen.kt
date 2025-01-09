@@ -12,10 +12,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
@@ -25,15 +23,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.error_message
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSnackbarHost
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
-import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
-import com.addhen.kanalytics.viewer.app.shared.ui.theme.ColorContrast
+import com.addhen.kanalytics.viewer.app.shared.ui.component.SnackbarMessageEffect
+import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageStateHolder
 import com.seanproctor.datatable.DataColumn
 import com.seanproctor.datatable.material3.PaginatedDataTable
 import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
@@ -44,20 +41,20 @@ import org.jetbrains.compose.resources.stringResource
 internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
 
 @Composable
-public fun ViewerAppTheme(
-  colorContrast: ColorContrast = ColorContrast.Default,
-  content: @Composable () -> Unit,
-) {
-  AppTheme(colorContrast, content)
-}
-
-@Composable
 internal fun AnalyticsEventsScreen(
   uiState: EventViewerViewModel.EventViewerUiState,
   snackbarHostState: SnackbarHostState,
-  onRetry: (String) -> Unit = {},
+  uiMessageStateHolder: UiMessageStateHolder,
   onSearchQueryChanged: (String) -> Unit = {},
 ) {
+
+  val retryMessageText = stringResource(Res.string.retry)
+  SnackbarMessageEffect(
+    snackbarHostState = snackbarHostState,
+    actionLabel = retryMessageText,
+    uiMessageStateHolder = uiMessageStateHolder,
+  )
+
   ViewerAppScaffold(
     title = "",
     topBar = {
@@ -68,20 +65,17 @@ internal fun AnalyticsEventsScreen(
       )
     },
     snackbarHost = { AppSnackbarHost(hostState = snackbarHostState) },
-  ) { AnalyticsEventsContent(uiState, snackbarHostState, onRetry) }
+  ) { AnalyticsEventsContent(uiState) }
 }
 
 @Composable
-private fun AnalyticsEventsContent(
-  uiState: EventViewerViewModel.EventViewerUiState,
-  snackbarHostState: SnackbarHostState,
-  onRetry: (String) -> Unit = {},
-) {
+private fun AnalyticsEventsContent(uiState: EventViewerViewModel.EventViewerUiState) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
     when (uiState.flag) {
       EventViewerViewModel.EventViewerUiState.Flag.LOADING -> {
         Text("Loading events...")
       }
+
       EventViewerViewModel.EventViewerUiState.Flag.IDLE -> {
         if (uiState.events.isEmpty()) {
           EmptyContent(
@@ -90,19 +84,6 @@ private fun AnalyticsEventsContent(
           )
         } else {
           PaginatedDataTableContent(uiState.events.toImmutableList(), uiState.searchQuery)
-        }
-      }
-      EventViewerViewModel.EventViewerUiState.Flag.ERROR -> {
-        val errorMessageText: String = stringResource(Res.string.error_message)
-        val retryMessageText = stringResource(Res.string.retry)
-        LaunchedEffect(uiState.flag) {
-          val snackbarResult = snackbarHostState.showSnackbar(
-            message = errorMessageText,
-            actionLabel = retryMessageText
-          )
-          if (snackbarResult == SnackbarResult.ActionPerformed) {
-            onRetry(uiState.searchQuery)
-          }
         }
       }
     }
