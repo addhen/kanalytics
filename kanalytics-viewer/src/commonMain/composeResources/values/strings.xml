@@ -6,4 +6,9 @@
   <string name="search_icon_content_description">Search Icon</string>
   <string name="retry">Retry</string>
   <string name="error_message">Error occurred fetching items.</string>
+  <string name="timestamp">Timestamp</string>
+  <string name="event_name">Event Name</string>
+  <string name="properties">Properties</string>
+  <string name="no_events_found">No events found</string>
+  <string name="loading_events">Loading events...</string>
 </resources>

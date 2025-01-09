@@ -23,7 +23,12 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.event_name
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.loading_events
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.no_events_found
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.properties
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.timestamp
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSnackbarHost
@@ -73,13 +78,13 @@ private fun AnalyticsEventsContent(uiState: EventViewerViewModel.EventViewerUiSt
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
     when (uiState.flag) {
       EventViewerViewModel.EventViewerUiState.Flag.LOADING -> {
-        Text("Loading events...")
+        Text(stringResource(Res.string.loading_events))
       }
 
       EventViewerViewModel.EventViewerUiState.Flag.IDLE -> {
         if (uiState.events.isEmpty()) {
           EmptyContent(
-            title = { Text("No events found") },
+            title = { Text(stringResource(Res.string.no_events_found)) },
             modifier = Modifier.fillMaxWidth(),
           )
         } else {
@@ -95,13 +100,13 @@ private fun PaginatedDataTableContent(events: ImmutableList<EventData>, searchTe
   PaginatedDataTable(
     columns = listOf(
       DataColumn {
-        Text("Timestamp")
+        Text(stringResource(Res.string.timestamp))
       },
       DataColumn {
-        Text("Event Name")
+        Text(stringResource(Res.string.event_name))
       },
       DataColumn {
-        Text("Properties")
+        Text(stringResource(Res.string.properties))
       },
     ),
     contentPadding = PaddingValues(horizontal = 8.dp),
