@@ -26,7 +26,7 @@ internal class NotificationManagerImpl : NotificationManager {
     .applicationContext
     .getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
-  override fun showNotification(title: String, message: String) {
+  override fun showNotification(eventName: String, trackerName: String) {
     val context = ContextInitializer.applicationContext
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
@@ -34,7 +34,7 @@ internal class NotificationManagerImpl : NotificationManager {
     }
     notificationManager.notify(
       notificationId,
-      createNotification(context, title, message),
+      createNotification(context, eventName, trackerName),
     )
   }
 
@@ -47,7 +47,7 @@ internal class NotificationManagerImpl : NotificationManager {
       .setContentTitle(context.getString(R.string.notification_title))
       .setContentText(context.getString(R.string.notification_message, eventName, trackerName))
       .setSmallIcon((R.drawable.ic_app_icon))
-      .setOnlyAlertOnce(true)
+      .setAutoCancel(true)
       .setChannelId(CHANNEL_ID)
       .setContentIntent(
         PendingIntent.getActivity(
