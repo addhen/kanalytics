@@ -31,8 +31,8 @@ public fun SamplesTheme(
 
 @Composable
 public fun Samples(
-  onAnalytics: () -> Unit,
-  onStopClick: () -> Unit,
+  onTriggerAnalytics: () -> Unit,
+  onEventViewer: () -> Unit,
 ) {
   Column(
     modifier = Modifier.padding(16.dp).fillMaxSize(),
@@ -40,11 +40,11 @@ public fun Samples(
   ) {
     Text("Sample app showing how to use kanalytics")
     HorizontalDivider(thickness = 2.dp)
-    Button(onClick = { onStopClick() }) {
+    Button(onClick = onTriggerAnalytics) {
       Text("Trigger an analytics event")
     }
 
-    Button(onClick = { onAnalytics() }) {
+    Button(onClick = onEventViewer ) {
       Text("Start viewer")
     }
   }

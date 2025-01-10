@@ -14,7 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import com.addhen.kanalytics.viewer.app.shared.ui.ViewerApp
 import dev.icerock.moko.permissions.PermissionsController
 
-internal class MainActivity : ComponentActivity() {
+public class MainActivity : ComponentActivity() {
 
   override fun onCreate(savedInstanceState: Bundle?) {
     // Navigation icon color can be changed since API 26(O)
@@ -54,8 +54,8 @@ internal class MainActivity : ComponentActivity() {
     isInForeground = false
   }
 
-  companion object {
-    var isInForeground: Boolean = false
+  internal companion object {
+    internal var isInForeground: Boolean = false
       private set
   }
 }

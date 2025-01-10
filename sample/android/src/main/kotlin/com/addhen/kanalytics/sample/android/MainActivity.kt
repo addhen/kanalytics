@@ -71,7 +71,7 @@ class MainActivity : ComponentActivity() {
           viewModel,
         ) {
           startActivity(
-            Intent(this, MainActivity::class.java)
+            Intent(this, com.addhen.kanalytics.viewer.app.android.MainActivity::class.java)
               .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
           )
         }
