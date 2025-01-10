@@ -15,6 +15,7 @@ import com.addhen.kanalytics.viewer.app.android.MainActivity
 import com.addhen.kanalytics.viewer.app.android.R
 
 private const val CHANNEL_ID = "com.addhen.kanalytics.viewer.app.android.channel"
+private const val BUFFER_SIZE = 10
 
 internal actual fun NotificationManager(): NotificationManager {
   return NotificationManagerImpl()
@@ -64,7 +65,7 @@ internal class NotificationManagerImpl : NotificationManager {
     synchronized(notificationBuffer) {
       for ((counter, i) in (notificationBuffer.lastIndex downTo 0).withIndex()) {
         val notification = notificationBuffer[i]
-        if (counter < 10) {
+        if (counter < BUFFER_SIZE) {
           if (counter == 0) {
             notificationBuilder.setContentTitle(context.getString(R.string.notification_title))
           }
