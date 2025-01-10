@@ -22,8 +22,8 @@ import com.addhen.kanalytics.KAnalytics
 import com.addhen.kanalytics.KAnalyticsEvent
 import com.addhen.kanalytics.KAnalyticsInterceptor
 import com.addhen.kanalytics.Tracker
-import com.addhen.kanalytics.sample.shared.LocationScreen
 import com.addhen.kanalytics.sample.shared.SampleApp
+import com.addhen.kanalytics.sample.shared.SampleScreen
 import com.addhen.kanalytics.sample.shared.SampleViewModel
 import com.addhen.kanalytics.viewer.app.android.MainActivity
 
@@ -65,10 +65,10 @@ class MainActivity : ComponentActivity() {
           .addInterceptor(KAnalyticsInterceptor())
           .build()
 
-        val viewModel = LocationViewModelFactory(
+        val viewModel = SampleViewModelFactory(
           kanalytics = kanalytics,
         ).create(SampleViewModel::class.java)
-        LocationScreen(
+        SampleScreen(
           viewModel,
         ) {
           startActivity(

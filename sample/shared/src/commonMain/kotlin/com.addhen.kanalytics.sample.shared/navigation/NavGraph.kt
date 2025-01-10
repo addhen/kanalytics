@@ -17,14 +17,14 @@ import kotlin.reflect.KClass
 public fun AppNavGraph(
   navController: NavHostController,
   startDestination: KClass<*>,
-  locationScreen: @Composable () -> Unit,
+  sampleScreen: @Composable () -> Unit,
 ) {
   NavHost(
     navController = navController,
     startDestination = startDestination,
   ) {
-    composable<LocationRoute> {
-      locationScreen()
+    composable<HomeRoute> {
+      sampleScreen()
     }
   }
 }

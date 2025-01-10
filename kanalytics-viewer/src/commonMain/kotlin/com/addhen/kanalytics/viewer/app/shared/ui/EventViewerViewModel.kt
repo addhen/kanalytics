@@ -19,6 +19,7 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageManager
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageStateHolder
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
@@ -42,7 +43,7 @@ internal class EventViewerViewModel(
   private val viewStateEmitter = MutableStateFlow(
     EventViewerUiState(flag = EventViewerUiState.Flag.LOADING)
   )
-  private val uiAction = MutableStateFlow<UiAction>(UiAction.LoadEvents)
+  private val uiAction = MutableSharedFlow<UiAction>()
 
   val viewState: StateFlow<EventViewerUiState> = viewStateEmitter
     .stateInWhileSubscribed(viewModelScope, viewStateEmitter.value)

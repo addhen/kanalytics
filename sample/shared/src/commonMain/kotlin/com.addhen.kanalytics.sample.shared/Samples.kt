@@ -31,8 +31,6 @@ public fun SamplesTheme(
 
 @Composable
 public fun Samples(
-  currentLocation: String,
-  lastKnownLocation: String,
   onAnalytics: () -> Unit,
   onStopClick: () -> Unit,
 ) {
@@ -40,11 +38,10 @@ public fun Samples(
     modifier = Modifier.padding(16.dp).fillMaxSize(),
     verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
-    Text("Current Location: $currentLocation")
-    Text("Last known location: $lastKnownLocation")
+    Text("Sample app showing how to use kanalytics")
     HorizontalDivider(thickness = 2.dp)
     Button(onClick = { onStopClick() }) {
-      Text("Start analytics")
+      Text("Trigger an analytics event")
     }
 
     Button(onClick = { onAnalytics() }) {

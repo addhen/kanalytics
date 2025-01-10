@@ -5,24 +5,27 @@ package com.addhen.kanalytics.sample.shared
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import co.touchlab.kermit.Logger
 import com.addhen.kanalytics.KAnalytics
 import com.addhen.kanalytics.KAnalyticsEvent
+import kotlin.random.Random
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
 public class SampleViewModel(
   private val kanalytics: KAnalytics,
 ) : ViewModel() {
   private val viewStateEmitter =
     MutableStateFlow(LocationUiState(flag = LocationUiState.Flag.LOADING))
+  private val actionStateFlow = MutableSharedFlow<UiAction>()
 
   public val viewState: StateFlow<LocationUiState> = viewStateEmitter
     .stateIn(
@@ -31,25 +34,37 @@ public class SampleViewModel(
       viewStateEmitter.value,
     )
 
+  public val action: (UiAction) -> Unit = { action ->
+    viewModelScope.launch { actionStateFlow.emit(action) }
+  }
+
   init {
-    flow { emit("Hello world!") }
-      .distinctUntilChanged()
-      .onEach { state ->
-        Logger.d(SampleViewModel::class.simpleName.toString()) { "state $state" }
-        viewStateEmitter.update { currentUiState ->
-          currentUiState.copy(
-            flag = LocationUiState.Flag.IDLE,
-            state = state,
-          )
+    actionStateFlow
+      .onStart { emit(UiAction.LoadEvent) }
+      .map { action ->
+        when (action) {
+          is UiAction.TriggerAnalyticsEvent -> sendAnalyticsEvent()
+          is UiAction.LoadEvent -> {
+            // do nothing
+          }
         }
-      }.launchIn(viewModelScope)
+
+      }
+      .onEach {
+        viewStateEmitter.update { it.copy(flag = LocationUiState.Flag.IDLE) }
+    }.launchIn(viewModelScope)
   }
 
   public fun sendAnalyticsEvent() {
-    val event = KAnalyticsEvent("LocationViewModel").apply {
-      addParameter("state", viewState.value.state)
+    val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
+      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
     }
     kanalytics.send(event)
+  }
+
+  public sealed interface UiAction {
+    public data object TriggerAnalyticsEvent: UiAction
+    public data object LoadEvent: UiAction
   }
 
   public data class LocationUiState(
@@ -58,8 +73,11 @@ public class SampleViewModel(
   ) {
     public enum class Flag {
       LOADING,
-      ERROR,
       IDLE,
     }
+  }
+
+  private fun generateRandomString(): String {
+    return Random.nextInt(1000).toString()
   }
 }

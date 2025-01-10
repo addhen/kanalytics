@@ -9,7 +9,7 @@ import com.addhen.kanalytics.KAnalytics
 import com.addhen.kanalytics.sample.shared.SampleViewModel
 
 @Suppress("UNCHECKED_CAST")
-class LocationViewModelFactory(
+class SampleViewModelFactory(
   private val kanalytics: KAnalytics,
 ) : ViewModelProvider.Factory {
 
