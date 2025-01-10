@@ -7,4 +7,5 @@ internal expect fun NotificationManager(): NotificationManager
 
 internal interface NotificationManager {
   fun showNotification(eventName: String, trackerName: String)
+  fun clearBuffer()
 }

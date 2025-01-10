@@ -26,26 +26,29 @@ internal class NotificationManagerImpl : NotificationManager {
     .applicationContext
     .getSystemService(Context.NOTIFICATION_SERVICE) as android.app.NotificationManager
 
+  private val notificationBuffer = mutableListOf<String>()
+
+  override fun clearBuffer() {
+    synchronized(notificationBuffer) {
+      notificationBuffer.clear()
+    }
+  }
+
   override fun showNotification(eventName: String, trackerName: String) {
     val context = ContextInitializer.applicationContext
-
+    addNotificationToBuffer(context.getString(R.string.notification_message, eventName, trackerName))
+    if (MainActivity.isInForeground) {
+      return
+    }
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       createNotificationChannel(context)
     }
-    notificationManager.notify(
-      notificationId,
-      createNotification(context, eventName, trackerName),
-    )
+    notificationManager.notify(notificationId, createNotification(context))
   }
 
-  private fun createNotification(
-    context: Context,
-    eventName: String,
-    trackerName: String,
-  ): Notification {
-    val notification = NotificationCompat.Builder(context, CHANNEL_ID)
+  private fun createNotification(context: Context): Notification {
+    val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
       .setContentTitle(context.getString(R.string.notification_title))
-      .setContentText(context.getString(R.string.notification_message, eventName, trackerName))
       .setSmallIcon((R.drawable.ic_app_icon))
       .setAutoCancel(true)
       .setChannelId(CHANNEL_ID)
@@ -57,8 +60,22 @@ internal class NotificationManagerImpl : NotificationManager {
           PendingIntent.FLAG_IMMUTABLE or PendingIntent.FLAG_UPDATE_CURRENT,
         ),
       )
-      .build()
-    return notification
+    val inboxStyle = NotificationCompat.InboxStyle()
+    synchronized(notificationBuffer) {
+      for ((counter, i) in (notificationBuffer.lastIndex downTo 0).withIndex()) {
+        val notification = notificationBuffer[i]
+        if (counter < 10) {
+          if (counter == 0) {
+            notificationBuilder.setContentTitle(context.getString(R.string.notification_title))
+          }
+          inboxStyle.addLine(notification)
+        }
+      }
+      notificationBuilder.setStyle(inboxStyle)
+      notificationBuilder.setSubText(notificationBuffer.size.toString())
+    }
+
+    return notificationBuilder.build()
   }
 
   @RequiresApi(Build.VERSION_CODES.O)
@@ -69,5 +86,11 @@ internal class NotificationManagerImpl : NotificationManager {
       android.app.NotificationManager.IMPORTANCE_DEFAULT,
     )
     notificationManager.createNotificationChannel(channel)
+  }
+
+  private fun addNotificationToBuffer(notification: String) {
+    synchronized(notificationBuffer) {
+      notificationBuffer.add(notification)
+    }
   }
 }

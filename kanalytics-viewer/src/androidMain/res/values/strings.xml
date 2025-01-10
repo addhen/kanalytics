@@ -2,5 +2,5 @@
 <resources>
   <string name="app_name">KAnalytics Viewer</string>
   <string name="notification_title">Analytics Event Sent!</string>
-  <string name="notification_message">Analytics event: %1$s sent to %2$s</string>
+  <string name="notification_message">%1$s sent to %2$s</string>
 </resources>
