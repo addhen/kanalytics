@@ -41,7 +41,9 @@ public class MainActivity : ComponentActivity() {
     super.onCreate(savedInstanceState)
     val permissionsController = PermissionsController(this)
     permissionsController.bind(this)
-    setContent { ViewerApp() }
+    setContent {
+      ViewerApp()
+    }
   }
 
   override fun onResume() {

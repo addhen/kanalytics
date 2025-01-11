@@ -3,30 +3,22 @@
 
 package com.addhen.kanalytics.viewer.app.shared.ui.component
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.addhen.kanalytics.viewer.app.shared.ui.ViewerAppScaffold
 
 @Composable
 public fun AppSurface(appNavHost: @Composable () -> Unit) {
   AppBackground(modifier = Modifier.fillMaxSize()) {
-    AppFrame(appNavHost = appNavHost)
+    AppFrame(appNavHost)
   }
 }
 
 @Composable
 private fun AppFrame(appNavHost: @Composable () -> Unit) {
-  ViewerAppScaffold(
-    title = "KAnalytics Viewer",
-  ) {
-    Column(modifier = Modifier.fillMaxSize()) {
-      appNavHost()
-    }
-  }
+  appNavHost()
 }
 
 @Composable

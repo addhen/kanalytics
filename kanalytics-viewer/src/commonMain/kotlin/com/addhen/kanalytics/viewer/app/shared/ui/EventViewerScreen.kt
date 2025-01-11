@@ -18,6 +18,7 @@ public fun EventViewerScreen() {
     uiState,
     snackbarHostState = SnackbarHostState(),
     uiMessageStateHolder = viewModel.uiMessageStateHolder,
+    onDeleteAllEvents = { viewModel.action(EventViewerViewModel.UiAction.DeleteAllEvents) },
   ) { searchQuery ->
     if (searchQuery.isNotBlank()) {
       viewModel.action(EventViewerViewModel.UiAction.SearchEvents(searchQuery))

@@ -10,11 +10,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -23,12 +28,14 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.delete_all_events_content_description
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.event_name
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.loading_events
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.no_events_found
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.properties
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.timestamp
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.viewer_app_name
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSnackbarHost
@@ -44,13 +51,15 @@ import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.stringResource
 
 internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
+internal const val DELETE_ALL_EVENTS_TEST_TAG = "DeleteAllEventsTestTag"
 
 @Composable
 internal fun AnalyticsEventsScreen(
   uiState: EventViewerViewModel.EventViewerUiState,
   snackbarHostState: SnackbarHostState,
   uiMessageStateHolder: UiMessageStateHolder,
-  onSearchQueryChanged: (String) -> Unit = {},
+  onDeleteAllEvents: () -> Unit,
+  onSearchQueryChanged: (String) -> Unit,
 ) {
 
   val retryMessageText = stringResource(Res.string.retry)
@@ -61,13 +70,24 @@ internal fun AnalyticsEventsScreen(
   )
 
   ViewerAppScaffold(
-    title = "",
-    topBar = {
+    title = stringResource(Res.string.viewer_app_name),
+    searchTopBar = {
       SearchTextFieldAppBar(
         searchQuery = uiState.searchQuery,
         onSearchQueryChanged = onSearchQueryChanged,
         testTag = SEARCH_SCREEN_TEST_TAG,
       )
+    },
+    actions = {
+      IconButton(
+        modifier = Modifier.testTag(DELETE_ALL_EVENTS_TEST_TAG),
+        onClick = onDeleteAllEvents,
+      ) {
+        Icon(
+          imageVector = Icons.Default.Delete,
+          contentDescription = stringResource(Res.string.delete_all_events_content_description) ,
+        )
+      }
     },
     snackbarHost = { AppSnackbarHost(hostState = snackbarHostState) },
   ) { AnalyticsEventsContent(uiState) }

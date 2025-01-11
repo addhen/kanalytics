@@ -5,6 +5,8 @@ package com.addhen.kanalytics.viewer.app.shared.ui
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.consumeWindowInsets
@@ -14,12 +16,10 @@ import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -29,16 +29,23 @@ import androidx.compose.ui.graphics.Color
 @Composable
 public fun ViewerAppScaffold(
   title: String,
+  navigationIcon: @Composable () -> Unit = {},
+  actions: @Composable RowScope.() -> Unit = {},
+  searchTopBar: @Composable () -> Unit = {},
   topBar: @Composable () -> Unit = {
-    TopAppBar(
-      title = { Text(text = title) },
-      navigationIcon = { },
-      colors = TopAppBarDefaults.topAppBarColors(
-        containerColor = Color.Transparent,
-        scrolledContainerColor = Color.Transparent,
-      ),
-      modifier = Modifier.fillMaxWidth(),
-    )
+    Column(modifier = Modifier.fillMaxWidth()) {
+      CenterAlignedTopAppBar(
+        title = { Text(text = title) },
+        navigationIcon = navigationIcon,
+        colors = TopAppBarDefaults.topAppBarColors(
+          containerColor = Color.Transparent,
+          scrolledContainerColor = Color.Transparent,
+        ),
+        actions = actions,
+        modifier = Modifier.fillMaxWidth(),
+      )
+      searchTopBar()
+    }
   },
   snackbarHost: @Composable () -> Unit = { },
   content: @Composable BoxScope.() -> Unit,

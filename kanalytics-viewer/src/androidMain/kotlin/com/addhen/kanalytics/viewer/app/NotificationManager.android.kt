@@ -83,7 +83,7 @@ internal class NotificationManagerImpl : NotificationManager {
   private fun createNotificationChannel(context: Context) {
     val channel = android.app.NotificationChannel(
       CHANNEL_ID,
-      context.getString(R.string.app_name),
+      context.getString(R.string.viewer_app_name),
       android.app.NotificationManager.IMPORTANCE_DEFAULT,
     )
     notificationManager.createNotificationChannel(channel)

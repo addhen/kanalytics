@@ -12,7 +12,9 @@ import com.addhen.kanalytics.viewer.app.shared.ui.navigation.EventViewerRoute
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.AppTheme
 
 @Composable
-public fun ViewerApp(navController: NavHostController = rememberNavController()) {
+public fun ViewerApp(
+  navController: NavHostController = rememberNavController()
+) {
   AppTheme {
     AppSurface {
       AppNavGraph(

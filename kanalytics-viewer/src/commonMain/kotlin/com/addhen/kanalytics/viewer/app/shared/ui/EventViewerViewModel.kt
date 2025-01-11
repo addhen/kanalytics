@@ -23,6 +23,8 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
@@ -85,6 +87,11 @@ internal class EventViewerViewModel(
             // I'm not sure if this is the best way to do this.
             eventRepository.search(it.query).map { events -> events to it.query }
           }
+
+          UiAction.DeleteAllEvents -> {
+            eventRepository.deleteAll()
+            flowOf(emptyList<EventData>() to "")
+          }
         }
       }
       .onEach { (events, searchQuery) ->
@@ -107,6 +114,7 @@ internal class EventViewerViewModel(
 
   sealed interface UiAction {
     data object LoadEvents : UiAction
+    data object DeleteAllEvents : UiAction
     data class SearchEvents(val query: String) : UiAction
   }
 

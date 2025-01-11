@@ -9,7 +9,7 @@ plugins {
 }
 
 android {
-  namespace = "com.addhen.klocation.sample.shared"
+  namespace = "com.addhen.kanalytics.sample.shared"
 }
 
 kotlin {
