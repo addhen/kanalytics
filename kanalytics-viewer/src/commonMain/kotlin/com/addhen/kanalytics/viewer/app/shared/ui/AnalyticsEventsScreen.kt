@@ -3,6 +3,10 @@
 
 package com.addhen.kanalytics.viewer.app.shared.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -44,9 +48,9 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.timestamp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.viewer_app_name
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
-import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSnackbarHost
 import com.addhen.kanalytics.viewer.app.shared.ui.component.ConfirmationDialog
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
+import com.addhen.kanalytics.viewer.app.shared.ui.component.LoadingText
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SnackbarMessageEffect
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageStateHolder
@@ -118,9 +122,21 @@ private fun AnalyticsEventsContent(
   onNavigateToDetail: (Long, String) -> Unit
 ) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    AnimatedVisibility(
+      modifier = Modifier.fillMaxSize(),
+      visible = (uiState.flag == EventViewerViewModel.EventViewerUiState.Flag.LOADING),
+      enter = fadeIn(),
+      exit = fadeOut(),
+    ) {
+      LoadingText(
+        modifier = Modifier
+          .fillMaxSize()
+          .background(MaterialTheme.colorScheme.background),
+      )
+    }
     when (uiState.flag) {
       EventViewerViewModel.EventViewerUiState.Flag.LOADING -> {
-        Text(stringResource(Res.string.loading_events))
+        // do nothing as the loading state is handled by the AnimatedVisibility
       }
 
       EventViewerViewModel.EventViewerUiState.Flag.IDLE -> {
