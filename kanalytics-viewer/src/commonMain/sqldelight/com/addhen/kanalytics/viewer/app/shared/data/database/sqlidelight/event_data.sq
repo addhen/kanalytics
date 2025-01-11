@@ -46,6 +46,9 @@ DELETE FROM `event_data`;
 deleteAllEventDataOlderThan:
 DELETE FROM `event_data` WHERE event_created_date < :date;
 
+getEventDataById:
+SELECT * FROM `event_data` WHERE id = :id;
+
 -- search
 -- Create a virtual table for full-text search
 CREATE VIRTUAL TABLE event_data_index USING fts4(

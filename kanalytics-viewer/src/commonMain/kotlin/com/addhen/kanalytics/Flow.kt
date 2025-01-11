@@ -26,10 +26,7 @@ internal fun <T> Flow<T>.handleErrorWithRetry(
   uiMessageStateHolder: UiMessageStateHolder
 ): Flow<T> = retry { throwable ->
   throwable.printStackTrace()
-  val action = uiMessageStateHolder.showMessage(
-    UiMessage(
-      message = throwable.message ?: "An error occurred",
-    )
-  )
+  val action = uiMessageStateHolder
+    .showMessage(UiMessage(message = throwable.message ?: "An error occurred"))
   action == UiMessageAction.ActionPerformed
 }.catch { /* Do nothing if the user dose not retry. */ }

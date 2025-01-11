@@ -11,9 +11,13 @@
   <string name="properties">Properties</string>
   <string name="no_events_found">No events found</string>
   <string name="loading_events">Loading events...</string>
+  <string name="loading">Loading...</string>
   <string name="delete_all_events_content_description">Icon to delete all events</string>
   <string name="confirm_delete_all_events_title">Confirm Deletion</string>
   <string name="confirm_delete_all_events_message">Are you sure you want to delete all the events?</string>
   <string name="confirm">Confirm</string>
   <string name="cancel">Cancel</string>
+  <string name="back_icon_content_description">Back Icon</string>
+  <string name="delete_icon_content_description">Events details</string>
+  <string name="event_details_title">%1$s details</string>
 </resources>

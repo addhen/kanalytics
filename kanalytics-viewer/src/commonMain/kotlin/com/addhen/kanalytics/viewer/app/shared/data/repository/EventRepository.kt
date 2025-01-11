@@ -18,4 +18,6 @@ public interface EventRepository {
   public fun getAll(): Flow<List<EventData>>
 
   public fun search(query: String): Flow<List<EventData>>
+
+  public fun getEventById(id: Long): Flow<EventData>
 }

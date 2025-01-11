@@ -10,9 +10,14 @@ import kotlinx.serialization.json.JsonNull
 import kotlinx.serialization.json.JsonObject
 import kotlinx.serialization.json.JsonPrimitive
 
-internal fun Map<String, Any>.toJsonString(): String {
+internal fun Map<String, Any>.toPrettyPrintJsonString(): String {
+  val json = Json { prettyPrint = true }
+  return this.toJsonString(json)
+}
+
+internal fun Map<String, Any>.toJsonString(json: Json = Json): String {
   return try {
-    Json.encodeToString(JsonElement.serializer(), this.toJsonElement())
+    json.encodeToString(JsonElement.serializer(), this.toJsonElement())
   } catch (ignore: Exception) {
     ignore.printStackTrace()
     ""

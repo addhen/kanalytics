@@ -23,6 +23,7 @@ import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
@@ -77,19 +78,25 @@ internal class EventViewerViewModel(
             // I don't like the use of the pair here. I'm using the pair here
             // so to pass the search query to the view state.
             // I'm not sure if this is the best way to do this.
-            eventRepository.getAll().map { events -> events to "" }
+            eventRepository.getAll()
+              .map { events -> events to "" }
+              .handleErrorWithRetry(uiMessageStateHolder)
           }
 
           is UiAction.SearchEvents -> {
             // I don't like the use of the pair here. I'm using the pair here
             // so to pass the search query to the view state.
             // I'm not sure if this is the best way to do this.
-            eventRepository.search(it.query).map { events -> events to it.query }
+            eventRepository.search(it.query)
+              .map { events -> events to it.query }
+              .handleErrorWithRetry(uiMessageStateHolder)
           }
 
           UiAction.DeleteAllEvents -> {
-            eventRepository.deleteAll()
-            flowOf(emptyList<EventData>() to "")
+            flow {
+              eventRepository.deleteAll()
+              emit(emptyList<EventData>() to "")
+            }.handleErrorWithRetry(uiMessageStateHolder)
           }
         }
       }
@@ -102,7 +109,6 @@ internal class EventViewerViewModel(
           )
         }
       }
-      .handleErrorWithRetry(uiMessageStateHolder)
       .launchIn(viewModelScope)
   }
 
@@ -135,7 +141,7 @@ internal class EventViewerViewModel(
       initializer {
         val savedStateHandle = createSavedStateHandle()
         val repository = EventDataRepository.Instance
-        val uiMessageStateHolder = UiMessageManager.Instance
+        val uiMessageStateHolder = UiMessageManager()
         EventViewerViewModel(
           eventRepository = repository,
           savedStateHandle = savedStateHandle,

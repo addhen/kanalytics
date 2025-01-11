@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
-public class EventDataDao(
+internal class EventDataDao(
   private val database: EventViewerDatabase,
   private val appCoroutineDispatchers: AppCoroutineDispatchers,
 ) {
@@ -70,8 +70,15 @@ public class EventDataDao(
       .flowOn(appCoroutineDispatchers.databaseRead)
   }
 
-  public companion object {
-    public val Instance: EventDataDao by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+  internal fun getEventById(id: Long): Flow<EventDataEntity> {
+    return database.event_dataQueries.getEventDataById(id, eventQueriesMapper)
+      .asFlow()
+      .map { it.executeAsOne() }
+      .flowOn(appCoroutineDispatchers.databaseRead)
+  }
+
+  internal companion object {
+    val Instance: EventDataDao by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
       EventDataDao(
         database = createDatabase(),
         appCoroutineDispatchers = AppCoroutineDispatchers(),

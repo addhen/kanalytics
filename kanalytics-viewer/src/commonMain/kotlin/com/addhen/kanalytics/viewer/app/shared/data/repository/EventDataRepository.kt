@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 
-public class EventDataRepository(
+internal class EventDataRepository(
   private val eventDataDao: EventDataDao,
 ) : EventRepository {
 
@@ -60,6 +60,20 @@ public class EventDataRepository(
         )
       }
     }
+  }
+
+  override fun getEventById(id: Long): Flow<EventData> {
+    return eventDataDao.getEventById(id)
+      .map { eventDataEntity ->
+        EventData(
+          id = eventDataEntity.id,
+          name = eventDataEntity.name,
+          trackerName = eventDataEntity.trackerName,
+          description = eventDataEntity.description,
+          createdAt = eventDataEntity.createdAt,
+          properties = eventDataEntity.properties
+        )
+      }
   }
 
   internal companion object {

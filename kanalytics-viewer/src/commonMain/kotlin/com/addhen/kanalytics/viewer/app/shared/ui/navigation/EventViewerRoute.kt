@@ -6,4 +6,7 @@ package com.addhen.kanalytics.viewer.app.shared.ui.navigation
 import kotlinx.serialization.Serializable
 
 @Serializable
-public data object EventViewerRoute
+internal data object EventViewerRoute
+
+@Serializable
+internal data class EventDetailsRoute(val eventId: Long, val eventName: String)

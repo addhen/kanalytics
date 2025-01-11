@@ -6,18 +6,20 @@ package com.addhen.kanalytics.viewer.app.shared.ui
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-public fun EventViewerScreen() {
+public fun EventViewerScreen(onNavigateToDetail: (Long, String) -> Unit) {
   val viewModel: EventViewerViewModel = viewModel(factory = EventViewerViewModel.Factory)
   val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 
   AnalyticsEventsScreen(
     uiState,
-    snackbarHostState = SnackbarHostState(),
+    snackbarHostState = remember { SnackbarHostState() },
     uiMessageStateHolder = viewModel.uiMessageStateHolder,
+    onNavigateToDetail = onNavigateToDetail,
     onDeleteAllEvents = { viewModel.action(EventViewerViewModel.UiAction.DeleteAllEvents) },
   ) { searchQuery ->
     if (searchQuery.isNotBlank()) {

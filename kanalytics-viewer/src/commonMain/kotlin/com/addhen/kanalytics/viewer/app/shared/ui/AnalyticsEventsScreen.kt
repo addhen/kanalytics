@@ -65,6 +65,7 @@ internal fun AnalyticsEventsScreen(
   uiState: EventViewerViewModel.EventViewerUiState,
   snackbarHostState: SnackbarHostState,
   uiMessageStateHolder: UiMessageStateHolder,
+  onNavigateToDetail: (Long, String) -> Unit,
   onDeleteAllEvents: () -> Unit,
   onSearchQueryChanged: (String) -> Unit,
 ) {
@@ -107,12 +108,15 @@ internal fun AnalyticsEventsScreen(
         )
       }
     },
-    snackbarHost = { AppSnackbarHost(hostState = snackbarHostState) },
-  ) { AnalyticsEventsContent(uiState) }
+    snackbarHostState = snackbarHostState,
+  ) { AnalyticsEventsContent(uiState, onNavigateToDetail) }
 }
 
 @Composable
-private fun AnalyticsEventsContent(uiState: EventViewerViewModel.EventViewerUiState) {
+private fun AnalyticsEventsContent(
+  uiState: EventViewerViewModel.EventViewerUiState,
+  onNavigateToDetail: (Long, String) -> Unit
+) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
     when (uiState.flag) {
       EventViewerViewModel.EventViewerUiState.Flag.LOADING -> {
@@ -126,7 +130,11 @@ private fun AnalyticsEventsContent(uiState: EventViewerViewModel.EventViewerUiSt
             modifier = Modifier.fillMaxWidth(),
           )
         } else {
-          PaginatedDataTableContent(uiState.events.toImmutableList(), uiState.searchQuery)
+          PaginatedDataTableContent(
+            uiState.events.toImmutableList(),
+            uiState.searchQuery,
+            onNavigateToDetail
+          )
         }
       }
     }
@@ -134,7 +142,11 @@ private fun AnalyticsEventsContent(uiState: EventViewerViewModel.EventViewerUiSt
 }
 
 @Composable
-private fun PaginatedDataTableContent(events: ImmutableList<EventData>, searchText: String) {
+private fun PaginatedDataTableContent(
+  events: ImmutableList<EventData>,
+  searchText: String,
+  onNavigateToDetail: (Long, String) -> Unit
+) {
   PaginatedDataTable(
     columns = listOf(
       DataColumn {
@@ -154,7 +166,9 @@ private fun PaginatedDataTableContent(events: ImmutableList<EventData>, searchTe
     for (rowIndex in 0 until events.size) {
       val event = events[rowIndex]
       row {
-        onClick = { println("Row clicked: $rowIndex") }
+        onClick = {
+          onNavigateToDetail(event.id ?: 0, event.name)
+        }
         isHeader = true
         cell {
           Text(event.createdAt.toString())
