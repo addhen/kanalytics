@@ -18,6 +18,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
@@ -28,6 +32,8 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.confirm_delete_all_events_message
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.confirm_delete_all_events_title
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.delete_all_events_content_description
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.event_name
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.loading_events
@@ -39,6 +45,7 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.viewer_app_na
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
 import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSnackbarHost
+import com.addhen.kanalytics.viewer.app.shared.ui.component.ConfirmationDialog
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SnackbarMessageEffect
@@ -61,6 +68,17 @@ internal fun AnalyticsEventsScreen(
   onDeleteAllEvents: () -> Unit,
   onSearchQueryChanged: (String) -> Unit,
 ) {
+  var showDialog by remember { mutableStateOf(false) }
+
+  if (showDialog) {
+    ConfirmDeleteDialog(
+      onConfirm = {
+        showDialog = false
+        onDeleteAllEvents()
+      },
+      onDismiss = { showDialog = false }
+    )
+  }
 
   val retryMessageText = stringResource(Res.string.retry)
   SnackbarMessageEffect(
@@ -81,7 +99,7 @@ internal fun AnalyticsEventsScreen(
     actions = {
       IconButton(
         modifier = Modifier.testTag(DELETE_ALL_EVENTS_TEST_TAG),
-        onClick = onDeleteAllEvents,
+        onClick = { showDialog = true },
       ) {
         Icon(
           imageVector = Icons.Default.Delete,
@@ -171,6 +189,19 @@ private fun String.highlightText(text: String): AnnotatedString {
     }
     append(text.takeLast(kotlin.math.max((text.lastIndex - highlightRange.last), 0)))
   }
+}
+
+@Composable
+private fun ConfirmDeleteDialog(
+  onConfirm: () -> Unit,
+  onDismiss: () -> Unit
+) {
+  ConfirmationDialog(
+    title = stringResource(Res.string.confirm_delete_all_events_title),
+    message = stringResource(Res.string.confirm_delete_all_events_message),
+    onConfirm = onConfirm,
+    onDismiss = onDismiss,
+  )
 }
 
 private fun String.getMatchIndexRange(queryText: String = ""): IntRange {
