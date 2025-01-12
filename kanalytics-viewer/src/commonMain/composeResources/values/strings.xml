@@ -20,4 +20,9 @@
   <string name="back_icon_content_description">Back Icon</string>
   <string name="delete_icon_content_description">Events details</string>
   <string name="event_details_title">%1$s details</string>
+  <string name="name">Name</string>
+  <string name="description">Description</string>
+  <string name="tracker_name">Tracker name</string>
+  <string name="id">ID</string>
+  <string name="created_at">Created at</string>
 </resources>
