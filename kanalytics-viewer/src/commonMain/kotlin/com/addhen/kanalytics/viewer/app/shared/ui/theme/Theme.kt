@@ -5,6 +5,7 @@ package com.addhen.kanalytics.viewer.app.shared.ui.theme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.text.font.FontFamily
 
 private val darkScheme = darkColorScheme(
   primary = primaryDark,
@@ -123,6 +124,7 @@ private val highContrastDarkColorScheme = darkColorScheme(
 @Composable
 internal fun AppTheme(
   colorContrast: ColorContrast = ColorContrast.Default,
+  fontFamily: FontFamily? = jetbrainsMonoFontFamily(),
   content: @Composable () -> Unit,
 ) {
   val colorScheme = when (colorContrast) {
@@ -133,7 +135,7 @@ internal fun AppTheme(
 
   MaterialTheme(
     colorScheme = colorScheme,
-    typography = appTypography(),
+    typography = appTypography(fontFamily),
     content = content,
   )
 }
