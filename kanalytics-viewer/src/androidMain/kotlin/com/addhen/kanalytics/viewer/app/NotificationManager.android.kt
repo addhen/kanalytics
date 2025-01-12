@@ -18,7 +18,7 @@ private const val CHANNEL_ID = "com.addhen.kanalytics.viewer.app.android.channel
 private const val BUFFER_SIZE = 10
 
 internal actual fun NotificationManager(): NotificationManager {
-  return NotificationManagerImpl()
+  return NotificationManagerImpl.Instance
 }
 
 internal class NotificationManagerImpl : NotificationManager {
@@ -92,6 +92,12 @@ internal class NotificationManagerImpl : NotificationManager {
   private fun addNotificationToBuffer(notification: String) {
     synchronized(notificationBuffer) {
       notificationBuffer.add(notification)
+    }
+  }
+
+  internal companion object {
+    val Instance: NotificationManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+      NotificationManagerImpl()
     }
   }
 }

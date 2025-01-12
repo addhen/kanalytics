@@ -13,6 +13,7 @@ import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.addhen.kanalytics.handleErrorWithRetry
 import com.addhen.kanalytics.stateInWhileSubscribed
+import com.addhen.kanalytics.viewer.app.NotificationManager
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageManager
@@ -38,6 +39,7 @@ private const val SEARCH_QUERY: String = "search_query"
 internal class EventViewerViewModel(
   private val eventRepository: EventDataRepository,
   private val savedStateHandle: SavedStateHandle,
+  private val notificationManager: NotificationManager,
   internal val uiMessageStateHolder: UiMessageStateHolder
 ) : ViewModel() {
 
@@ -94,6 +96,7 @@ internal class EventViewerViewModel(
           UiAction.DeleteAllEvents -> {
             flow {
               eventRepository.deleteAll()
+              notificationManager.clearBuffer()
               emit(emptyList<EventData>() to "")
             }.handleErrorWithRetry(uiMessageStateHolder)
           }
@@ -144,6 +147,7 @@ internal class EventViewerViewModel(
         EventViewerViewModel(
           eventRepository = repository,
           savedStateHandle = savedStateHandle,
+          notificationManager = NotificationManager(),
           uiMessageStateHolder = uiMessageStateHolder
         )
       }
