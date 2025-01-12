@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.loading
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.loading_events
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
