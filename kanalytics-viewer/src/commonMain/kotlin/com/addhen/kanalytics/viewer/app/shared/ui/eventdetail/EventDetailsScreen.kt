@@ -20,7 +20,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
@@ -45,13 +44,9 @@ internal fun EventDetailsScreen(
   eventName: String,
   onBack: () -> Unit
 ) {
-  val viewModel: EventDetailsViewModel = viewModel(factory = EventDetailsViewModel.Factory)
+  val viewModel: EventDetailsViewModel = viewModel(factory = EventDetailsViewModel.create(eventId))
   val uiState by viewModel.viewState.collectAsStateWithLifecycle()
   val snackbarHostState = remember { SnackbarHostState() }
-
-  LaunchedEffect(Unit) {
-    viewModel.action(EventDetailsViewModel.UiAction.LoadEventDetails(eventId))
-  }
 
   val retryMessageText = stringResource(Res.string.retry)
   SnackbarMessageEffect(
