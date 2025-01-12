@@ -1,7 +1,7 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics.viewer.app.shared.ui
+package com.addhen.kanalytics.viewer.app.shared.ui.eventlist
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -31,7 +31,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.text.withStyle
@@ -41,7 +40,6 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.confirm_delet
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.confirm_delete_all_events_title
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.delete_all_events_content_description
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.event_name
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.loading_events
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.no_events_found
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.properties
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
@@ -49,6 +47,7 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.timestamp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.viewer_app_name
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toJsonString
+import com.addhen.kanalytics.viewer.app.shared.ui.ViewerAppScaffold
 import com.addhen.kanalytics.viewer.app.shared.ui.component.ConfirmationDialog
 import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.component.LoadingText

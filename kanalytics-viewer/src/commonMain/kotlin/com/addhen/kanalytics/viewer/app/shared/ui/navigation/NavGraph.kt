@@ -3,7 +3,6 @@
 
 package com.addhen.kanalytics.viewer.app.shared.ui.navigation
 
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.lifecycle.Lifecycle
@@ -15,7 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import androidx.navigation.toRoute
-import com.addhen.kanalytics.viewer.app.shared.ui.EventViewerScreen
+import com.addhen.kanalytics.viewer.app.shared.ui.eventlist.EventViewerScreen
 import com.addhen.kanalytics.viewer.app.shared.ui.eventdetail.EventDetailsScreen
 import kotlin.reflect.KClass
 

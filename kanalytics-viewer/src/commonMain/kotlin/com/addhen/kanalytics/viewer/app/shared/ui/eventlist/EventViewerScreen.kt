@@ -1,7 +1,7 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics.viewer.app.shared.ui
+package com.addhen.kanalytics.viewer.app.shared.ui.eventlist
 
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
