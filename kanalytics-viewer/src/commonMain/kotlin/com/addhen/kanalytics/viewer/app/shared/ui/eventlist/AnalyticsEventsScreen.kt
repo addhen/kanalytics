@@ -54,6 +54,9 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.LoadingText
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SnackbarMessageEffect
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageStateHolder
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.logColorDark
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.logColorDarkHighContrast
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.logColorDarkMediumContrast
 import com.seanproctor.datatable.DataColumn
 import com.seanproctor.datatable.material3.PaginatedDataTable
 import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
@@ -166,13 +169,13 @@ private fun PaginatedDataTableContent(
   PaginatedDataTable(
     columns = listOf(
       DataColumn {
-        Text(stringResource(Res.string.timestamp))
+        Text(stringResource(Res.string.timestamp), color = logColorDarkHighContrast)
       },
       DataColumn {
-        Text(stringResource(Res.string.event_name))
+        Text(stringResource(Res.string.event_name), color = logColorDarkHighContrast)
       },
       DataColumn {
-        Text(stringResource(Res.string.properties))
+        Text(stringResource(Res.string.properties), color = logColorDarkHighContrast)
       },
     ),
     contentPadding = PaddingValues(horizontal = 8.dp),
@@ -185,18 +188,18 @@ private fun PaginatedDataTableContent(
         onClick = {
           onNavigateToDetail(event.id ?: 0, event.name)
         }
-        isHeader = true
         cell {
           Text(event.createdAt.toString())
         }
         cell {
-          Text(searchText.highlightText(event.name))
+          Text(searchText.highlightText(event.name), color = logColorDarkMediumContrast)
         }
         cell {
           Text(
             searchText.highlightText(event.properties.toJsonString()),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
+            color = logColorDark
           )
         }
       }
