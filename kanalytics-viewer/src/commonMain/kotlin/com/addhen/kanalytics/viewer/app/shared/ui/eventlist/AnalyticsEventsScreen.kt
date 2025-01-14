@@ -54,9 +54,9 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.LoadingText
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SnackbarMessageEffect
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageStateHolder
-import com.addhen.kanalytics.viewer.app.shared.ui.theme.logColorDark
-import com.addhen.kanalytics.viewer.app.shared.ui.theme.logColorDarkHighContrast
-import com.addhen.kanalytics.viewer.app.shared.ui.theme.logColorDarkMediumContrast
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.eventHeaderTextColor
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.eventNameTextColor
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.eventPropertiesTextColor
 import com.seanproctor.datatable.DataColumn
 import com.seanproctor.datatable.material3.PaginatedDataTable
 import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
@@ -169,13 +169,13 @@ private fun PaginatedDataTableContent(
   PaginatedDataTable(
     columns = listOf(
       DataColumn {
-        Text(stringResource(Res.string.timestamp), color = logColorDarkHighContrast)
+        Text(stringResource(Res.string.timestamp), color = eventHeaderTextColor())
       },
       DataColumn {
-        Text(stringResource(Res.string.event_name), color = logColorDarkHighContrast)
+        Text(stringResource(Res.string.event_name), color = eventHeaderTextColor())
       },
       DataColumn {
-        Text(stringResource(Res.string.properties), color = logColorDarkHighContrast)
+        Text(stringResource(Res.string.properties), color = eventHeaderTextColor())
       },
     ),
     contentPadding = PaddingValues(horizontal = 8.dp),
@@ -192,14 +192,14 @@ private fun PaginatedDataTableContent(
           Text(event.createdAt.toString())
         }
         cell {
-          Text(searchText.highlightText(event.name), color = logColorDarkMediumContrast)
+          Text(searchText.highlightText(event.name), color = eventNameTextColor())
         }
         cell {
           Text(
             searchText.highlightText(event.properties.toJsonString()),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            color = logColorDark
+            color = eventPropertiesTextColor()
           )
         }
       }

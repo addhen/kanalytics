@@ -7,6 +7,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
 
 // Light scheme
@@ -239,6 +240,138 @@ private val highContrastDarkColorScheme = darkColorScheme(
   surfaceContainerHigh = surfaceContainerHighDarkHighContrast,
   surfaceContainerHighest = surfaceContainerHighestDarkHighContrast,
 )
+
+internal sealed class EventsTableColorScheme {
+  abstract val textColor: Color
+
+  data object Light : EventsTableColorScheme() {
+    override val textColor = eventHeaderLight
+  }
+
+  data object MediumConstrastLight : EventsTableColorScheme() {
+    override val textColor = eventHeaderLightMediumContrast
+  }
+
+  data object HighContrastLight : EventsTableColorScheme() {
+    override val textColor = eventHeaderLightHighContrast
+  }
+
+  data object Dark : EventsTableColorScheme() {
+    override val textColor = eventHeaderDark
+  }
+
+  data object MediumContrastDark : EventsTableColorScheme() {
+    override val textColor = eventHeaderDarkMediumContrast
+  }
+
+  data object HighContrastDark : EventsTableColorScheme() {
+    override val textColor = eventHeaderDarkHighContrast
+  }
+}
+
+internal sealed class EventNameColorScheme {
+  abstract val textColor: Color
+
+  data object Light : EventNameColorScheme() {
+    override val textColor = eventNameLight
+  }
+
+  data object MediumContrastLight : EventNameColorScheme() {
+    override val textColor = eventNameLightMediumContrast
+  }
+
+  data object HighContrastLight : EventNameColorScheme() {
+    override val textColor = eventNameLightHighContrast
+  }
+
+  data object Dark : EventNameColorScheme() {
+    override val textColor = eventNameDark
+  }
+
+  data object MediumContrastDark : EventNameColorScheme() {
+    override val textColor = eventNameDarkMediumContrast
+  }
+
+  data object HighContrastDark : EventNameColorScheme() {
+    override val textColor = eventNameDarkHighContrast
+  }
+}
+
+internal sealed class EventPropertiesColorScheme {
+  abstract val textColor: Color
+
+  data object Light : EventPropertiesColorScheme() {
+    override val textColor = eventPropertiesLight
+  }
+
+  data object MediumContrastLight : EventPropertiesColorScheme() {
+    override val textColor = eventPropertiesLightMediumContrast
+  }
+
+  data object HighContrastLight : EventPropertiesColorScheme() {
+    override val textColor = eventPropertiesLightHighContrast
+  }
+
+  data object Dark : EventPropertiesColorScheme() {
+    override val textColor = eventPropertiesDark
+  }
+
+  data object MediumContrastDark : EventPropertiesColorScheme() {
+    override val textColor = eventPropertiesDarkMediumContrast
+  }
+
+  data object HighContrastDark : EventPropertiesColorScheme() {
+    override val textColor = eventPropertiesDarkHighContrast
+  }
+}
+
+@Composable
+internal fun eventHeaderTextColor(
+  colorContrast: ColorContrast = ColorContrast.Dark,
+  isDarkTheme: Boolean = isSystemInDarkTheme()
+) = when {
+  isDarkTheme && colorContrast == ColorContrast.Light -> EventsTableColorScheme.Light.textColor
+  isDarkTheme && colorContrast == ColorContrast.LightMedium -> EventsTableColorScheme.Light.textColor
+  isDarkTheme && colorContrast == ColorContrast.LightHigh -> EventsTableColorScheme.Light.textColor
+  isDarkTheme && colorContrast ==ColorContrast.Dark -> EventsTableColorScheme.Dark.textColor
+  isDarkTheme && colorContrast == ColorContrast.DarkMedium -> EventsTableColorScheme.MediumContrastDark.textColor
+  isDarkTheme && colorContrast ==ColorContrast.DarkHigh -> EventsTableColorScheme.HighContrastDark.textColor
+  else -> {
+    EventsTableColorScheme.Light.textColor
+  }
+}
+
+@Composable
+internal fun eventNameTextColor(
+  colorContrast: ColorContrast = ColorContrast.Dark,
+  isDarkTheme: Boolean = isSystemInDarkTheme()
+) = when {
+  isDarkTheme && colorContrast == ColorContrast.Light -> EventNameColorScheme.Light.textColor
+  isDarkTheme && colorContrast == ColorContrast.LightMedium -> EventNameColorScheme.Light.textColor
+  isDarkTheme && colorContrast == ColorContrast.LightHigh -> EventNameColorScheme.Light.textColor
+  isDarkTheme && colorContrast ==ColorContrast.Dark -> EventNameColorScheme.Dark.textColor
+  isDarkTheme && colorContrast == ColorContrast.DarkMedium -> EventNameColorScheme.MediumContrastDark.textColor
+  isDarkTheme && colorContrast ==ColorContrast.DarkHigh -> EventNameColorScheme.HighContrastDark.textColor
+  else -> {
+    EventNameColorScheme.Light.textColor
+  }
+}
+
+@Composable
+internal fun eventPropertiesTextColor(
+  colorContrast: ColorContrast = ColorContrast.Dark,
+  isDarkTheme: Boolean = isSystemInDarkTheme()
+) = when {
+  isDarkTheme && colorContrast == ColorContrast.Light -> EventPropertiesColorScheme.Light.textColor
+  isDarkTheme && colorContrast == ColorContrast.LightMedium -> EventPropertiesColorScheme.Light.textColor
+  isDarkTheme && colorContrast == ColorContrast.LightHigh -> EventPropertiesColorScheme.Light.textColor
+  isDarkTheme && colorContrast ==ColorContrast.Dark -> EventPropertiesColorScheme.Dark.textColor
+  isDarkTheme && colorContrast == ColorContrast.DarkMedium -> EventPropertiesColorScheme.MediumContrastDark.textColor
+  isDarkTheme && colorContrast ==ColorContrast.DarkHigh -> EventPropertiesColorScheme.HighContrastDark.textColor
+  else -> {
+    EventPropertiesColorScheme.Light.textColor
+  }
+}
 
 @Composable
 internal fun AppTheme(
