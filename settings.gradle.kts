@@ -23,7 +23,7 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 // https://docs.gradle.org/7.6/userguide/configuration_cache.html#config_cache:stable
 enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
-// setting project name to klocation-lib to curtail an issue with conflicts klocation name due to
+// setting project name to kanalytics-lib to curtail an issue with conflicts kanalytics name due to
 // gradle's typesafe project accessors feature
 rootProject.name = "kanalytics-lib"
 

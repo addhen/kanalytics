@@ -1,6 +1,6 @@
 import UIKit
 import SwiftUI
-import KLocationKt
+import KAnalyticsKt
 
 struct ComposeView: UIViewControllerRepresentable {
     func makeUIViewController(context: Context) -> UIViewController {

@@ -12,7 +12,7 @@ plugins {
 }
 
 android {
-  namespace = "com.addhen.klocation.sample.iosframework"
+  namespace = "com.addhen.kanaltyics.sample.iosframework"
 }
 
 kotlin {
@@ -20,6 +20,7 @@ kotlin {
     commonMain {
       dependencies {
         implementation(projects.kanalyticsViewer)
+        implementation(projects.sample.shared)
       }
     }
 

@@ -17,14 +17,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
-import co.touchlab.kermit.Logger
-import com.addhen.kanalytics.KAnalytics
-import com.addhen.kanalytics.KAnalyticsEvent
-import com.addhen.kanalytics.KAnalyticsInterceptor
-import com.addhen.kanalytics.Tracker
 import com.addhen.kanalytics.sample.shared.SampleApp
 import com.addhen.kanalytics.sample.shared.SampleScreen
-import com.addhen.kanalytics.sample.shared.SampleViewModel
+import com.addhen.kanalytics.sample.shared.viewModel
 
 class MainActivity : ComponentActivity() {
 
@@ -55,27 +50,7 @@ class MainActivity : ComponentActivity() {
     enableEdgeToEdge()
     super.onCreate(savedInstanceState)
     setContent {
-      val navController = rememberNavController()
-      SampleApp(
-        navController = navController,
-      ) {
-        val kanalytics = KAnalytics.Builder()
-          .addTracker(FirebaseTracker())
-          .addInterceptor(KAnalyticsInterceptor())
-          .build()
-
-        val viewModel = SampleViewModelFactory(
-          kanalytics = kanalytics,
-        ).create(SampleViewModel::class.java)
-        SampleScreen(
-          viewModel,
-        ) {
-          startActivity(
-            Intent(this, com.addhen.kanalytics.viewer.app.android.MainActivity::class.java)
-              .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
-          )
-        }
-      }
+      SampleApp()
     }
   }
 
@@ -113,16 +88,5 @@ class MainActivity : ComponentActivity() {
     val uri: Uri = Uri.fromParts("package", packageName, null)
     intent.data = uri
     startActivity(intent)
-  }
-}
-
-class FirebaseTracker : Tracker {
-
-  private val analyticsEvents = mutableListOf<KAnalyticsEvent>()
-
-  override fun send(event: KAnalyticsEvent) {
-    // Send event to firebase
-    analyticsEvents.add(event)
-    Logger.d(tag = "MainActivity", messageString = "FirebaseTracker: $event")
   }
 }

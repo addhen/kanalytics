@@ -5,18 +5,23 @@ package com.addhen.kanalytics.sample.shared
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.addhen.kanalytics.sample.shared.component.AppSurface
 import com.addhen.kanalytics.sample.shared.navigation.AppNavGraph
 import com.addhen.kanalytics.sample.shared.navigation.HomeRoute
+import com.addhen.kanalytics.viewer.app.shared.ui.launchViewerApp
 
 @Composable
-public fun SampleApp(navController: NavHostController, locationScreen: @Composable () -> Unit) {
+public fun SampleApp(
+  navController: NavHostController = rememberNavController(),
+  onEventViewerTrigger: () -> Unit = { launchViewerApp() },
+) {
   SamplesTheme {
     AppSurface {
       AppNavGraph(
         navController = navController,
         HomeRoute::class,
-        sampleScreen = locationScreen,
+        sampleScreen = { SampleScreen(viewModel, onEventViewerTrigger)},
       )
     }
   }

@@ -60,6 +60,12 @@ internal class NotificationManagerImpl : NotificationManager {
     }
   }
 
+  override fun clearBuffer() {
+    // Clear the notification buffer
+    //val notificationCenter = UNUserNotificationCenter.currentNotificationCenter()
+    //notificationCenter.removeDeliveredNotifications(listOf(notificationId))
+  }
+
   private fun NSError.toThrowable(): Throwable {
     return Throwable(this.localizedDescription)
   }
