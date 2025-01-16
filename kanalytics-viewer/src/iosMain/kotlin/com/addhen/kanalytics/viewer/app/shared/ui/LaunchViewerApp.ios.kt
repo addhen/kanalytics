@@ -1,6 +1,5 @@
 package com.addhen.kanalytics.viewer.app.shared.ui
 
-import androidx.compose.ui.window.ComposeUIViewController
 import platform.Foundation.NSProcessInfo
 import platform.UIKit.UIApplication
 import platform.UIKit.UIModalPresentationFullScreen
@@ -22,7 +21,7 @@ internal actual fun disposeViewerAppWindow() {
 }
 
 private fun getTopMostViewController(
-  base: UIViewController? = UIApplication.sharedApplication.topWindow?.rootViewController
+  base: UIViewController? = topWindow?.rootViewController
 ): UIViewController? {
   if (base == null) return null
 
@@ -42,7 +41,7 @@ private fun getTopMostViewController(
   }
 }
 
-private val UIApplication.topWindow: UIWindow?
+private val topWindow: UIWindow?
   get() {
     return if (NSProcessInfo.processInfo.operatingSystemVersionString >= "15.0") {
       UIApplication.sharedApplication.connectedScenes
