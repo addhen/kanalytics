@@ -11,3 +11,7 @@ public actual fun launchViewerApp() {
       .setFlags(Intent.FLAG_ACTIVITY_NEW_TASK),
   )
 }
+
+internal actual fun disposeViewerAppWindow() {
+  MainActivity.viewerAppMainActivityInstance = null
+}

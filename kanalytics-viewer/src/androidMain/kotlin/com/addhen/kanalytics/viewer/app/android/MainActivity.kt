@@ -39,6 +39,7 @@ public class MainActivity : ComponentActivity() {
       }
     }
     super.onCreate(savedInstanceState)
+    viewerAppMainActivityInstance = this
     val permissionsController = PermissionsController(this)
     permissionsController.bind(this)
     setContent {
@@ -56,8 +57,15 @@ public class MainActivity : ComponentActivity() {
     isInForeground = false
   }
 
+  override fun onDestroy() {
+    super.onDestroy()
+    viewerAppMainActivityInstance = null
+  }
+
   internal companion object {
     internal var isInForeground: Boolean = false
       private set
+
+    internal var viewerAppMainActivityInstance: MainActivity? = null
   }
 }

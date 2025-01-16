@@ -1,11 +1,60 @@
 package com.addhen.kanalytics.viewer.app.shared.ui
 
 import androidx.compose.ui.window.ComposeUIViewController
+import platform.Foundation.NSProcessInfo
 import platform.UIKit.UIApplication
+import platform.UIKit.UIModalPresentationFullScreen
+import platform.UIKit.UINavigationController
+import platform.UIKit.UITabBarController
+import platform.UIKit.UIViewController
+import platform.UIKit.UIWindow
+import platform.UIKit.UIWindowScene
 
 public actual fun launchViewerApp() {
-  val pluginViewController = ComposeUIViewController { ViewerApp() }
-  val topController = UIApplication.sharedApplication.keyWindow?.rootViewController
-    ?: throw IllegalStateException("No key window or root view controller found")
-  topController.presentViewController(pluginViewController, animated = true, completion = null)
+  if (viewerAppViewControllerInstance != null) return // Already launched
+  val viewerAppViewController = ViewerAppViewController()
+  viewerAppViewController.modalPresentationStyle = UIModalPresentationFullScreen
+  getTopMostViewController()?.presentViewController(viewerAppViewController, true, null)
 }
+
+internal actual fun disposeViewerAppWindow() {
+  viewerAppViewControllerInstance = null
+}
+
+private fun getTopMostViewController(
+  base: UIViewController? = UIApplication.sharedApplication.topWindow?.rootViewController
+): UIViewController? {
+  if (base == null) return null
+
+  return when (base) {
+    is UINavigationController -> getTopMostViewController(base.visibleViewController)
+    is UITabBarController -> {
+      base.selectedViewController?.let { getTopMostViewController(it) }
+    }
+
+    else -> {
+      if (base.presentedViewController != null) {
+        getTopMostViewController(base.presentedViewController)
+      } else {
+        base
+      }
+    }
+  }
+}
+
+private val UIApplication.topWindow: UIWindow?
+  get() {
+    return if (NSProcessInfo.processInfo.operatingSystemVersionString >= "15.0") {
+      UIApplication.sharedApplication.connectedScenes
+        .asSequence()
+        .mapNotNull { it as? UIWindowScene }
+        .mapNotNull { it.keyWindow }
+        .lastOrNull()
+    } else {
+      UIApplication.sharedApplication.connectedScenes
+        .asSequence()
+        .flatMap { (it as? UIWindowScene)?.windows?.asSequence() ?: emptySequence() }
+        .filterIsInstance<UIWindow>()
+        .lastOrNull { it.isKeyWindow() }
+    }
+  }
