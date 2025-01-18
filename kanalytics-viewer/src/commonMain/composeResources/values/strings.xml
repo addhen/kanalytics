@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
   <string name="viewer_app_name">KAnalytics Viewer</string>
-  <string name="search_term_placeHolder">Search by event name, key or value</string>
   <string name="search_placeholder">Search</string>
-  <string name="search_event_hint">Search events...</string>
   <string name="search_icon_content_description">Search Icon</string>
   <string name="retry">Retry</string>
   <string name="error_message">Error occurred fetching items.</string>
