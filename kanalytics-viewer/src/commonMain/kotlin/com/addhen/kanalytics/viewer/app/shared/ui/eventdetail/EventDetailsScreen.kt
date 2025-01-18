@@ -62,6 +62,7 @@ import com.sebastianneubauer.jsontree.search.SearchState
 import com.sebastianneubauer.jsontree.search.rememberSearchState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+import toFormattedString
 
 
 internal const val SEARCH_RESULT_ARROW_DOWN_TEST_TAG = "SearchResultArrowDownTestTag"
@@ -221,7 +222,7 @@ private fun EventDetailsContent(
 private fun toAnnotatedEventDescription(eventData: EventData) = buildAnnotatedString {
   toStyledKeyValueString(stringResource(Res.string.id), eventData.id.toString())
   toStyledKeyValueString(stringResource(Res.string.name), eventData.name)
-  toStyledKeyValueString(stringResource(Res.string.created_at), eventData.createdAt.toString())
+  toStyledKeyValueString(stringResource(Res.string.created_at), eventData.createdAt.toFormattedString())
   toStyledKeyValueString(stringResource(Res.string.tracker_name), eventData.trackerName)
   if (eventData.description.isNullOrBlank().not()) {
     toStyledKeyValueString(stringResource(Res.string.description), eventData.description)

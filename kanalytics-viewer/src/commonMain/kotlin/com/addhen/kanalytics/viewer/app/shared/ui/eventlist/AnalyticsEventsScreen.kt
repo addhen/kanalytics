@@ -65,6 +65,7 @@ import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.stringResource
+import toFormattedString
 
 internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
 internal const val DELETE_ALL_EVENTS_TEST_TAG = "DeleteAllEventsTestTag"
@@ -192,7 +193,7 @@ private fun PaginatedDataTableContent(
           onNavigateToDetail(event.id ?: 0, event.name)
         }
         cell {
-          Text(event.createdAt.toString())
+          Text(event.createdAt.toFormattedString())
         }
         cell {
           Text(searchText.highlightText(event.name), color = eventNameTextColor())
