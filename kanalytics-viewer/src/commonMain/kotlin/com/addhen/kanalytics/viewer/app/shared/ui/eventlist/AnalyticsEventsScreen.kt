@@ -43,7 +43,7 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.event_name
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.no_events_found
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.properties
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_term_placeHolder
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_placeholder
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.timestamp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.viewer_app_name
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
@@ -102,7 +102,7 @@ internal fun AnalyticsEventsScreen(
     searchTopBar = {
       SearchTextFieldAppBar(
         searchQuery = uiState.searchQuery,
-        placeholder = stringResource(Res.string.search_term_placeHolder),
+        placeholder = stringResource(Res.string.search_placeholder),
         onSearchQueryChanged = onSearchQueryChanged,
         testTag = SEARCH_SCREEN_TEST_TAG,
       )

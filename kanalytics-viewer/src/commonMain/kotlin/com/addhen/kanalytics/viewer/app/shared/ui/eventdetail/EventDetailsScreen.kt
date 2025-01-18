@@ -45,7 +45,7 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.id
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.name
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.no_events_found
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_term_placeHolder
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_placeholder
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.tracker_name
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.toPrettyPrintJsonString
@@ -54,7 +54,6 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.EmptyContent
 import com.addhen.kanalytics.viewer.app.shared.ui.component.LoadingText
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SearchTextFieldAppBar
 import com.addhen.kanalytics.viewer.app.shared.ui.component.SnackbarMessageEffect
-import com.addhen.kanalytics.viewer.app.shared.ui.eventlist.DELETE_ALL_EVENTS_TEST_TAG
 import com.addhen.kanalytics.viewer.app.shared.ui.eventlist.SEARCH_SCREEN_TEST_TAG
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.jsonTreeTextColor
 import com.addhen.kanalytics.viewer.app.shared.ui.toStyledKeyValueString
@@ -63,6 +62,11 @@ import com.sebastianneubauer.jsontree.search.SearchState
 import com.sebastianneubauer.jsontree.search.rememberSearchState
 import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
+
+
+internal const val SEARCH_RESULT_ARROW_DOWN_TEST_TAG = "SearchResultArrowDownTestTag"
+internal const val SEARCH_RESULT_ARROW_UP_TEST_TAG = "SearchResultArrowUpTestTag"
+
 
 @Composable
 internal fun EventDetailsScreen(
@@ -117,7 +121,7 @@ internal fun EventDetailsScreen(
         searchQuery = searchQuery,
         onSearchQueryChanged = { searchState.query = it },
         testTag = SEARCH_SCREEN_TEST_TAG,
-        placeholder = stringResource(Res.string.search_term_placeHolder),
+        placeholder = stringResource(Res.string.search_placeholder),
         actions = {
 
           Row(
@@ -125,7 +129,7 @@ internal fun EventDetailsScreen(
             verticalAlignment = Alignment.CenterVertically
           ) {
             IconButton(
-              modifier = Modifier.testTag(DELETE_ALL_EVENTS_TEST_TAG),
+              modifier = Modifier.testTag(SEARCH_RESULT_ARROW_DOWN_TEST_TAG),
               onClick = { coroutineScope.launch { searchState.selectNext() } },
             ) {
               Icon(
@@ -137,7 +141,7 @@ internal fun EventDetailsScreen(
             Spacer(modifier = Modifier.width(2.dp))
 
             IconButton(
-              modifier = Modifier.testTag(DELETE_ALL_EVENTS_TEST_TAG),
+              modifier = Modifier.testTag(SEARCH_RESULT_ARROW_UP_TEST_TAG),
               onClick = { coroutineScope.launch { searchState.selectPrevious() } },
             ) {
               Icon(
@@ -150,7 +154,7 @@ internal fun EventDetailsScreen(
 
             Text(
               text = "${searchState.selectedResult}/${searchState.totalResults}",
-              color = Color.Gray
+              color = MaterialTheme.colorScheme.outline
             )
           }
         },
