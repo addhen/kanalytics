@@ -25,8 +25,6 @@ kotlin {
         implementation(libs.lifecycle.viewmodel.compose)
         implementation(libs.androidx.navigation.compose)
         implementation(libs.kotlinx.serialization)
-        api(libs.moko.permissions)
-        implementation(libs.moko.permissions.compose)
         implementation(libs.kotlinx.serialization)
       }
     }

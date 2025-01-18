@@ -12,7 +12,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import com.addhen.kanalytics.viewer.app.shared.ui.ViewerApp
-import dev.icerock.moko.permissions.PermissionsController
 
 public class MainActivity : ComponentActivity() {
 
@@ -40,8 +39,6 @@ public class MainActivity : ComponentActivity() {
     }
     super.onCreate(savedInstanceState)
     viewerAppMainActivityInstance = this
-    val permissionsController = PermissionsController(this)
-    permissionsController.bind(this)
     setContent {
       ViewerApp()
     }

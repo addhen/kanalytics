@@ -28,6 +28,7 @@ sqldelight = "2.0.2"
 startup-runtime = "1.2.0"
 composeDataTable = "0.10.1"
 mokkery = "2.6.1"
+json-tree = "2.5.0-SNAPSHOT"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -48,8 +49,6 @@ androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navi
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serializer" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
 touchlab-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
-moko-permissions-compose = { module = "dev.icerock.moko:permissions-compose", version.ref = "moko-permissions" }
-moko-permissions = { module = "dev.icerock.moko:permissions", version.ref = "moko-permissions" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
 sqldelight-android = { module = "app.cash.sqldelight:android-driver", version.ref = "sqldelight" }
@@ -59,6 +58,7 @@ sqldelight-primitive = { module = "app.cash.sqldelight:primitive-adapters", vers
 androidx-startup-runtime = { module = "androidx.startup:startup-runtime", version.ref = "startup-runtime" }
 data-table-material = { module = "com.seanproctor:data-table-material3", version.ref = "composeDataTable"}
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
+json-tree = { module = "com.sebastianneubauer.jsontree:jsontree", version.ref = "json-tree" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

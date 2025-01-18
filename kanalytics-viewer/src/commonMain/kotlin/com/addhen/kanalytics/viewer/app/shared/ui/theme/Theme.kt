@@ -9,6 +9,9 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import com.sebastianneubauer.jsontree.TreeColors
+import com.sebastianneubauer.jsontree.defaultDarkColors
+import com.sebastianneubauer.jsontree.defaultLightColors
 
 // Light scheme
 
@@ -325,6 +328,34 @@ internal sealed class EventPropertiesColorScheme {
   }
 }
 
+internal sealed class SearchHighlightColorScheme {
+  abstract val textColor: Color
+
+  data object Light : SearchHighlightColorScheme() {
+    override val textColor = searchHighlightLight
+  }
+
+  data object MediumContrastLight : SearchHighlightColorScheme() {
+    override val textColor = searchHighlightLightMediumContrast
+  }
+
+  data object HighContrastLight : SearchHighlightColorScheme() {
+    override val textColor = searchHighlightLightHighContrast
+  }
+
+  data object Dark : SearchHighlightColorScheme() {
+    override val textColor = searchHighlightDark
+  }
+
+  data object MediumContrastDark : SearchHighlightColorScheme() {
+    override val textColor = searchHighlightDarkMediumContrast
+  }
+
+  data object HighContrastDark : SearchHighlightColorScheme() {
+    override val textColor = searchHighlightDarkHighContrast
+  }
+}
+
 @Composable
 internal fun eventHeaderTextColor(
   colorContrast: ColorContrast = ColorContrast.Dark,
@@ -371,6 +402,115 @@ internal fun eventPropertiesTextColor(
   else -> {
     EventPropertiesColorScheme.Light.textColor
   }
+}
+
+@Composable
+internal fun jsonTreeTextColor(
+  colorContrast: ColorContrast = ColorContrast.Dark,
+  isDarkTheme: Boolean = isSystemInDarkTheme()
+) = when {
+  isDarkTheme && colorContrast == ColorContrast.Light -> TreeColors(
+    keyColor = defaultLightColors.keyColor,
+    stringValueColor = defaultLightColors.stringValueColor,
+    numberValueColor = defaultLightColors.numberValueColor,
+    booleanValueColor = defaultLightColors.booleanValueColor,
+    nullValueColor = defaultLightColors.nullValueColor,
+    indexColor = defaultLightColors.indexColor,
+    symbolColor = defaultLightColors.symbolColor,
+    iconColor = defaultLightColors.iconColor,
+    highlightColor = searchHighlightLight,
+    selectedHighlightColor = searchHighlightLight,
+  )
+
+  isDarkTheme && colorContrast == ColorContrast.LightMedium -> TreeColors(
+    keyColor = defaultLightColors.keyColor,
+    stringValueColor = defaultLightColors.stringValueColor,
+    numberValueColor = defaultLightColors.numberValueColor,
+    booleanValueColor = defaultLightColors.booleanValueColor,
+    nullValueColor = defaultLightColors.nullValueColor,
+    indexColor = defaultLightColors.indexColor,
+    symbolColor = defaultLightColors.symbolColor,
+    iconColor = defaultLightColors.iconColor,
+    highlightColor = searchHighlightLightMediumContrast,
+    selectedHighlightColor = searchHighlightLightMediumContrast,
+  )
+
+  isDarkTheme && colorContrast == ColorContrast.LightHigh -> TreeColors(
+    keyColor = defaultLightColors.keyColor,
+    stringValueColor = defaultLightColors.stringValueColor,
+    numberValueColor = defaultLightColors.numberValueColor,
+    booleanValueColor = defaultLightColors.booleanValueColor,
+    nullValueColor = defaultLightColors.nullValueColor,
+    indexColor = defaultLightColors.indexColor,
+    symbolColor = defaultLightColors.symbolColor,
+    iconColor = defaultLightColors.iconColor,
+    highlightColor = searchHighlightLightHighContrast,
+    selectedHighlightColor = searchHighlightLightHighContrast,
+  )
+
+  isDarkTheme && colorContrast == ColorContrast.Dark -> TreeColors(
+    keyColor = defaultLightColors.keyColor,
+    stringValueColor = defaultLightColors.stringValueColor,
+    numberValueColor = MaterialTheme.colorScheme.onSecondaryContainer.copy(alpha = 0.4f),
+    booleanValueColor = defaultLightColors.booleanValueColor,
+    nullValueColor = defaultLightColors.nullValueColor,
+    indexColor = defaultLightColors.indexColor,
+    symbolColor = MaterialTheme.colorScheme.onSecondaryContainer,
+    iconColor = MaterialTheme.colorScheme.onSecondaryContainer,
+    highlightColor = searchHighlightDark,
+    selectedHighlightColor = searchHighlightDark,
+  )
+
+  isDarkTheme && colorContrast == ColorContrast.DarkMedium -> TreeColors(
+    keyColor = defaultLightColors.keyColor,
+    stringValueColor = defaultLightColors.stringValueColor,
+    numberValueColor = defaultLightColors.numberValueColor,
+    booleanValueColor = defaultLightColors.booleanValueColor,
+    nullValueColor = defaultLightColors.nullValueColor,
+    indexColor = defaultLightColors.indexColor,
+    symbolColor = defaultLightColors.symbolColor,
+    iconColor = defaultLightColors.iconColor,
+    highlightColor = searchHighlightDarkMediumContrast,
+    selectedHighlightColor = searchHighlightDarkMediumContrast,
+  )
+
+  isDarkTheme && colorContrast == ColorContrast.DarkHigh -> TreeColors(
+    keyColor = defaultLightColors.keyColor,
+    stringValueColor = defaultLightColors.stringValueColor,
+    numberValueColor = defaultLightColors.numberValueColor,
+    booleanValueColor = defaultLightColors.booleanValueColor,
+    nullValueColor = defaultLightColors.nullValueColor,
+    indexColor = defaultLightColors.indexColor,
+    symbolColor = defaultLightColors.symbolColor,
+    iconColor = defaultLightColors.iconColor,
+    highlightColor = searchHighlightDarkHighContrast,
+    selectedHighlightColor = searchHighlightDarkHighContrast,
+  )
+
+  else -> {
+    TreeColors(
+      keyColor = defaultLightColors.keyColor,
+      stringValueColor = defaultLightColors.stringValueColor,
+      numberValueColor = defaultLightColors.numberValueColor,
+      booleanValueColor = defaultLightColors.booleanValueColor,
+      nullValueColor = defaultLightColors.nullValueColor,
+      indexColor = defaultLightColors.indexColor,
+      symbolColor = defaultLightColors.symbolColor,
+      iconColor = defaultLightColors.iconColor,
+      highlightColor = searchHighlightLight,
+      selectedHighlightColor = searchHighlightLight,
+    )
+  }
+}
+
+@Composable
+internal fun searchHighlightTextColor(
+  isDarkTheme: Boolean = isSystemInDarkTheme()
+): Color = if (isDarkTheme) {
+  SearchHighlightColorScheme.Dark.textColor
+} else {
+
+  SearchHighlightColorScheme.Light.textColor
 }
 
 @Composable

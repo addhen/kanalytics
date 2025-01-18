@@ -240,3 +240,11 @@ internal val eventHeaderLightHighContrast = Color(0xFF770084)
 internal val eventPropertiesLight = Color(0xFF334D00)
 internal val eventPropertiesLightMediumContrast = Color(0xFF547220)
 internal val eventPropertiesLightHighContrast = Color(0xFF314A00)
+
+internal val searchHighlightLight = Color(0xFFFCD47D)
+internal val searchHighlightLightMediumContrast = Color(0xFFFFC21C)
+internal val searchHighlightLightHighContrast = Color(0xFFFFA900)
+
+internal val searchHighlightDark = Color(0xFFE4E4E4)
+internal val searchHighlightDarkMediumContrast = Color(0xFFCCCFE5)
+internal val searchHighlightDarkHighContrast = Color(0xFFBFC6E6)

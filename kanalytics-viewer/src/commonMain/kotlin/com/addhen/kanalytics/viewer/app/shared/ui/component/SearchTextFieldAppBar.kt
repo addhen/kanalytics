@@ -5,6 +5,7 @@ package com.addhen.kanalytics.viewer.app.shared.ui.component
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -36,22 +37,24 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_icon_content_description
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_term_placeHolder
 import org.jetbrains.compose.resources.stringResource
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 internal fun SearchTextFieldAppBar(
   searchQuery: String,
+  placeholder: String,
   testTag: String,
   modifier: Modifier = Modifier,
   onSearchQueryChanged: (String) -> Unit,
+  actions: @Composable RowScope.() -> Unit = {},
 ) {
   TopAppBar(
     modifier = modifier,
     title = {
       SearchTextField(
         searchQuery = searchQuery,
+        placeholder = placeholder,
         onSearchQueryChanged = onSearchQueryChanged,
         modifier = Modifier
           .testTag(testTag),
@@ -60,6 +63,7 @@ internal fun SearchTextFieldAppBar(
     colors = TopAppBarDefaults.largeTopAppBarColors(
       containerColor = Color.Transparent,
     ),
+    actions = actions,
   )
 }
 
@@ -67,6 +71,7 @@ internal fun SearchTextFieldAppBar(
 private fun SearchTextField(
   modifier: Modifier = Modifier,
   searchQuery: String,
+  placeholder: String,
   onSearchQueryChanged: (String) -> Unit = {},
   enabled: Boolean = true,
   interactionSource: MutableInteractionSource = remember { MutableInteractionSource() },
@@ -81,7 +86,7 @@ private fun SearchTextField(
       query = value
       onSearchQueryChanged(value)
     },
-    placeholder = { Text(stringResource(Res.string.search_term_placeHolder)) },
+    placeholder = { Text(placeholder) },
     modifier = modifier
       .fillMaxWidth()
       .padding(end = 8.dp)

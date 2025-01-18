@@ -43,6 +43,7 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.event_name
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.no_events_found
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.properties
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_term_placeHolder
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.timestamp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.viewer_app_name
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
@@ -57,6 +58,7 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageStateHolder
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.eventHeaderTextColor
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.eventNameTextColor
 import com.addhen.kanalytics.viewer.app.shared.ui.theme.eventPropertiesTextColor
+import com.addhen.kanalytics.viewer.app.shared.ui.theme.searchHighlightTextColor
 import com.seanproctor.datatable.DataColumn
 import com.seanproctor.datatable.material3.PaginatedDataTable
 import com.seanproctor.datatable.paging.rememberPaginatedDataTableState
@@ -100,6 +102,7 @@ internal fun AnalyticsEventsScreen(
     searchTopBar = {
       SearchTextFieldAppBar(
         searchQuery = uiState.searchQuery,
+        placeholder = stringResource(Res.string.search_term_placeHolder),
         onSearchQueryChanged = onSearchQueryChanged,
         testTag = SEARCH_SCREEN_TEST_TAG,
       )
@@ -214,7 +217,7 @@ private fun String.highlightText(text: String): AnnotatedString {
     append(text.take(highlightRange.first))
     withStyle(
       SpanStyle(
-        background = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.6f),
+        background = searchHighlightTextColor(),
         textDecoration = TextDecoration.Underline,
       ),
     ) {
