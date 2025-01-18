@@ -1,8 +1,10 @@
 package com.addhen.kanalytics.viewer.app.shared.ui.eventdetail
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.togetherWith
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,8 +14,10 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.text.selection.SelectionContainer
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CopyAll
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.CircularProgressIndicator
@@ -27,10 +31,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalClipboardManager
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -102,9 +108,11 @@ internal fun EventDetailsScreen(
   onBack: () -> Unit
 ) {
 
+  val clipboardManager = LocalClipboardManager.current
   val coroutineScope = rememberCoroutineScope()
   val searchState = rememberSearchState()
   val searchQuery by remember(searchState.query) { mutableStateOf(searchState.query.orEmpty()) }
+  var eventInfo by remember { mutableStateOf(buildAnnotatedString { }) }
 
   ViewerAppScaffold(
     title = stringResource(Res.string.event_details_title, eventName),
@@ -161,8 +169,21 @@ internal fun EventDetailsScreen(
         },
       )
     },
+    actions = {
+      IconButton(onClick = {
+        clipboardManager.setText(eventInfo)
+      }) {
+        Icon(
+          imageVector = Icons.Default.CopyAll,
+          contentDescription = stringResource(Res.string.delete_all_events_content_description) ,
+        )
+      }
+    }
   ) {
-      EventDetailsContent(uiState = uiState, searchState = searchState)
+      EventDetailsContent(
+        uiState = uiState,
+        searchState = searchState,
+      ) { eventContent -> eventInfo = eventContent }
   }
 }
 
@@ -170,8 +191,8 @@ internal fun EventDetailsScreen(
 private fun EventDetailsContent(
   uiState: EventDetailsViewModel.EventDetailsUiState,
   searchState: SearchState,
+  onEventLoaded: (AnnotatedString) -> Unit
 ) {
-  uiState.hashCode()
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
    AnimatedVisibility(
       modifier = Modifier.fillMaxSize(),
@@ -197,20 +218,35 @@ private fun EventDetailsContent(
             modifier = Modifier.fillMaxWidth(),
           )
         } else {
-          Column(modifier = Modifier.padding(8.dp)) {
-            Text(text = toAnnotatedEventDescription(uiState.event))
-            Spacer(modifier = Modifier.height(2.dp))
-            JsonTree(
-              json = uiState.event.properties.toPrettyPrintJsonString(),
-              showIndices = true,
-              showItemCount = true,
-              expandSingleChildren = true,
-              onLoading = { CircularProgressIndicator() },
-              searchState = searchState,
-              modifier = Modifier.fillMaxWidth(),
-              textStyle = MaterialTheme.typography.bodyMedium,
-              colors = jsonTreeTextColor()
-            )
+          val eventDescription = toAnnotatedEventDescription(uiState.event)
+          val eventProperties = uiState.event.properties.toPrettyPrintJsonString()
+          onEventLoaded(
+            buildAnnotatedString {
+              append(eventDescription)
+              append(eventProperties)
+            }
+          )
+          AnimatedContent(
+            uiState.flag == EventDetailsViewModel.EventDetailsUiState.Flag.IDLE,
+            transitionSpec = { fadeIn() togetherWith fadeOut() },
+          ) {
+            SelectionContainer {
+              Column(modifier = Modifier.padding(8.dp)) {
+                Text(text = eventDescription)
+                Spacer(modifier = Modifier.height(2.dp))
+                JsonTree(
+                  json = eventProperties,
+                  showIndices = true,
+                  showItemCount = true,
+                  expandSingleChildren = true,
+                  onLoading = { CircularProgressIndicator() },
+                  searchState = searchState,
+                  modifier = Modifier.fillMaxWidth(),
+                  textStyle = MaterialTheme.typography.bodyMedium,
+                  colors = jsonTreeTextColor()
+                )
+              }
+            }
           }
         }
       }
@@ -222,9 +258,9 @@ private fun EventDetailsContent(
 private fun toAnnotatedEventDescription(eventData: EventData) = buildAnnotatedString {
   toStyledKeyValueString(stringResource(Res.string.id), eventData.id.toString())
   toStyledKeyValueString(stringResource(Res.string.name), eventData.name)
-  toStyledKeyValueString(stringResource(Res.string.created_at), eventData.createdAt.toFormattedString())
   toStyledKeyValueString(stringResource(Res.string.tracker_name), eventData.trackerName)
   if (eventData.description.isNullOrBlank().not()) {
     toStyledKeyValueString(stringResource(Res.string.description), eventData.description)
   }
+  toStyledKeyValueString(stringResource(Res.string.created_at), eventData.createdAt.toFormattedString())
 }
