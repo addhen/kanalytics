@@ -223,6 +223,7 @@ private fun EventDetailsContent(
           onEventLoaded(
             buildAnnotatedString {
               append(eventDescription)
+              append("\n")
               append(eventProperties)
             }
           )
