@@ -3,11 +3,9 @@
 
 package com.addhen.kanalytics
 
-private const val DEFAULT_EVENT_PARAM_VALUE = "NA"
-
 public class KAnalyticsEvent(
   public val eventName: String,
-  public val eventDescription: String = DEFAULT_EVENT_PARAM_VALUE,
+  public val eventDescription: String? = null,
   public val properties: MutableMap<String, Any?> = mutableMapOf(),
 ) {
 
@@ -21,7 +19,7 @@ public class KAnalyticsEvent(
 
   public fun copy(
     eventName: String = this.eventName,
-    eventDescription: String = this.eventDescription,
+    eventDescription: String? = this.eventDescription,
     parameters: MutableMap<String, Any?> = this.properties,
   ): KAnalyticsEvent = KAnalyticsEvent(eventName, eventDescription, parameters)
 
