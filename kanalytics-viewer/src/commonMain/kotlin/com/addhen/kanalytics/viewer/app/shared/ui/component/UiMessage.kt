@@ -89,12 +89,6 @@ internal class UiMessageManager : UiMessageStateHolder {
     _uiMessageState = _uiMessageState.copy(uiMessages = newMessages)
     return action
   }
-
-  internal companion object {
-    val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-      UiMessageManager()
-    }
-  }
 }
 
 internal data class UiMessage(
