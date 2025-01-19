@@ -1,4 +1,4 @@
-// Copyright 2023, Addhen Limited and the FOSDEM Event app project contributors
+// Copyright 2023, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
 package com.addhen.kanalytics.viewer.app.shared.ui.component

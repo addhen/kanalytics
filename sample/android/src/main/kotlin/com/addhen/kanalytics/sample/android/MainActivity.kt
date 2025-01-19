@@ -16,10 +16,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.compose.rememberNavController
 import com.addhen.kanalytics.sample.shared.SampleApp
-import com.addhen.kanalytics.sample.shared.SampleScreen
-import com.addhen.kanalytics.sample.shared.viewModel
 
 class MainActivity : ComponentActivity() {
 

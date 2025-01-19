@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.eventdetail
 
 import androidx.compose.runtime.Stable
@@ -25,13 +28,13 @@ internal class EventDetailsViewModel(
     .map { eventDataEntity ->
       EventDetailsUiState(
         event = eventDataEntity,
-        flag = EventDetailsUiState.Flag.IDLE
+        flag = EventDetailsUiState.Flag.IDLE,
       )
     }
     .handleErrorWithRetry(uiMessageStateHolder)
     .stateInWhileSubscribed(
       viewModelScope,
-      EventDetailsUiState(flag = EventDetailsUiState.Flag.LOADING)
+      EventDetailsUiState(flag = EventDetailsUiState.Flag.LOADING),
     )
 
   @Stable
@@ -54,7 +57,7 @@ internal class EventDetailsViewModel(
         EventDetailsViewModel(
           eventRepository = repository,
           uiMessageStateHolder = uiMessageStateHolder,
-          eventId = eventId
+          eventId = eventId,
         )
       }
     }

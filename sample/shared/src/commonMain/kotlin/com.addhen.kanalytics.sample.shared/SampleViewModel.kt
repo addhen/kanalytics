@@ -48,11 +48,10 @@ public class SampleViewModel(
             // do nothing
           }
         }
-
       }
       .onEach {
         viewStateEmitter.update { it.copy(flag = LocationUiState.Flag.IDLE) }
-    }.launchIn(viewModelScope)
+      }.launchIn(viewModelScope)
   }
 
   public fun sendAnalyticsEvent() {
@@ -63,8 +62,8 @@ public class SampleViewModel(
   }
 
   public sealed interface UiAction {
-    public data object TriggerAnalyticsEvent: UiAction
-    public data object LoadEvent: UiAction
+    public data object TriggerAnalyticsEvent : UiAction
+    public data object LoadEvent : UiAction
   }
 
   public data class LocationUiState(

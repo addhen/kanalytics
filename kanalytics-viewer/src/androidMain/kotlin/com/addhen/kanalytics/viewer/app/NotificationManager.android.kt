@@ -37,7 +37,9 @@ internal class NotificationManagerImpl : NotificationManager {
 
   override fun showNotification(eventName: String, trackerName: String) {
     val context = ContextInitializer.applicationContext
-    addNotificationToBuffer(context.getString(R.string.notification_message, eventName, trackerName))
+    addNotificationToBuffer(
+      context.getString(R.string.notification_message, eventName, trackerName),
+    )
     if (MainActivity.isInForeground) {
       return
     }

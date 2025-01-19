@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.component
 
 import androidx.compose.material3.SnackbarDuration
@@ -52,24 +55,24 @@ internal fun SnackbarMessageEffect(
 }
 
 internal class UiMessageManager : UiMessageStateHolder {
-  private var _uiMessagesState by mutableStateOf(UiMessageState())
+  private var _uiMessageState by mutableStateOf(UiMessageState())
 
-  override val uiMessageState: UiMessageState get() = _uiMessagesState
+  override val uiMessageState: UiMessageState get() = _uiMessageState
 
   override fun messageShown(messageId: Long, uiMessageAction: UiMessageAction) {
-    val messages = _uiMessagesState.uiMessages.toMutableList()
+    val messages = _uiMessageState.uiMessages.toMutableList()
     messages.indexOfFirst { it.id == messageId }.let { uiMessageIndex ->
       if (uiMessageIndex == -1) return@let
       messages[uiMessageIndex] = messages[uiMessageIndex].copy(action = uiMessageAction)
     }
-    _uiMessagesState = _uiMessagesState.copy(uiMessages = messages)
+    _uiMessageState = _uiMessageState.copy(uiMessages = messages)
   }
 
   override suspend fun showMessage(message: UiMessage): UiMessageAction {
     val messages = uiMessageState.uiMessages.toMutableList()
     messages.add(message)
-    _uiMessagesState = _uiMessagesState.copy(uiMessages = messages)
-    val action = snapshotFlow { _uiMessagesState }.filter { messageState ->
+    _uiMessageState = _uiMessageState.copy(uiMessages = messages)
+    val action = snapshotFlow { _uiMessageState }.filter { messageState ->
       messageState.uiMessages.find { it.id == message.id }?.let { uiMessage ->
         val action = uiMessage.action
         action != null
@@ -79,11 +82,11 @@ internal class UiMessageManager : UiMessageStateHolder {
       checkNotNull(uiMessage.action)
     }.first()
 
-    val newMessages = _uiMessagesState.uiMessages.toMutableList()
+    val newMessages = _uiMessageState.uiMessages.toMutableList()
     newMessages.find { it.id == message.id }?.let { uiMessage ->
       newMessages.remove(uiMessage)
     }
-    _uiMessagesState = _uiMessagesState.copy(uiMessages = newMessages)
+    _uiMessageState = _uiMessageState.copy(uiMessages = newMessages)
     return action
   }
 

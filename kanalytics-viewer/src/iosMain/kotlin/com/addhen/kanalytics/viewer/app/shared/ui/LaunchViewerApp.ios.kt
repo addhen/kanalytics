@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui
 
 import platform.Foundation.NSProcessInfo
@@ -11,7 +14,7 @@ import platform.UIKit.UIWindowScene
 
 public actual fun launchViewerApp() {
   if (viewerAppViewControllerInstance != null) return // Already launched
-  val viewerAppViewController = ViewerAppViewController()
+  val viewerAppViewController = viewerAppViewController()
   viewerAppViewController.modalPresentationStyle = UIModalPresentationFullScreen
   getTopMostViewController()?.presentViewController(viewerAppViewController, true, null)
 }
@@ -21,7 +24,7 @@ internal actual fun disposeViewerAppWindow() {
 }
 
 private fun getTopMostViewController(
-  base: UIViewController? = topWindow?.rootViewController
+  base: UIViewController? = topWindow?.rootViewController,
 ): UIViewController? {
   if (base == null) return null
 

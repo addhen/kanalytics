@@ -125,7 +125,6 @@ internal sealed class EventPropertiesColorScheme {
   data object Dark : EventPropertiesColorScheme() {
     override val textColor = eventPropertiesDark
   }
-
 }
 
 internal sealed class SearchHighlightColorScheme {
@@ -141,17 +140,13 @@ internal sealed class SearchHighlightColorScheme {
 }
 
 @Composable
-internal fun eventHeaderTextColor(
-  isDarkTheme: Boolean = isSystemInDarkTheme()
-) = when {
+internal fun eventHeaderTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = when {
   isDarkTheme -> EventsTableColorScheme.Dark.textColor
   else -> EventsTableColorScheme.Light.textColor
 }
 
 @Composable
-internal fun eventNameTextColor(
-  isDarkTheme: Boolean = isSystemInDarkTheme()
-) = when {
+internal fun eventNameTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = when {
   isDarkTheme -> EventNameColorScheme.Dark.textColor
   else -> {
     EventNameColorScheme.Light.textColor
@@ -159,19 +154,15 @@ internal fun eventNameTextColor(
 }
 
 @Composable
-internal fun eventPropertiesTextColor(
-  isDarkTheme: Boolean = isSystemInDarkTheme()
-) = when {
-  isDarkTheme  -> EventPropertiesColorScheme.Dark.textColor
+internal fun eventPropertiesTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = when {
+  isDarkTheme -> EventPropertiesColorScheme.Dark.textColor
   else -> {
     EventPropertiesColorScheme.Light.textColor
   }
 }
 
 @Composable
-internal fun jsonTreeTextColor(
-  isDarkTheme: Boolean = isSystemInDarkTheme()
-) = when {
+internal fun jsonTreeTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = when {
   isDarkTheme -> {
     TreeColors(
       keyColor = defaultLightColors.keyColor,
@@ -202,14 +193,12 @@ internal fun jsonTreeTextColor(
 }
 
 @Composable
-internal fun searchHighlightTextColor(
-  isDarkTheme: Boolean = isSystemInDarkTheme()
-): Color = if (isDarkTheme) {
-  SearchHighlightColorScheme.Dark.textColor
-} else {
-
-  SearchHighlightColorScheme.Light.textColor
-}
+internal fun searchHighlightTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()): Color =
+  if (isDarkTheme) {
+    SearchHighlightColorScheme.Dark.textColor
+  } else {
+    SearchHighlightColorScheme.Light.textColor
+  }
 
 @Composable
 internal fun AppTheme(
@@ -217,8 +206,7 @@ internal fun AppTheme(
   fontFamily: FontFamily? = jetbrainsMonoFontFamily(),
   content: @Composable () -> Unit,
 ) {
-
-    val colorScheme = getColorScheme(isDarkTheme)
+  val colorScheme = getColorScheme(isDarkTheme)
 
   MaterialTheme(
     colorScheme = colorScheme,

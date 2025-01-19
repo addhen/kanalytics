@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.eventdetail
 
 import androidx.compose.animation.AnimatedContent
@@ -70,17 +73,11 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import toFormattedString
 
-
 internal const val SEARCH_RESULT_ARROW_DOWN_TEST_TAG = "SearchResultArrowDownTestTag"
 internal const val SEARCH_RESULT_ARROW_UP_TEST_TAG = "SearchResultArrowUpTestTag"
 
-
 @Composable
-internal fun EventDetailsScreen(
-  eventId: Long,
-  eventName: String,
-  onBack: () -> Unit
-) {
+internal fun EventDetailsScreen(eventId: Long, eventName: String, onBack: () -> Unit) {
   val viewModel: EventDetailsViewModel = viewModel(factory = EventDetailsViewModel.create(eventId))
   val uiState by viewModel.viewState.collectAsStateWithLifecycle()
   val snackbarHostState = remember { SnackbarHostState() }
@@ -96,7 +93,7 @@ internal fun EventDetailsScreen(
     eventName = eventName,
     snackbarHostState = snackbarHostState,
     uiState = uiState,
-    onBack = onBack
+    onBack = onBack,
   )
 }
 
@@ -105,9 +102,8 @@ internal fun EventDetailsScreen(
   eventName: String,
   snackbarHostState: SnackbarHostState,
   uiState: EventDetailsViewModel.EventDetailsUiState,
-  onBack: () -> Unit
+  onBack: () -> Unit,
 ) {
-
   val clipboardManager = LocalClipboardManager.current
   val coroutineScope = rememberCoroutineScope()
   val searchState = rememberSearchState()
@@ -121,7 +117,7 @@ internal fun EventDetailsScreen(
       IconButton(onClick = onBack) {
         Icon(
           imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-          contentDescription = stringResource(Res.string.back_icon_content_description)
+          contentDescription = stringResource(Res.string.back_icon_content_description),
         )
       }
     },
@@ -132,10 +128,9 @@ internal fun EventDetailsScreen(
         testTag = SEARCH_SCREEN_TEST_TAG,
         placeholder = stringResource(Res.string.search_placeholder),
         actions = {
-
           Row(
             modifier = Modifier.padding(4.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
           ) {
             IconButton(
               modifier = Modifier.testTag(SEARCH_RESULT_ARROW_DOWN_TEST_TAG),
@@ -143,7 +138,9 @@ internal fun EventDetailsScreen(
             ) {
               Icon(
                 imageVector = Icons.Default.KeyboardArrowDown,
-                contentDescription = stringResource(Res.string.delete_all_events_content_description) ,
+                contentDescription = stringResource(
+                  Res.string.delete_all_events_content_description,
+                ),
               )
             }
 
@@ -155,7 +152,9 @@ internal fun EventDetailsScreen(
             ) {
               Icon(
                 imageVector = Icons.Default.KeyboardArrowUp,
-                contentDescription = stringResource(Res.string.delete_all_events_content_description) ,
+                contentDescription = stringResource(
+                  Res.string.delete_all_events_content_description,
+                ),
               )
             }
 
@@ -163,7 +162,7 @@ internal fun EventDetailsScreen(
 
             Text(
               text = "${searchState.selectedResult}/${searchState.totalResults}",
-              color = MaterialTheme.colorScheme.outline
+              color = MaterialTheme.colorScheme.outline,
             )
           }
         },
@@ -175,15 +174,15 @@ internal fun EventDetailsScreen(
       }) {
         Icon(
           imageVector = Icons.Default.CopyAll,
-          contentDescription = stringResource(Res.string.delete_all_events_content_description) ,
+          contentDescription = stringResource(Res.string.delete_all_events_content_description),
         )
       }
-    }
+    },
   ) {
-      EventDetailsContent(
-        uiState = uiState,
-        searchState = searchState,
-      ) { eventContent -> eventInfo = eventContent }
+    EventDetailsContent(
+      uiState = uiState,
+      searchState = searchState,
+    ) { eventContent -> eventInfo = eventContent }
   }
 }
 
@@ -191,10 +190,10 @@ internal fun EventDetailsScreen(
 private fun EventDetailsContent(
   uiState: EventDetailsViewModel.EventDetailsUiState,
   searchState: SearchState,
-  onEventLoaded: (AnnotatedString) -> Unit
+  onEventLoaded: (AnnotatedString) -> Unit,
 ) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-   AnimatedVisibility(
+    AnimatedVisibility(
       modifier = Modifier.fillMaxSize(),
       visible = (uiState.flag == EventDetailsViewModel.EventDetailsUiState.Flag.LOADING),
       enter = fadeIn(),
@@ -225,7 +224,7 @@ private fun EventDetailsContent(
               append(eventDescription)
               append("\n")
               append(eventProperties)
-            }
+            },
           )
           AnimatedContent(
             uiState.flag == EventDetailsViewModel.EventDetailsUiState.Flag.IDLE,
@@ -244,7 +243,7 @@ private fun EventDetailsContent(
                   searchState = searchState,
                   modifier = Modifier.fillMaxWidth(),
                   textStyle = MaterialTheme.typography.bodyMedium,
-                  colors = jsonTreeTextColor()
+                  colors = jsonTreeTextColor(),
                 )
               }
             }
@@ -263,5 +262,8 @@ private fun toAnnotatedEventDescription(eventData: EventData) = buildAnnotatedSt
   if (eventData.description.isNullOrBlank().not()) {
     toStyledKeyValueString(stringResource(Res.string.description), eventData.description)
   }
-  toStyledKeyValueString(stringResource(Res.string.created_at), eventData.createdAt.toFormattedString())
+  toStyledKeyValueString(
+    stringResource(Res.string.created_at),
+    eventData.createdAt.toFormattedString(),
+  )
 }

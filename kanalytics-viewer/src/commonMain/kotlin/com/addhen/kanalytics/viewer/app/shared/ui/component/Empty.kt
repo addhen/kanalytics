@@ -16,8 +16,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 public fun EmptyContent(modifier: Modifier = Modifier, title: @Composable () -> Unit) {
-  Box(modifier = modifier.fillMaxSize(),
-    contentAlignment = Alignment.Center
+  Box(
+    modifier = modifier.fillMaxSize(),
+    contentAlignment = Alignment.Center,
   ) {
     Column(
       modifier = modifier,

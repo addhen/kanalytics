@@ -15,9 +15,7 @@ import androidx.compose.ui.unit.sp
 internal expect fun jetbrainsMonoFontFamily(): FontFamily
 
 @Composable
-internal fun appTypography(
-  fontFamily: FontFamily?
-): Typography {
+internal fun appTypography(fontFamily: FontFamily?): Typography {
   return remember(fontFamily) {
     Typography(
       displayLarge = TextStyle(

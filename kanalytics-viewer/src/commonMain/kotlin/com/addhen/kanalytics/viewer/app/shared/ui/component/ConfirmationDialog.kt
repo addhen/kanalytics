@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.component
 
 import androidx.compose.material3.AlertDialog
@@ -18,7 +21,7 @@ internal fun ConfirmationDialog(
   confirmButtonText: String = stringResource(Res.string.confirm),
   dismissButtonText: String = stringResource(Res.string.cancel),
   onConfirm: () -> Unit,
-  onDismiss: () -> Unit
+  onDismiss: () -> Unit,
 ) {
   AlertDialog(
     onDismissRequest = onDismiss,
@@ -27,7 +30,7 @@ internal fun ConfirmationDialog(
         text = title,
         style = MaterialTheme.typography.headlineSmall,
         color = MaterialTheme.colorScheme.onSurface,
-        textAlign = TextAlign.Center
+        textAlign = TextAlign.Center,
       )
     },
     text = {
@@ -46,6 +49,6 @@ internal fun ConfirmationDialog(
       TextButton(onClick = onDismiss) {
         Text(text = dismissButtonText)
       }
-    }
+    },
   )
 }

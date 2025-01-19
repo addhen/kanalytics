@@ -5,7 +5,7 @@ package com.addhen.kanalytics.viewer.app.shared.ui.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
-import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.Lifecycle.State.RESUMED
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
@@ -14,8 +14,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navOptions
 import androidx.navigation.toRoute
-import com.addhen.kanalytics.viewer.app.shared.ui.eventlist.EventViewerScreen
 import com.addhen.kanalytics.viewer.app.shared.ui.eventdetail.EventDetailsScreen
+import com.addhen.kanalytics.viewer.app.shared.ui.eventlist.EventViewerScreen
 import kotlin.reflect.KClass
 
 @Composable
@@ -27,7 +27,8 @@ public fun AppNavGraph(navController: NavHostController, startDestination: KClas
     composable<EventViewerRoute> {
       EventViewerScreen { eventId, eventName ->
         navController.navigate(
-          EventDetailsRoute(eventId, eventName), navController.buildNavOptions()
+          EventDetailsRoute(eventId, eventName),
+          navController.buildNavOptions(),
         )
       }
     }
@@ -35,14 +36,14 @@ public fun AppNavGraph(navController: NavHostController, startDestination: KClas
     composable<EventDetailsRoute> { navBackStackEntry ->
       val route = navBackStackEntry.toRoute<EventDetailsRoute>()
       EventDetailsScreen(
-        eventId = remember {route.eventId},
-        eventName = remember { route.eventName }
+        eventId = remember { route.eventId },
+        eventName = remember { route.eventName },
       ) {
         // Checking if the current back stack entry is resumed to avoid an issue when the
         // back button is double pressed in succession which causes the display to show a
         // blank screen with no view components on it.
         // See: https://github.com/google/accompanist/issues/1408#issuecomment-1673011548
-        if (navController.currentBackStackEntry?.lifecycle?.currentState == Lifecycle.State.RESUMED) {
+        if (navController.currentBackStackEntry?.lifecycle?.currentState == RESUMED) {
           navController.popBackStack()
         }
       }

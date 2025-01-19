@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.sample.shared
 
 import androidx.lifecycle.ViewModel
@@ -22,10 +25,7 @@ public class SampleViewModelFactory(
   private val kanalytics: KAnalytics,
 ) : ViewModelProvider.Factory {
 
-  public override fun <T : ViewModel> create(
-    modelClass: KClass<T>,
-    extras: CreationExtras
-  ): T {
+  public override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
     return SampleViewModel(kanalytics) as T
   }
 }

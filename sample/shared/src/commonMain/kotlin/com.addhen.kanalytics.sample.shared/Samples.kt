@@ -30,10 +30,7 @@ public fun SamplesTheme(
 }
 
 @Composable
-public fun Samples(
-  onTriggerAnalytics: () -> Unit,
-  onEventViewer: () -> Unit,
-) {
+public fun Samples(onTriggerAnalytics: () -> Unit, onEventViewer: () -> Unit) {
   Column(
     modifier = Modifier.padding(16.dp).fillMaxSize(),
     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -44,7 +41,7 @@ public fun Samples(
       Text("Trigger an analytics event")
     }
 
-    Button(onClick = onEventViewer ) {
+    Button(onClick = onEventViewer) {
       Text("Start viewer")
     }
   }

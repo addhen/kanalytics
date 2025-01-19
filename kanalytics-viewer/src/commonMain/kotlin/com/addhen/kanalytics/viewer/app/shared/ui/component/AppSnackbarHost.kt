@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.component
 
 import androidx.compose.foundation.layout.systemBarsPadding
@@ -14,17 +17,17 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 public fun AppSnackbarHost(
-    hostState: SnackbarHostState,
-    modifier: Modifier = Modifier,
-    snackbar: @Composable (SnackbarData) -> Unit = { Snackbar(it) }
+  hostState: SnackbarHostState,
+  modifier: Modifier = Modifier,
+  snackbar: @Composable (SnackbarData) -> Unit = { Snackbar(it) },
 ) {
-    SnackbarHost(
-        hostState = hostState,
-        modifier = modifier
-            .systemBarsPadding()
-            // Limit the Snackbar width for large screens
-            .wrapContentWidth(align = Alignment.Start)
-            .widthIn(max = 550.dp),
-        snackbar = snackbar
-    )
+  SnackbarHost(
+    hostState = hostState,
+    modifier = modifier
+      .systemBarsPadding()
+      // Limit the Snackbar width for large screens
+      .wrapContentWidth(align = Alignment.Start)
+      .widthIn(max = 550.dp),
+    snackbar = snackbar,
+  )
 }

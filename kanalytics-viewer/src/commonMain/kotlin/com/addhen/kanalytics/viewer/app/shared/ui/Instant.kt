@@ -1,9 +1,12 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 
 internal fun Instant.toFormattedString(
-  timezone: TimeZone = TimeZone.currentSystemDefault()
+  timezone: TimeZone = TimeZone.currentSystemDefault(),
 ): String {
   val localDateTime = this.toLocalDateTime(timezone)
   return buildString {

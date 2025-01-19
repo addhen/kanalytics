@@ -87,7 +87,7 @@ internal fun AnalyticsEventsScreen(
         showDialog = false
         onDeleteAllEvents()
       },
-      onDismiss = { showDialog = false }
+      onDismiss = { showDialog = false },
     )
   }
 
@@ -115,7 +115,7 @@ internal fun AnalyticsEventsScreen(
       ) {
         Icon(
           imageVector = Icons.Default.Delete,
-          contentDescription = stringResource(Res.string.delete_all_events_content_description) ,
+          contentDescription = stringResource(Res.string.delete_all_events_content_description),
         )
       }
     },
@@ -126,7 +126,7 @@ internal fun AnalyticsEventsScreen(
 @Composable
 private fun AnalyticsEventsContent(
   uiState: EventViewerViewModel.EventViewerUiState,
-  onNavigateToDetail: (Long, String) -> Unit
+  onNavigateToDetail: (Long, String) -> Unit,
 ) {
   Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
     AnimatedVisibility(
@@ -156,7 +156,7 @@ private fun AnalyticsEventsContent(
           PaginatedDataTableContent(
             uiState.events.toImmutableList(),
             uiState.searchQuery,
-            onNavigateToDetail
+            onNavigateToDetail,
           )
         }
       }
@@ -168,7 +168,7 @@ private fun AnalyticsEventsContent(
 private fun PaginatedDataTableContent(
   events: ImmutableList<EventData>,
   searchText: String,
-  onNavigateToDetail: (Long, String) -> Unit
+  onNavigateToDetail: (Long, String) -> Unit,
 ) {
   PaginatedDataTable(
     columns = listOf(
@@ -203,7 +203,7 @@ private fun PaginatedDataTableContent(
             searchText.highlightText(event.properties.toJsonString()),
             maxLines = 2,
             overflow = TextOverflow.Ellipsis,
-            color = eventPropertiesTextColor()
+            color = eventPropertiesTextColor(),
           )
         }
       }
@@ -229,10 +229,7 @@ private fun String.highlightText(text: String): AnnotatedString {
 }
 
 @Composable
-private fun ConfirmDeleteDialog(
-  onConfirm: () -> Unit,
-  onDismiss: () -> Unit
-) {
+private fun ConfirmDeleteDialog(onConfirm: () -> Unit, onDismiss: () -> Unit) {
   ConfirmationDialog(
     title = stringResource(Res.string.confirm_delete_all_events_title),
     message = stringResource(Res.string.confirm_delete_all_events_message),

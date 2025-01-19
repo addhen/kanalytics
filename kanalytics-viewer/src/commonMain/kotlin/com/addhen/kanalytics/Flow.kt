@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics
 
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessage
@@ -13,7 +16,7 @@ import kotlinx.coroutines.flow.stateIn
 
 internal fun <T> Flow<T>.stateInWhileSubscribed(
   scope: CoroutineScope,
-  initialValue: T
+  initialValue: T,
 ): StateFlow<T> {
   return stateIn(
     scope = scope,
@@ -22,11 +25,10 @@ internal fun <T> Flow<T>.stateInWhileSubscribed(
   )
 }
 
-internal fun <T> Flow<T>.handleErrorWithRetry(
-  uiMessageStateHolder: UiMessageStateHolder
-): Flow<T> = retry { throwable ->
-  throwable.printStackTrace()
-  val action = uiMessageStateHolder
-    .showMessage(UiMessage(message = throwable.message ?: "An error occurred"))
-  action == UiMessageAction.ActionPerformed
-}.catch { /* Do nothing if the user dose not retry. */ }
+internal fun <T> Flow<T>.handleErrorWithRetry(uiMessageStateHolder: UiMessageStateHolder): Flow<T> =
+  retry { throwable ->
+    throwable.printStackTrace()
+    val action = uiMessageStateHolder
+      .showMessage(UiMessage(message = throwable.message ?: "An error occurred"))
+    action == UiMessageAction.ActionPerformed
+  }.catch { /* Do nothing if the user dose not retry. */ }

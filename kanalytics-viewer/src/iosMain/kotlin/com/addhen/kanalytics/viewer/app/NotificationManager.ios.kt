@@ -31,14 +31,14 @@ internal class NotificationManagerImpl : NotificationManager {
   private val notificationAction = UNNotificationAction.actionWithIdentifier(
     identifier = "OPEN_VIEWER_APP_ACTION",
     title = "Open Viewer App",
-    options = UNNotificationActionOptionForeground
+    options = UNNotificationActionOptionForeground,
   )
 
   private val notificationCategory = UNNotificationCategory.categoryWithIdentifier(
     identifier = "KANALYTICS_CATEGORY",
     actions = listOf(notificationAction),
     intentIdentifiers = listOf<String>(),
-    options = UNNotificationCategoryOptionNone
+    options = UNNotificationCategoryOptionNone,
   )
 
   override fun showNotification(eventName: String, trackerName: String) {
@@ -86,7 +86,7 @@ internal class NotificationManagerImpl : NotificationManager {
         override fun userNotificationCenter(
           center: UNUserNotificationCenter,
           didReceiveNotificationResponse: UNNotificationResponse,
-          withCompletionHandler: () -> Unit
+          withCompletionHandler: () -> Unit,
         ) {
           if (didReceiveNotificationResponse.actionIdentifier == "OPEN_VIEWER_APP_ACTION") {
             launchViewerApp()

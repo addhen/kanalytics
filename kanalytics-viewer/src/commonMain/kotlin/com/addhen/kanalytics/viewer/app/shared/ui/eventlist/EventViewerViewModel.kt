@@ -40,11 +40,11 @@ internal class EventViewerViewModel(
   private val eventRepository: EventDataRepository,
   private val savedStateHandle: SavedStateHandle,
   private val notificationManager: NotificationManager,
-  internal val uiMessageStateHolder: UiMessageStateHolder
+  internal val uiMessageStateHolder: UiMessageStateHolder,
 ) : ViewModel() {
 
   private val viewStateEmitter = MutableStateFlow(
-    EventViewerUiState(flag = EventViewerUiState.Flag.LOADING)
+    EventViewerUiState(flag = EventViewerUiState.Flag.LOADING),
   )
   private val uiAction = MutableSharedFlow<UiAction>()
 
@@ -148,7 +148,7 @@ internal class EventViewerViewModel(
           eventRepository = repository,
           savedStateHandle = savedStateHandle,
           notificationManager = NotificationManager(),
-          uiMessageStateHolder = uiMessageStateHolder
+          uiMessageStateHolder = uiMessageStateHolder,
         )
       }
     }

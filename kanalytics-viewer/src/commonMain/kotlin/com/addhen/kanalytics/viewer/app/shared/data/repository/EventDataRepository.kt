@@ -71,7 +71,7 @@ internal class EventDataRepository(
           trackerName = eventDataEntity.trackerName,
           description = eventDataEntity.description,
           createdAt = eventDataEntity.createdAt,
-          properties = eventDataEntity.properties
+          properties = eventDataEntity.properties,
         )
       }
   }
