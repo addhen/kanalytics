@@ -170,7 +170,7 @@ internal fun EventDetailsScreen(
     },
     actions = {
       IconButton(onClick = {
-        clipboardManager.setText(eventInfo)
+        if (eventInfo.isBlank().not()) clipboardManager.setText(eventInfo)
       }) {
         Icon(
           imageVector = Icons.Default.CopyAll,
