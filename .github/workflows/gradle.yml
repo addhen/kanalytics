@@ -1,0 +1,78 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+      - 'docs/**'
+  workflow_call:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    # Skip build if head commit contains 'skip ci'
+    if: "!contains(github.event.head_commit.message, 'skip ci')"
+    strategy:
+      matrix:
+        include:
+          - target: iosSimulatorArm64Test
+            os: macos-latest
+          - target: iosX64Test
+            os: macos-latest
+          - target: testDebugUnitTest
+            os: ubuntu-latest
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 60
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup
+      uses: ./.github/actions/setup
+    - name: Spotless Check
+      run: ./gradlew spotlessCheck --stacktrace
+    - name: Lint
+      run: ./gradlew lint --stacktrace
+    - name: Build with Gradle
+      uses: gradle/actions/setup-gradle@v3
+      with:
+        arguments: ${{ matrix.target }}
+  publish-snapshots:
+    runs-on: macos-latest
+    if: github.repository == 'addhen/kanalytics' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    needs: [build]
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup
+      uses: ./.github/actions/setup
+    - name: Upload Snapshot
+      uses: gradle/actions/setup-gradle@v3
+      if: success() && endsWith(env.VERSION_NAME, '-SNAPSHOT')
+      env:
+        OSSRH_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+        OSSRH_GPG_SECRET_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
+        OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      with:
+        arguments: |
+          --no-configuration-cache
+          publishAllPublicationsToSonatypeRepository
+          closeSonatypeStagingRepository
+          -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'

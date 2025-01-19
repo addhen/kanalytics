@@ -1,0 +1,52 @@
+# This workflow uses actions that are not certified by GitHub.
+# They are provided by a third-party and are governed by
+# separate terms of service, privacy policy, and support
+# documentation.
+# This workflow will build a Java project with Gradle and cache/restore any dependencies to improve the workflow execution time
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-java-with-gradle
+
+name: Deploy to central
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    uses: ./.github/workflows/gradle.yml
+  deploy:
+    needs: build
+    runs-on: macos-latest
+    permissions:
+      contents: write
+    steps:
+    - uses: actions/checkout@v4
+    - name: Setup
+      uses: ./.github/actions/setup
+    - name: Gradle publish
+      uses: gradle/actions/setup-gradle@v3
+      env:
+        OSSRH_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+        OSSRH_GPG_SECRET_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
+        OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+      with:
+        arguments: |
+          --no-configuration-cache
+          publishToSonatype
+          closeAndReleaseSonatypeStagingRepository
+          -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
+
+    - name: Extract release notes
+      id: release_notes
+      uses: ffurrer2/extract-release-notes@v2
+
+    - name: Create release
+      uses: ncipollo/release-action@v1
+      with:
+        body: ${{ steps.release_notes.outputs.release_notes }}
