@@ -48,7 +48,6 @@ android {
 }
 
 dependencies {
-  implementation(projects.kanalyticsViewer)
   implementation(projects.sample.shared)
   implementation(libs.androidx.core.ktx)
   implementation(libs.androidx.activity.compose)
@@ -56,4 +55,5 @@ dependencies {
   implementation(libs.androidx.appcompat)
   implementation(libs.accompanist.permissions)
   implementation(libs.androidx.navigation.compose)
+  debugImplementation(projects.kanalyticsViewer)
 }
