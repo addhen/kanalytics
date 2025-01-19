@@ -30,9 +30,5 @@ public class KAnalyticsInterceptor private constructor(builder: Builder) : Inter
     }
 
     fun build(): KAnalyticsInterceptor = KAnalyticsInterceptor(this)
-
-    fun redactParams(keyNames: Iterable<String>): Builder = this
-
-    fun redactParams(vararg keyNames: String): Builder = this
   }
 }
