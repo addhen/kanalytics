@@ -22,6 +22,9 @@ captures
 .idea/androidTestResultsUserPreferences.xml
 .idea/appInsightsSettings.xml
 .idea/artifacts
+.idea/assetWizardSettings.xml
+.idea/runConfigurations.xml
+.idea/studiobot.xml
 gradle.xml
 *.iml
 ios-app/Fosdem/.idea/*
