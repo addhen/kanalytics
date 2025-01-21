@@ -7,14 +7,6 @@ import kotlin.reflect.KClass
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
-/**
- * KAnalytics is a multiplatform analytics library that provides a simple way to track events.
- * val kanalytics = KAnalytics.Builder()
- * .addTracker(FirebaseTracker())
- * .addTracker(AdjustTracker())
- * .addInterceptor(AnalyticsInterceptor())
- * .build()
- */
 public class KAnalytics internal constructor(builder: Builder) {
 
   public val trackers: ImmutableList<Tracker> = builder.trackers.toImmutableList()
