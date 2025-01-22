@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-public fun SamplesTheme(
+public fun SampleTheme(
   useDarkColors: Boolean = isSystemInDarkTheme(),
   content: @Composable () -> Unit,
 ) {
@@ -30,7 +30,7 @@ public fun SamplesTheme(
 }
 
 @Composable
-public fun Samples(onTriggerAnalytics: () -> Unit, onEventViewer: () -> Unit) {
+public fun Sample(onTriggerAnalytics: () -> Unit, onEventViewer: () -> Unit) {
   Column(
     modifier = Modifier.padding(16.dp).fillMaxSize(),
     verticalArrangement = Arrangement.spacedBy(8.dp),

@@ -16,7 +16,7 @@ public fun SampleApp(
   navController: NavHostController = rememberNavController(),
   onEventViewerTrigger: () -> Unit = { launchViewerApp() },
 ) {
-  SamplesTheme {
+  SampleTheme {
     AppSurface {
       AppNavGraph(
         navController = navController,
