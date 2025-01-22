@@ -28,11 +28,21 @@ public class KAnalytics internal constructor(builder: Builder) {
 
   public constructor() : this(Builder())
 
-
+  /**
+   * Sends an event to all trackers
+   *
+   * @param event The event to send
+   */
   public fun send(event: KAnalyticsEvent) {
     send(trackers, event)
   }
 
+  /**
+   * Sends an event to the specified trackers
+   *
+   * @param event The event to send
+   * @param trackerNames The trackers to send the event to
+   */
   public fun send(event: KAnalyticsEvent, vararg trackerNames: KClass<out Tracker>) {
     val trackerNamesSet = trackerNames.toImmutableSet()
     val filteredTrackers = trackers.filter { trackerNamesSet.contains(it::class) }
@@ -47,6 +57,9 @@ public class KAnalytics internal constructor(builder: Builder) {
     send(event)
   }
 
+  /**
+   * Gets a new builder instance for KAnalytics
+   */
   public fun newBuilder(): Builder = Builder(this)
 
   private fun send(trackers: List<Tracker>, event: KAnalyticsEvent) {
