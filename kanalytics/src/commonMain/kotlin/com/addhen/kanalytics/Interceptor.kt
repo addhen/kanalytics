@@ -3,7 +3,20 @@
 
 package com.addhen.kanalytics
 
-public interface Interceptor {
+public fun interface Interceptor {
+  public fun intercept(chain: Chain): KAnalyticsEvent
 
-  public fun intercept(event: KAnalyticsEvent, tracker: Tracker): KAnalyticsEvent
+  public companion object {
+    public inline operator fun invoke(
+      crossinline block: (chain: Chain) -> KAnalyticsEvent
+    ): Interceptor = Interceptor { block(it) }
+  }
+
+  public interface Chain {
+
+    public val event: KAnalyticsEvent
+    public val trackerName: TrackerName
+
+    public fun proceed(event: KAnalyticsEvent): KAnalyticsEvent
+  }
 }

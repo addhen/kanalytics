@@ -20,7 +20,8 @@ class KAnalyticsTest {
 
   private val firebaseTracker = FirebaseTracker()
   private val adjustTracker = AdjustTracker()
-  private val mockTrackerIntercept = MockTrackerIntercept()
+  private val mockTrackerIntercept = FakeTrackerIntercept()
+  private val mockTrackerIntercept2 = FakeTrackerIntercept2()
 
   private lateinit var kanalytics: KAnalytics
 
@@ -107,6 +108,7 @@ class KAnalyticsTest {
       .addTracker(firebaseTracker)
       .addTracker(adjustTracker)
       .addInterceptor(mockTrackerIntercept)
+      .addInterceptor(mockTrackerIntercept2)
       .build()
 
     val event = KAnalyticsEvent(EVENT_NAME).apply {
@@ -123,10 +125,28 @@ class KAnalyticsTest {
 
     assertEquals(1, firebaseTracker.analyticsEvents.size)
     assertEquals(1, adjustTracker.analyticsEvents.size)
-    assertEquals(event.toString(), mockTrackerIntercept.event.toString())
+    assertEquals(event.copy(eventName = "Intercepted ${event.eventName}").toString(), mockTrackerIntercept.event.toString())
     assertEquals(3, mockTrackerIntercept.event?.properties?.size)
-    assertHasEvents(firebaseTracker.analyticsEvents)
-    assertHasEvents(adjustTracker.analyticsEvents)
+    assertEquals(event.copy(eventName = "Mock2 Intercepted Intercepted ${event.eventName}").toString(), mockTrackerIntercept2.event.toString())
+    assertEquals(3, mockTrackerIntercept2.event?.properties?.size)
+
+    val firebaseEvent = firebaseTracker.analyticsEvents
+    assertTrue(firebaseEvent.isNotEmpty())
+    firebaseEvent.forEach {
+      assertEquals("Mock2 Intercepted Intercepted $EVENT_NAME", it.eventName)
+      assertEquals(SCREEN_NAME, it.properties[SCREEN_NAME])
+      assertEquals(3, it.properties.size)
+      assertEquals(VALUE_ONE, it.properties[KEY_ONE])
+    }
+
+    val adjustEvent = adjustTracker.analyticsEvents
+    assertTrue(adjustEvent.isNotEmpty())
+    adjustEvent.forEach {
+      assertEquals("Mock2 Intercepted Intercepted $EVENT_NAME", it.eventName)
+      assertEquals(SCREEN_NAME, it.properties[SCREEN_NAME])
+      assertEquals(3, it.properties.size)
+      assertEquals(VALUE_ONE, it.properties[KEY_ONE])
+    }
   }
 
   private fun assertHasEvent(event: KAnalyticsEvent) {
@@ -172,15 +192,27 @@ class KAnalyticsTest {
     }
   }
 
-  inner class MockTrackerIntercept : Interceptor {
+  inner class FakeTrackerIntercept : Interceptor {
 
     var event: KAnalyticsEvent? = null
-    var tracker: Tracker? = null
+    var tracker: TrackerName? = null
 
-    override fun intercept(event: KAnalyticsEvent, tracker: Tracker): KAnalyticsEvent {
-      this.event = event
-      this.tracker = tracker
-      return event
+    override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
+      this.event = chain.event.copy(eventName = "Intercepted ${chain.event.eventName}")
+      this.tracker = chain.trackerName
+      return chain.proceed(this.event!!)
+    }
+  }
+
+  inner class FakeTrackerIntercept2 : Interceptor {
+
+    var event: KAnalyticsEvent? = null
+    var tracker: TrackerName? = null
+
+    override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
+      this.event = chain.event.copy(eventName = "Mock2 Intercepted ${chain.event.eventName}")
+      this.tracker = chain.trackerName
+      return chain.proceed(this.event!!)
     }
   }
 }

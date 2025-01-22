@@ -3,9 +3,12 @@
 
 package com.addhen.kanalytics
 
+import com.addhen.kanalytics.KAnalytics.Builder
+import com.addhen.kanalytics.internal.DefaultInterceptorChain
 import kotlin.reflect.KClass
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
+import kotlinx.collections.immutable.toImmutableSet
 
 /**
  * KAnalytics is a class that provides a centralized way to manage and dispatch analytics
@@ -30,10 +33,10 @@ public class KAnalytics internal constructor(builder: Builder) {
   }
 
   public fun send(event: KAnalyticsEvent, vararg trackerNames: KClass<out Tracker>) {
-    send(
-      trackers.filter { trackerNames.indexOf(it::class) >= 0 },
-      event,
-    )
+    val trackerNamesSet = trackerNames.toImmutableSet()
+    val filteredTrackers = trackers.filter { trackerNamesSet.contains(it::class) }
+
+    send(filteredTrackers, event)
   }
 
   public fun send(eventName: String, fieldName: String, fieldValue: Any?) {
@@ -49,15 +52,19 @@ public class KAnalytics internal constructor(builder: Builder) {
     if (trackers.isEmpty()) return
 
     if (!interceptors.isEmpty()) {
-      interceptors.forEach { interceptor ->
-        trackers.forEach {
-          val interceptedEvent = interceptor.intercept(event.copy(), it)
-          it.send(interceptedEvent)
-        }
+      trackers.forEach { tracker ->
+        val chain = DefaultInterceptorChain(
+          interceptors = interceptors,
+          index = 0,
+          trackerName = TrackerName(this::class.simpleName ?: ""),
+          event = event
+        )
+        val interceptedEvent = chain.proceed(event)
+        tracker.send(interceptedEvent.copy())
       }
-      return
+    } else {
+      trackers.forEach { it.send(event.copy()) }
     }
-    trackers.forEach { it.send(event.copy()) }
   }
 
   /**
