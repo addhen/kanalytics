@@ -7,12 +7,23 @@ import kotlin.reflect.KClass
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 
+/**
+ * KAnalytics is a class that provides a centralized way to manage and dispatch analytics
+ * events to multiple trackers.
+ *
+ * It allows for flexible configuration of trackers and interceptors, enabling event modification
+ * and filtering before being sent.
+ *
+ * @param builder The builder for the KAnalytics instance. Use the [Builder] to configure trackers
+ * and interceptors.
+ */
 public class KAnalytics internal constructor(builder: Builder) {
 
-  public val trackers: ImmutableList<Tracker> = builder.trackers.toImmutableList()
-  public val interceptors: ImmutableList<Interceptor> = builder.interceptors.toImmutableList()
+  private val trackers: ImmutableList<Tracker> = builder.trackers.toImmutableList()
+  private val interceptors: ImmutableList<Interceptor> = builder.interceptors.toImmutableList()
 
   public constructor() : this(Builder())
+
 
   public fun send(event: KAnalyticsEvent) {
     send(trackers, event)
