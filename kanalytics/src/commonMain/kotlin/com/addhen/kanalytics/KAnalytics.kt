@@ -6,6 +6,7 @@ package com.addhen.kanalytics
 import com.addhen.kanalytics.KAnalytics.Builder
 import com.addhen.kanalytics.internal.DefaultInterceptorChain
 import kotlin.reflect.KClass
+import kotlinx.atomicfu.atomic
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
@@ -71,27 +72,31 @@ public class KAnalytics internal constructor(builder: Builder) {
    * Builder class for KAnalytics
    */
   public class Builder() {
+    private val _trackers = atomic(mutableListOf<Tracker>())
+    private val _interceptors = atomic(mutableListOf<Interceptor>())
 
-    internal val trackers: MutableList<Tracker> = mutableListOf()
-    internal val interceptors: MutableList<Interceptor> = mutableListOf()
+    internal val trackers: List<Tracker>
+      get() = _trackers.value
+    internal val interceptors: List<Interceptor>
+      get() = _interceptors.value
 
     internal constructor(kAnalytics: KAnalytics) : this() {
-      this.trackers += kAnalytics.trackers
-      this.interceptors += kAnalytics.interceptors
+      this._trackers.value += kAnalytics.trackers
+      this._interceptors.value += kAnalytics.interceptors
     }
 
     /**
      * Add a tracker to the list of trackers
      */
     public fun addTracker(tracker: Tracker): Builder = apply {
-      trackers.add(tracker)
+      _trackers.value.add(tracker)
     }
 
     /**
      * Add an interceptor to the list of interceptors
      */
     public fun addInterceptor(interceptor: Interceptor): Builder = apply {
-      interceptors.add(interceptor)
+      _interceptors.value.add(interceptor)
     }
 
     /**

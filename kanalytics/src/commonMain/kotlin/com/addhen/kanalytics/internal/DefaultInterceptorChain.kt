@@ -3,6 +3,7 @@ package com.addhen.kanalytics.internal
 import com.addhen.kanalytics.Interceptor
 import com.addhen.kanalytics.KAnalyticsEvent
 import com.addhen.kanalytics.TrackerName
+import kotlinx.atomicfu.atomic
 
 internal class DefaultInterceptorChain(
   private val interceptors: List<Interceptor>,
@@ -10,7 +11,7 @@ internal class DefaultInterceptorChain(
   override val trackerName: TrackerName,
   override val event: KAnalyticsEvent
 ): Interceptor.Chain {
-  private var calls: Int = 0
+  private val calls = atomic(0)
 
   internal fun copy(
     index: Int = this.index,
@@ -19,8 +20,7 @@ internal class DefaultInterceptorChain(
   ) = DefaultInterceptorChain(interceptors, index, trackerName, event)
 
   override fun proceed(event: KAnalyticsEvent): KAnalyticsEvent {
-    calls++
-    check(calls == 1) {
+    require(calls.incrementAndGet() == 1) {
       "interceptor ${interceptors[index - 1]} must call proceed() exactly once"
     }
     if (index >= interceptors.size) {

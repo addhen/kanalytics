@@ -3,6 +3,7 @@
 
 package com.addhen.kanalytics
 
+//
 public fun interface Interceptor {
   public fun intercept(chain: Chain): KAnalyticsEvent
 
