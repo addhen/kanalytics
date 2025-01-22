@@ -20,8 +20,8 @@ internal class DefaultInterceptorChain(
   ) = DefaultInterceptorChain(interceptors, index, trackerName, event)
 
   override fun proceed(event: KAnalyticsEvent): KAnalyticsEvent {
-    require(calls.incrementAndGet() == 1) {
-      "interceptor ${interceptors[index - 1]} must call proceed() exactly once"
+    check(calls.incrementAndGet() == 1) {
+      "interceptor ${interceptors[index]} must call proceed() exactly once"
     }
     if (index >= interceptors.size) {
       return event
@@ -31,4 +31,7 @@ internal class DefaultInterceptorChain(
     return interceptors[index].intercept(nextChain)
   }
 
+  override fun toString(): String {
+    return "DefaultInterceptorChain(index=$index, trackerName=$trackerName, event=$event)"
+  }
 }
