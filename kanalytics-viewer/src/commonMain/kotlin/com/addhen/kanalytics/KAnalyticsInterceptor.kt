@@ -12,11 +12,6 @@ public class KAnalyticsInterceptor private constructor(builder: Builder) : Inter
 
   public constructor() : this(Builder())
 
-  public override fun intercept(event: KAnalyticsEvent, tracker: Tracker): KAnalyticsEvent {
-    collector.onEventSent(event, tracker::class.simpleName!!, Clock.System.now())
-    return event
-  }
-
   public fun redactHeaders(vararg keyNames: String): KAnalyticsInterceptor {
     return this
   }
@@ -30,5 +25,11 @@ public class KAnalyticsInterceptor private constructor(builder: Builder) : Inter
     }
 
     fun build(): KAnalyticsInterceptor = KAnalyticsInterceptor(this)
+  }
+
+  override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
+    val event = chain.event
+    collector.onEventSent(event, chain.trackerName, Clock.System.now())
+    return event
   }
 }

@@ -23,14 +23,14 @@ internal class KAnalyticsCollector(
 ) {
   private val scope = MainScope()
 
-  fun onEventSent(kAnalyticsEvent: KAnalyticsEvent, eventProvider: String, onSentDate: Instant) {
+  fun onEventSent(kAnalyticsEvent: KAnalyticsEvent, trackerName: TrackerName, onSentDate: Instant) {
     scope.launch {
       withContext(appCoroutineDispatchers.io) {
         repository.insert(
           eventData = EventData(
             id = null,
             name = kAnalyticsEvent.eventName,
-            trackerName = eventProvider,
+            trackerName = trackerName.value,
             description = kAnalyticsEvent.eventDescription,
             createdAt = onSentDate,
             properties = kAnalyticsEvent.properties.mapValues { it.value ?: "" },
@@ -40,7 +40,7 @@ internal class KAnalyticsCollector(
 
       notificationManager.showNotification(
         eventName = kAnalyticsEvent.eventName,
-        trackerName = eventProvider,
+        trackerName = trackerName.value,
       )
 
       withContext(appCoroutineDispatchers.io) {
