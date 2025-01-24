@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -44,6 +45,7 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.no_events_fou
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.properties
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.retry
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.search_placeholder
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_icon_content_description
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.timestamp
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.viewer_app_name
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
@@ -69,6 +71,7 @@ import toFormattedString
 
 internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
 internal const val DELETE_ALL_EVENTS_TEST_TAG = "DeleteAllEventsTestTag"
+internal const val SETTINGS_TEST_TAG = "SettingsTestTag"
 
 @Composable
 internal fun AnalyticsEventsScreen(
@@ -77,6 +80,7 @@ internal fun AnalyticsEventsScreen(
   uiMessageStateHolder: UiMessageStateHolder,
   onNavigateToDetail: (Long, String) -> Unit,
   onDeleteAllEvents: () -> Unit,
+  onSettingsClick: () -> Unit,
   onSearchQueryChanged: (String) -> Unit,
 ) {
   var showDialog by remember { mutableStateOf(false) }
@@ -116,6 +120,16 @@ internal fun AnalyticsEventsScreen(
         Icon(
           imageVector = Icons.Default.Delete,
           contentDescription = stringResource(Res.string.delete_all_events_content_description),
+        )
+      }
+
+      IconButton(
+        modifier = Modifier.testTag(SETTINGS_TEST_TAG),
+        onClick = onSettingsClick,
+      ) {
+        Icon(
+          imageVector = Icons.Default.Settings,
+          contentDescription = stringResource(Res.string.settings_icon_content_description),
         )
       }
     },

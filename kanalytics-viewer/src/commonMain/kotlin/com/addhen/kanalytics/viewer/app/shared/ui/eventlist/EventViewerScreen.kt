@@ -11,7 +11,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-public fun EventViewerScreen(onNavigateToDetail: (Long, String) -> Unit) {
+public fun EventViewerScreen(navigateToSettings: () -> Unit, onNavigateToDetail: (Long, String) -> Unit) {
   val viewModel: EventViewerViewModel = viewModel(factory = EventViewerViewModel.Factory)
   val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 
@@ -20,6 +20,7 @@ public fun EventViewerScreen(onNavigateToDetail: (Long, String) -> Unit) {
     snackbarHostState = remember { SnackbarHostState() },
     uiMessageStateHolder = viewModel.uiMessageStateHolder,
     onNavigateToDetail = onNavigateToDetail,
+    onSettingsClick = navigateToSettings,
     onDeleteAllEvents = { viewModel.action(EventViewerViewModel.UiAction.DeleteAllEvents) },
   ) { searchQuery ->
     if (searchQuery.isNotBlank()) {

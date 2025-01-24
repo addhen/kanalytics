@@ -10,3 +10,6 @@ internal data object EventViewerRoute
 
 @Serializable
 internal data class EventDetailsRoute(val eventId: Long, val eventName: String)
+
+@Serializable
+internal data object PreferencesRoute

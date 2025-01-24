@@ -1,0 +1,120 @@
+package com.addhen.kanalytics.viewer.app.shared.ui.component
+
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ProvideTextStyle
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.dp
+import com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference
+
+@Composable
+public fun CheckboxPreference(
+  checked: Boolean,
+  onCheckClicked: () -> Unit,
+  title: String,
+  modifier: Modifier = Modifier,
+  onClick: (() -> Unit) = onCheckClicked,
+  beforeControl: (@Composable () -> Unit)? = null,
+  summaryOff: String? = null,
+  summaryOn: String? = null,
+) {
+  Preference(
+    title = title,
+    summary = {
+      if (summaryOff != null && summaryOn != null) {
+        AnimatedContent(checked) { target ->
+          Text(text = if (target) summaryOn else summaryOff)
+        }
+      } else if (summaryOff != null) {
+        Text(text = summaryOff)
+      }
+    },
+    onClick = onClick,
+    control = {
+      beforeControl?.invoke()
+
+      Switch(
+        checked = checked,
+        onCheckedChange = { onCheckClicked() },
+      )
+    },
+    modifier = modifier,
+  )
+}
+
+@Composable
+public fun Preference(
+  title: String,
+  modifier: Modifier = Modifier,
+  onClick: (() -> Unit) = {},
+  summary: (@Composable () -> Unit)? = null,
+  control: (@Composable RowScope.() -> Unit)? = null,
+) {
+  Surface(modifier = modifier, onClick = onClick) {
+    Row(
+      modifier = Modifier.padding(16.dp),
+      horizontalArrangement = Arrangement.spacedBy(8.dp),
+      verticalAlignment = Alignment.CenterVertically,
+    ) {
+      Column(
+        modifier = Modifier.weight(1f),
+        verticalArrangement = Arrangement.spacedBy(2.dp),
+      ) {
+        Text(
+          text = title,
+          style = MaterialTheme.typography.bodyLarge,
+        )
+
+        if (summary != null) {
+          ProvideTextStyle(
+            MaterialTheme.typography.bodyMedium.copy(
+              color = MaterialTheme.colorScheme.onSurfaceVariant,
+            ),
+          ) {
+            summary()
+          }
+        }
+      }
+
+      control?.invoke(this)
+    }
+  }
+}
+
+@Composable
+public fun PreferenceHeader(
+  title: String,
+  modifier: Modifier = Modifier,
+  tonalElevation: Dp = 0.dp,
+) {
+  Surface(modifier = modifier, tonalElevation = tonalElevation) {
+    Text(
+      text = title,
+      style = MaterialTheme.typography.labelLarge,
+      modifier = Modifier
+        .padding(horizontal = 16.dp, vertical = 4.dp),
+    )
+  }
+}
+
+@Composable
+internal fun PreferenceDivider() {
+  HorizontalDivider(Modifier.padding(horizontal = 16.dp))
+}
+
+@Composable
+internal fun <T> Preference<T>.collectAsState(): State<T> = flow.collectAsState(defaultValue)

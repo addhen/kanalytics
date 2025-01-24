@@ -30,6 +30,8 @@ composeDataTable = "0.10.1"
 mokkery = "2.6.1"
 json-tree = "2.5.0-SNAPSHOT"
 kotlinx-atomicfu = "0.27.0"
+multiplatformsettings = "1.2.0"
+androidx-preference = "1.2.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -61,6 +63,10 @@ data-table-material = { module = "com.seanproctor:data-table-material3", version
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines" }
 json-tree = { module = "com.sebastianneubauer.jsontree:jsontree", version.ref = "json-tree" }
 kotlinx-atomicfu = { module = "org.jetbrains.kotlinx:atomicfu", version.ref = "kotlinx-atomicfu" }
+multiplatformsettings-core = { module = "com.russhwolf:multiplatform-settings", version.ref = "multiplatformsettings" }
+multiplatformsettings-coroutines = { module = "com.russhwolf:multiplatform-settings-coroutines", version.ref = "multiplatformsettings" }
+androidx-preference = { module = "androidx.preference:preference-ktx", version.ref = "androidx-preference" }
+
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

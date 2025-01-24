@@ -30,11 +30,12 @@ kotlin {
         implementation(libs.lifecycle.viewmodel.compose)
         implementation(libs.androidx.navigation.compose)
         implementation(libs.kotlinx.serialization)
-        implementation(libs.kotlinx.serialization)
         implementation(libs.sqldelight.coroutines)
         implementation(libs.sqldelight.primitive)
         implementation(libs.data.table.material)
         implementation(libs.json.tree)
+        implementation(libs.multiplatformsettings.core)
+        implementation(libs.multiplatformsettings.coroutines)
       }
     }
 
@@ -42,6 +43,7 @@ kotlin {
       dependencies {
         implementation(libs.androidx.core.ktx)
         implementation(libs.androidx.startup.runtime)
+        implementation(libs.androidx.preference)
         implementation(libs.sqldelight.android)
       }
     }

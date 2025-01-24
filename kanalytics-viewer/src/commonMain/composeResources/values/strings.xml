@@ -24,4 +24,10 @@
   <string name="tracker_name">Tracker name</string>
   <string name="id">ID</string>
   <string name="created_at">Created at</string>
+  <string  name="settings_title">Settings</string>
+  <string name="settings_ui_theme_category_title">Theme</string>
+  <string name="settings_mode_title">Mode</string>
+  <string name="settings_icon_content_description">Settings Icon</string>
+  <string name="settings_dynamic_color_summary">Use colors derived from your wallpaper</string>
+  <string name="settings_dynamic_color_title">Dynamic colors</string>
 </resources>

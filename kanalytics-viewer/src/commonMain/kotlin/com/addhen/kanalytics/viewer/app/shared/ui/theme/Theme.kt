@@ -7,14 +7,18 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontFamily
+import com.addhen.kanalytics.viewer.app.shared.ui.LocalPreferences
+import com.addhen.kanalytics.viewer.app.shared.ui.component.collectAsState
+import com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences
 import com.sebastianneubauer.jsontree.TreeColors
 import com.sebastianneubauer.jsontree.defaultLightColors
 
 // Light scheme
 
-private val lightScheme = lightColorScheme(
+internal val lightScheme = lightColorScheme(
   primary = primaryLight,
   onPrimary = onPrimaryLight,
   primaryContainer = primaryContainerLight,
@@ -53,7 +57,7 @@ private val lightScheme = lightColorScheme(
 )
 
 // Dark scheme
-private val darkScheme = darkColorScheme(
+internal val darkScheme = darkColorScheme(
   primary = primaryDark,
   onPrimary = onPrimaryDark,
   primaryContainer = primaryContainerDark,
@@ -202,20 +206,31 @@ internal fun searchHighlightTextColor(isDarkTheme: Boolean = isSystemInDarkTheme
 
 @Composable
 internal fun AppTheme(
-  isDarkTheme: Boolean = isSystemInDarkTheme(),
+  useDarkColors: Boolean = shouldUseDarkColors(),
+  useDynamicColors: Boolean = shouldUseDynamicColors(),
   fontFamily: FontFamily? = jetbrainsMonoFontFamily(),
   content: @Composable () -> Unit,
 ) {
-  val colorScheme = getColorScheme(isDarkTheme)
 
   MaterialTheme(
-    colorScheme = colorScheme,
+    colorScheme = colorScheme(useDarkColors, useDynamicColors),
     typography = appTypography(fontFamily),
     content = content,
   )
 }
 
-private fun getColorScheme(darkTheme: Boolean) = when {
-  darkTheme -> darkScheme
-  else -> lightScheme
+@Composable
+private fun shouldUseDarkColors(): Boolean {
+  val themePreference = LocalPreferences.current.theme.collectAsState()
+  return when (themePreference.value) {
+    ViewerAppPreferences.Theme.LIGHT -> false
+    ViewerAppPreferences.Theme.DARK -> true
+    else -> isSystemInDarkTheme()
+  }
+}
+
+@Composable
+private fun shouldUseDynamicColors(): Boolean {
+  val state by LocalPreferences.current.useDynamicColors.collectAsState()
+  return state
 }

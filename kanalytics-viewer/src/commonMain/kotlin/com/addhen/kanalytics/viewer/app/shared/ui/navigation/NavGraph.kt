@@ -16,6 +16,7 @@ import androidx.navigation.navOptions
 import androidx.navigation.toRoute
 import com.addhen.kanalytics.viewer.app.shared.ui.eventdetail.EventDetailsScreen
 import com.addhen.kanalytics.viewer.app.shared.ui.eventlist.EventViewerScreen
+import com.addhen.kanalytics.viewer.app.shared.ui.settings.PreferencesScreen
 import kotlin.reflect.KClass
 
 @Composable
@@ -25,12 +26,17 @@ public fun AppNavGraph(navController: NavHostController, startDestination: KClas
     startDestination = startDestination,
   ) {
     composable<EventViewerRoute> {
-      EventViewerScreen { eventId, eventName ->
-        navController.navigate(
-          EventDetailsRoute(eventId, eventName),
-          navController.buildNavOptions(),
-        )
-      }
+      EventViewerScreen(
+        navigateToSettings = {
+          navController.navigate(PreferencesRoute, navController.buildNavOptions())
+        },
+        onNavigateToDetail = { eventId, eventName ->
+          navController.navigate(
+            EventDetailsRoute(eventId, eventName),
+            navController.buildNavOptions(),
+          )
+        }
+      )
     }
 
     composable<EventDetailsRoute> { navBackStackEntry ->
@@ -47,6 +53,20 @@ public fun AppNavGraph(navController: NavHostController, startDestination: KClas
           navController.popBackStack()
         }
       }
+    }
+
+    composable<PreferencesRoute> {
+      PreferencesScreen(
+        onBack = {
+          // Checking if the current back stack entry is resumed to avoid an issue when the
+          // back button is double pressed in succession which causes the display to show a
+          // blank screen with no view components on it.
+          // See: https://github.com/google/accompanist/issues/1408#issuecomment-1673011548
+          if (navController.currentBackStackEntry?.lifecycle?.currentState == RESUMED) {
+            navController.popBackStack()
+          }
+        }
+      )
     }
   }
 }
