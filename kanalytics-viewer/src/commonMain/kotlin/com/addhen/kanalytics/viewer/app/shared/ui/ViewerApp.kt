@@ -23,7 +23,7 @@ public fun ViewerApp(navController: NavHostController = rememberNavController())
   }
 
   CompositionLocalProvider(
-    LocalPreferences provides DefaultViewerAppPreference.Instance
+    LocalPreferences provides DefaultViewerAppPreference.Instance,
   ) {
     AppTheme {
       AppSurface {
@@ -34,5 +34,4 @@ public fun ViewerApp(navController: NavHostController = rememberNavController())
       }
     }
   }
-
 }

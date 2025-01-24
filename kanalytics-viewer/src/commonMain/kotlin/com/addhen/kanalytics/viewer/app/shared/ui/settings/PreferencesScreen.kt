@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.settings
 
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -36,9 +39,7 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.PreferenceHeader
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
-internal fun PreferencesScreen(
-  onBack: () -> Unit
-) {
+internal fun PreferencesScreen(onBack: () -> Unit) {
   val viewModel: PreferencesViewModel = viewModel(factory = PreferencesViewModel.Factory)
   val viewState by viewModel.viewState.collectAsStateWithLifecycle()
 
@@ -50,7 +51,6 @@ internal fun PreferencesScreen(
     onBack = onBack,
   )
 }
-
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -138,11 +138,7 @@ private fun ThemePreference(
 }
 
 @Composable
-private fun ThemeButton(
-  isSelected: Boolean,
-  icon: ImageVector,
-  onClick: () -> Unit,
-) {
+private fun ThemeButton(isSelected: Boolean, icon: ImageVector, onClick: () -> Unit) {
   FilledIconToggleButton(
     checked = isSelected,
     onCheckedChange = { onClick() },

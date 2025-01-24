@@ -19,7 +19,7 @@ public data class AppCoroutineDispatchers(
 ) {
 
   internal companion object {
-    val Instance by lazy( mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
       AppCoroutineDispatchers()
     }
   }

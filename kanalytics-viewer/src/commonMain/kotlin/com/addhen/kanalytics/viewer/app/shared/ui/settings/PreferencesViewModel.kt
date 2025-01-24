@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.settings
 
 import androidx.compose.runtime.Stable
@@ -13,8 +16,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class PreferencesViewModel(
-  preferences: ViewerAppPreferences
-): ViewModel() {
+  preferences: ViewerAppPreferences,
+) : ViewModel() {
 
   private val defaultPreferences by lazy { preferences }
 
@@ -26,14 +29,14 @@ internal class PreferencesViewModel(
     useDynamicColors,
     { theme: ViewerAppPreferences.Theme, useDynamicColors: Boolean ->
       PreferencesUiState(theme = theme, useDynamicColors = useDynamicColors)
-    }
+    },
   ).stateIn(
     scope = viewModelScope,
     started = SharingStarted.WhileSubscribed(5_000),
     initialValue = PreferencesUiState(
       theme = ViewerAppPreferences.Theme.SYSTEM,
       useDynamicColors = true,
-    )
+    ),
   )
 
   val action: (UiAction) -> Unit = { action ->

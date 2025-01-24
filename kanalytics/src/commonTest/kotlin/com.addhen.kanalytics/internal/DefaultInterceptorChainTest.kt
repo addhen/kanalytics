@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.internal
 
 import com.addhen.kanalytics.Interceptor
@@ -18,7 +21,7 @@ class DefaultInterceptorChainTest {
       interceptors = listOf(fakeInterceptor),
       index = 0,
       trackerName = TrackerName("testTracker"),
-      event = event
+      event = event,
     )
 
     val result = chain.proceed(event)
@@ -33,7 +36,7 @@ class DefaultInterceptorChainTest {
       interceptors = listOf(fakeInterceptor),
       index = 0,
       trackerName = TrackerName("testTracker"),
-      event = event
+      event = event,
     )
 
     chain.proceed(event)
@@ -50,7 +53,7 @@ class DefaultInterceptorChainTest {
       interceptors = emptyList(),
       index = 0,
       trackerName = TrackerName("testTracker"),
-      event = event
+      event = event,
     )
 
     val result = chain.proceed(event)
@@ -65,12 +68,13 @@ class DefaultInterceptorChainTest {
       interceptors = listOf(fakeInterceptor),
       index = 0,
       trackerName = TrackerName("testTracker"),
-      event = event
+      event = event,
     )
 
     val newEvent = KAnalyticsEvent("newTestEvent")
     val newChain = chain.copy(index = 1, event = newEvent)
-    val expectedChain = DefaultInterceptorChain(listOf(fakeInterceptor), 1, TrackerName("testTracker"), newEvent)
+    val expectedChain =
+      DefaultInterceptorChain(listOf(fakeInterceptor), 1, TrackerName("testTracker"), newEvent)
 
     assertEquals(expectedChain.toString(), newChain.toString())
   }

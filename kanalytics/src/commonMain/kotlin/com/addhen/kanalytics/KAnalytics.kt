@@ -71,7 +71,7 @@ public class KAnalytics internal constructor(builder: Builder) {
           interceptors = interceptors,
           index = 0,
           trackerName = TrackerName(this::class.simpleName ?: ""),
-          event = event
+          event = event,
         )
         val interceptedEvent = chain.proceed(event)
         tracker.send(interceptedEvent.copy())
@@ -85,31 +85,31 @@ public class KAnalytics internal constructor(builder: Builder) {
    * Builder class for KAnalytics
    */
   public class Builder() {
-    private val _trackers = atomic(mutableListOf<Tracker>())
-    private val _interceptors = atomic(mutableListOf<Interceptor>())
+    private val trackersAtomicRef = atomic(mutableListOf<Tracker>())
+    private val interceptorsAtomicRef = atomic(mutableListOf<Interceptor>())
 
     internal val trackers: List<Tracker>
-      get() = _trackers.value
+      get() = trackersAtomicRef.value
     internal val interceptors: List<Interceptor>
-      get() = _interceptors.value
+      get() = interceptorsAtomicRef.value
 
     internal constructor(kAnalytics: KAnalytics) : this() {
-      this._trackers.value += kAnalytics.trackers
-      this._interceptors.value += kAnalytics.interceptors
+      this.trackersAtomicRef.value += kAnalytics.trackers
+      this.interceptorsAtomicRef.value += kAnalytics.interceptors
     }
 
     /**
      * Add a tracker to the list of trackers
      */
     public fun addTracker(tracker: Tracker): Builder = apply {
-      _trackers.value.add(tracker)
+      trackersAtomicRef.value.add(tracker)
     }
 
     /**
      * Add an interceptor to the list of interceptors
      */
     public fun addInterceptor(interceptor: Interceptor): Builder = apply {
-      _interceptors.value.add(interceptor)
+      interceptorsAtomicRef.value.add(interceptor)
     }
 
     /**

@@ -11,7 +11,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 
 @Composable
-public fun EventViewerScreen(navigateToSettings: () -> Unit, onNavigateToDetail: (Long, String) -> Unit) {
+public fun EventViewerScreen(
+  navigateToSettings: () -> Unit,
+  onNavigateToDetail: (Long, String) -> Unit,
+) {
   val viewModel: EventViewerViewModel = viewModel(factory = EventViewerViewModel.Factory)
   val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 

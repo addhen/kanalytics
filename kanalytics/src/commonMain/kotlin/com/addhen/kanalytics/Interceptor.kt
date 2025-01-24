@@ -9,7 +9,7 @@ public fun interface Interceptor {
 
   public companion object {
     public inline operator fun invoke(
-      crossinline block: (chain: Chain) -> KAnalyticsEvent
+      crossinline block: (chain: Chain) -> KAnalyticsEvent,
     ): Interceptor = Interceptor { block(it) }
   }
 

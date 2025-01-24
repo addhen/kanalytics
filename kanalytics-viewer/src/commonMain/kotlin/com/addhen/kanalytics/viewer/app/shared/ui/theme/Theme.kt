@@ -211,7 +211,6 @@ internal fun AppTheme(
   fontFamily: FontFamily? = jetbrainsMonoFontFamily(),
   content: @Composable () -> Unit,
 ) {
-
   MaterialTheme(
     colorScheme = colorScheme(useDarkColors, useDynamicColors),
     typography = appTypography(fontFamily),

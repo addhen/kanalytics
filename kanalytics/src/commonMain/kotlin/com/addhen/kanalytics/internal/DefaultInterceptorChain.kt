@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.internal
 
 import com.addhen.kanalytics.Interceptor
@@ -9,14 +12,14 @@ internal class DefaultInterceptorChain(
   private val interceptors: List<Interceptor>,
   private val index: Int,
   override val trackerName: TrackerName,
-  override val event: KAnalyticsEvent
-): Interceptor.Chain {
+  override val event: KAnalyticsEvent,
+) : Interceptor.Chain {
   private val calls = atomic(0)
 
   internal fun copy(
     index: Int = this.index,
     trackerName: TrackerName = this.trackerName,
-    event: KAnalyticsEvent = this.event
+    event: KAnalyticsEvent = this.event,
   ) = DefaultInterceptorChain(interceptors, index, trackerName, event)
 
   override fun proceed(event: KAnalyticsEvent): KAnalyticsEvent {

@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.settings
 
 import com.addhen.kanalytics.viewer.app.provideObservableSettings
@@ -28,9 +31,9 @@ internal const val KEY_RENTION_DAYS = "pref_data_retention_days"
 
 @OptIn(ExperimentalSettingsApi::class)
 internal class DefaultViewerAppPreference(
-settings: ObservableSettings,
-private val coroutineScope: CoroutineScope,
-private val dispatchers: AppCoroutineDispatchers,
+  settings: ObservableSettings,
+  private val coroutineScope: CoroutineScope,
+  private val dispatchers: AppCoroutineDispatchers,
 ) : ViewerAppPreferences {
 
   private val settings: ObservableSettings by lazy { settings }
@@ -125,10 +128,9 @@ private val dispatchers: AppCoroutineDispatchers,
       DefaultViewerAppPreference(
         provideObservableSettings(),
         applicationCoroutineScope,
-        AppCoroutineDispatchers.Instance
+        AppCoroutineDispatchers.Instance,
       )
     }
-
   }
 }
 

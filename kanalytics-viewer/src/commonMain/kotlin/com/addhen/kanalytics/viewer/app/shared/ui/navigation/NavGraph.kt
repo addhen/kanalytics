@@ -35,7 +35,7 @@ public fun AppNavGraph(navController: NavHostController, startDestination: KClas
             EventDetailsRoute(eventId, eventName),
             navController.buildNavOptions(),
           )
-        }
+        },
       )
     }
 
@@ -65,7 +65,7 @@ public fun AppNavGraph(navController: NavHostController, startDestination: KClas
           if (navController.currentBackStackEntry?.lifecycle?.currentState == RESUMED) {
             navController.popBackStack()
           }
-        }
+        },
       )
     }
   }

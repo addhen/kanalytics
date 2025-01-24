@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.viewer.app.shared.ui.theme
 
 import android.os.Build
@@ -8,17 +11,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 
 @Composable
-internal actual fun colorScheme(
-  useDarkColors: Boolean,
-  useDynamicColors: Boolean
-): ColorScheme = when {
-  Build.VERSION.SDK_INT >= 31 && useDynamicColors && useDarkColors -> {
-    dynamicDarkColorScheme(LocalContext.current)
+internal actual fun colorScheme(useDarkColors: Boolean, useDynamicColors: Boolean): ColorScheme =
+  when {
+    Build.VERSION.SDK_INT >= 31 && useDynamicColors && useDarkColors -> {
+      dynamicDarkColorScheme(LocalContext.current)
+    }
+    Build.VERSION.SDK_INT >= 31 && useDynamicColors && !useDarkColors -> {
+      dynamicLightColorScheme(LocalContext.current)
+    }
+    useDarkColors -> lightScheme
+    else -> darkScheme
   }
-  Build.VERSION.SDK_INT >= 31 && useDynamicColors && !useDarkColors -> {
-    dynamicLightColorScheme(LocalContext.current)
-  }
-  useDarkColors -> lightScheme
-  else -> darkScheme
-}
-

@@ -125,9 +125,15 @@ class KAnalyticsTest {
 
     assertEquals(1, firebaseTracker.analyticsEvents.size)
     assertEquals(1, adjustTracker.analyticsEvents.size)
-    assertEquals(event.copy(eventName = "Intercepted ${event.eventName}").toString(), mockTrackerIntercept.event.toString())
+    assertEquals(
+      event.copy(eventName = "Intercepted ${event.eventName}").toString(),
+      mockTrackerIntercept.event.toString(),
+    )
     assertEquals(3, mockTrackerIntercept.event?.properties?.size)
-    assertEquals(event.copy(eventName = "Mock2 Intercepted Intercepted ${event.eventName}").toString(), mockTrackerIntercept2.event.toString())
+    assertEquals(
+      event.copy(eventName = "Mock2 Intercepted Intercepted ${event.eventName}").toString(),
+      mockTrackerIntercept2.event.toString(),
+    )
     assertEquals(3, mockTrackerIntercept2.event?.properties?.size)
 
     val firebaseEvent = firebaseTracker.analyticsEvents
