@@ -145,7 +145,3 @@ private fun getThemeForStorageValue(value: String) = when (value) {
   THEME_DARK_VALUE -> Theme.DARK
   else -> Theme.SYSTEM
 }
-
-private fun ObservableSettings.toggleBoolean(key: String, defaultValue: Boolean = false) {
-  putBoolean(key, !getBoolean(key, defaultValue))
-}

@@ -20,7 +20,7 @@ public class KAnalyticsInterceptor private constructor(builder: Builder) : Inter
 
     internal var collector: KAnalyticsCollector? = null
 
-    public fun collector(collector: KAnalyticsCollector): Builder = apply {
+    fun collector(collector: KAnalyticsCollector): Builder = apply {
       this.collector = collector
     }
 
