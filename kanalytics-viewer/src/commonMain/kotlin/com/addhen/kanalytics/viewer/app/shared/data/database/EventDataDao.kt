@@ -78,7 +78,7 @@ internal class EventDataDao(
   }
 
   internal companion object {
-    val Instance: EventDataDao by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    val Instance: EventDataDao by lazy {
       EventDataDao(
         database = createDatabase(),
         appCoroutineDispatchers = AppCoroutineDispatchers(),

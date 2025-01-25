@@ -77,10 +77,6 @@ internal class EventDataRepository(
   }
 
   internal companion object {
-    val Instance by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-      EventDataRepository(
-        eventDataDao = EventDataDao.Instance,
-      )
-    }
+    val Instance by lazy { EventDataRepository(eventDataDao = EventDataDao.Instance) }
   }
 }

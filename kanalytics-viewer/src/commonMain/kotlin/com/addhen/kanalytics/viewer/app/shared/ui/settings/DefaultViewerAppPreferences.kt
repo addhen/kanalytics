@@ -124,7 +124,7 @@ internal class DefaultViewerAppPreference(
   internal companion object {
     val SUBSCRIBED_TIMEOUT = 20.seconds
 
-    val Instance: ViewerAppPreferences by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    val Instance: ViewerAppPreferences by lazy {
       DefaultViewerAppPreference(
         provideObservableSettings(),
         applicationCoroutineScope,

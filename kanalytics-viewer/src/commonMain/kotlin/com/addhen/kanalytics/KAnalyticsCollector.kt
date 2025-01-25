@@ -50,7 +50,7 @@ internal class KAnalyticsCollector(
   }
 
   companion object {
-    val instance: KAnalyticsCollector by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
+    val instance: KAnalyticsCollector by lazy {
       KAnalyticsCollector(
         repository = EventDataRepository.Instance,
       )

@@ -98,8 +98,6 @@ internal class NotificationManagerImpl : NotificationManager {
   }
 
   internal companion object {
-    val Instance: NotificationManager by lazy(mode = LazyThreadSafetyMode.SYNCHRONIZED) {
-      NotificationManagerImpl()
-    }
+    val Instance: NotificationManager by lazy { NotificationManagerImpl() }
   }
 }
