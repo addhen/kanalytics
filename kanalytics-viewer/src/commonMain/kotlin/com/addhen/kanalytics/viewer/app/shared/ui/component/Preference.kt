@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ProvideTextStyle
@@ -18,11 +20,18 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_data_retention_days
 import com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference
+import org.jetbrains.compose.resources.pluralStringResource
 
 @Composable
 public fun CheckboxPreference(
@@ -112,6 +121,58 @@ public fun PreferenceHeader(
         .padding(horizontal = 16.dp, vertical = 4.dp),
     )
   }
+}
+
+@Composable
+public fun DropdownPreference(
+  selectedDay: Int,
+  onDaySelected: (Int) -> Unit,
+  title: String,
+  summary: String,
+  modifier: Modifier = Modifier
+) {
+  var expanded by remember { mutableStateOf(false) }
+  val days = (1..7).toList()
+
+  Preference(
+    title = title,
+    summary = { Text(text = summary) },
+    modifier = modifier,
+    onClick = { expanded = true },
+    control = {
+      Row {
+        Text(
+          text = pluralStringResource(
+            Res.plurals.settings_data_retention_days,
+            selectedDay,
+            selectedDay
+          )
+        )
+        DropdownMenu(
+          expanded = expanded,
+          onDismissRequest = { expanded = false }
+        ) {
+          days.forEach { day ->
+            DropdownMenuItem(
+              onClick = {
+              onDaySelected(day)
+              expanded = false
+            },
+              text = {
+                Text(
+                  text = pluralStringResource(
+                    Res.plurals.settings_data_retention_days,
+                    day,
+                    day
+                  )
+                )
+              }
+            )
+          }
+        }
+      }
+    }
+  )
 }
 
 @Composable

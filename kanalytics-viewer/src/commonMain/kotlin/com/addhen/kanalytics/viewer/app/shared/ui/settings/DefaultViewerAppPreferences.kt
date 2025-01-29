@@ -27,7 +27,7 @@ internal const val THEME_DARK_VALUE = "dark"
 internal const val THEME_SYSTEM_VALUE = "system"
 internal const val KEY_THEME = "pref_theme"
 internal const val KEY_USE_DYNAMIC_COLORS = "pref_dynamic_colors"
-internal const val KEY_RENTION_DAYS = "pref_data_retention_days"
+internal const val KEY_RETENTION_DAYS = "pref_data_retention_days"
 
 @OptIn(ExperimentalSettingsApi::class)
 internal class DefaultViewerAppPreference(
@@ -48,7 +48,7 @@ internal class DefaultViewerAppPreference(
   }
 
   override val dataRetentionDays: Preference<Int> by lazy {
-    IntPreference(KEY_RENTION_DAYS, 7)
+    IntPreference(KEY_RETENTION_DAYS, 7)
   }
 
   private inner class BooleanPreference(
@@ -103,13 +103,6 @@ internal class DefaultViewerAppPreference(
     private val toValue: (String) -> V,
     private val fromValue: (V) -> String,
   ) : Preference<V> {
-    override suspend fun set(value: V) = withContext(dispatchers.io) {
-      settings[key] = fromValue(value)
-    }
-
-    override suspend fun get(): V = withContext(dispatchers.io) {
-      settings.getStringOrNull(key)?.let(toValue) ?: defaultValue
-    }
 
     override val flow: Flow<V> by lazy {
       flowSettings.getStringOrNullFlow(key)
@@ -118,6 +111,14 @@ internal class DefaultViewerAppPreference(
           scope = coroutineScope,
           started = SharingStarted.WhileSubscribed(SUBSCRIBED_TIMEOUT),
         )
+    }
+
+    override suspend fun set(value: V) = withContext(dispatchers.io) {
+      settings[key] = fromValue(value)
+    }
+
+    override suspend fun get(): V = withContext(dispatchers.io) {
+      settings.getStringOrNull(key)?.let(toValue) ?: defaultValue
     }
   }
 

@@ -3,41 +3,19 @@
 
 package com.addhen.kanalytics.viewer.app.shared.ui.settings
 
-import androidx.compose.runtime.Stable
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import co.touchlab.kermit.Logger
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 
 internal class PreferencesViewModel(
   preferences: ViewerAppPreferences,
 ) : ViewModel() {
 
-  private val defaultPreferences by lazy { preferences }
-
-  private val theme = defaultPreferences.theme.flow
-  private val useDynamicColors = defaultPreferences.useDynamicColors.flow
-
-  val viewState = combine(
-    theme,
-    useDynamicColors,
-    { theme: ViewerAppPreferences.Theme, useDynamicColors: Boolean ->
-      PreferencesUiState(theme = theme, useDynamicColors = useDynamicColors)
-    },
-  ).stateIn(
-    scope = viewModelScope,
-    started = SharingStarted.WhileSubscribed(5_000),
-    initialValue = PreferencesUiState(
-      theme = ViewerAppPreferences.Theme.SYSTEM,
-      useDynamicColors = true,
-    ),
-  )
+  val defaultPreferences by lazy { preferences }
 
   val action: (UiAction) -> Unit = { action ->
     viewModelScope.launch {
@@ -51,18 +29,18 @@ internal class PreferencesViewModel(
           Logger.d { "Use dynamic colors" }
           defaultPreferences.useDynamicColors.toggle()
         }
+
+        is UiAction.SelectDays -> {
+          Logger.d { "Select days: $action" }
+          defaultPreferences.dataRetentionDays.set(action.days)
+        }
       }
     }
   }
 
-  @Stable
-  data class PreferencesUiState(
-    val theme: ViewerAppPreferences.Theme,
-    val useDynamicColors: Boolean,
-  )
-
   sealed interface UiAction {
     data class SaveTheme(val theme: ViewerAppPreferences.Theme) : UiAction
+    data class SelectDays(val days: Int) : UiAction
     data object UseDynamicColors : UiAction
   }
 

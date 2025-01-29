@@ -24,8 +24,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
+import co.touchlab.kermit.Logger
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.back_icon_content_description
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_data_retention_summary
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_data_retention_title
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_dynamic_color_summary
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_dynamic_color_title
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_mode_title
@@ -33,21 +36,28 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_titl
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_ui_theme_category_title
 import com.addhen.kanalytics.viewer.app.shared.ui.ViewerAppScaffold
 import com.addhen.kanalytics.viewer.app.shared.ui.component.CheckboxPreference
+import com.addhen.kanalytics.viewer.app.shared.ui.component.DropdownPreference
 import com.addhen.kanalytics.viewer.app.shared.ui.component.Preference
 import com.addhen.kanalytics.viewer.app.shared.ui.component.PreferenceDivider
 import com.addhen.kanalytics.viewer.app.shared.ui.component.PreferenceHeader
+import com.addhen.kanalytics.viewer.app.shared.ui.component.collectAsState
 import org.jetbrains.compose.resources.stringResource
 
 @Composable
 internal fun PreferencesScreen(onBack: () -> Unit) {
   val viewModel: PreferencesViewModel = viewModel(factory = PreferencesViewModel.Factory)
-  val viewState by viewModel.viewState.collectAsStateWithLifecycle()
+  val useDynamicColors by viewModel.defaultPreferences.useDynamicColors.collectAsState()
+  val dataRetentionDays by viewModel.defaultPreferences.dataRetentionDays.collectAsState()
+  val theme by viewModel.defaultPreferences.theme.collectAsState()
 
   PreferencesContent(
-    uiState = viewState,
+    theme = theme,
+    useDynamicColors = useDynamicColors,
+    selectedDay = dataRetentionDays,
     snackbarHostState = remember { SnackbarHostState() },
     onThemeSelected = { viewModel.action(PreferencesViewModel.UiAction.SaveTheme(it)) },
     onDynamicColorSelected = { viewModel.action(PreferencesViewModel.UiAction.UseDynamicColors) },
+    onDaySelected = { viewModel.action(PreferencesViewModel.UiAction.SelectDays(it)) },
     onBack = onBack,
   )
 }
@@ -55,12 +65,16 @@ internal fun PreferencesScreen(onBack: () -> Unit) {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 private fun PreferencesContent(
-  uiState: PreferencesViewModel.PreferencesUiState,
+  theme: ViewerAppPreferences.Theme,
+  useDynamicColors: Boolean,
+  selectedDay: Int,
   snackbarHostState: SnackbarHostState,
   onThemeSelected: (ViewerAppPreferences.Theme) -> Unit,
+  onDaySelected: (Int) -> Unit,
   onDynamicColorSelected: () -> Unit,
   onBack: () -> Unit,
 ) {
+  Logger.d { "PreferencesContent: $theme" }
   ViewerAppScaffold(
     title = stringResource(Res.string.settings_title),
     snackbarHostState = snackbarHostState,
@@ -83,7 +97,7 @@ private fun PreferencesContent(
       item {
         ThemePreference(
           title = stringResource(Res.string.settings_mode_title),
-          selected = uiState.theme,
+          selected = theme,
           onThemeSelected = onThemeSelected,
         )
       }
@@ -95,10 +109,20 @@ private fun PreferencesContent(
           title = stringResource(Res.string.settings_dynamic_color_title),
           summaryOff = stringResource(Res.string.settings_dynamic_color_summary),
           onCheckClicked = onDynamicColorSelected,
-          checked = uiState.useDynamicColors,
+          checked = useDynamicColors,
         )
       }
 
+      item { PreferenceDivider() }
+
+      item {
+        DropdownPreference(
+          selectedDay = selectedDay,
+          onDaySelected = onDaySelected,
+          title = stringResource(Res.string.settings_data_retention_title),
+          summary = stringResource(Res.string.settings_data_retention_summary),
+        )
+      }
       item { PreferenceDivider() }
     }
   }
@@ -111,6 +135,7 @@ private fun ThemePreference(
   title: String,
   modifier: Modifier = Modifier,
 ) {
+  Logger.d { "ThemePreferences: $selected" }
   Preference(
     title = title,
     control = {
