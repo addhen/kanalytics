@@ -22,9 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import co.touchlab.kermit.Logger
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.back_icon_content_description
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_data_retention_summary
@@ -74,7 +72,7 @@ private fun PreferencesContent(
   onDynamicColorSelected: () -> Unit,
   onBack: () -> Unit,
 ) {
-  Logger.d { "PreferencesContent: $theme" }
+
   ViewerAppScaffold(
     title = stringResource(Res.string.settings_title),
     snackbarHostState = snackbarHostState,
@@ -135,7 +133,7 @@ private fun ThemePreference(
   title: String,
   modifier: Modifier = Modifier,
 ) {
-  Logger.d { "ThemePreferences: $selected" }
+
   Preference(
     title = title,
     control = {
