@@ -29,18 +29,12 @@ internal class PreferencesViewModel(
           Logger.d { "Use dynamic colors" }
           defaultPreferences.useDynamicColors.toggle()
         }
-
-        is UiAction.SelectDays -> {
-          Logger.d { "Select days: $action" }
-          defaultPreferences.dataRetentionDays.set(action.days)
-        }
       }
     }
   }
 
   sealed interface UiAction {
     data class SaveTheme(val theme: ViewerAppPreferences.Theme) : UiAction
-    data class SelectDays(val days: Int) : UiAction
     data object UseDynamicColors : UiAction
   }
 

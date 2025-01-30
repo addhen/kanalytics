@@ -25,8 +25,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.back_icon_content_description
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_data_retention_summary
-import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_data_retention_title
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_dynamic_color_summary
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_dynamic_color_title
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_mode_title
@@ -34,7 +32,6 @@ import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_titl
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.settings_ui_theme_category_title
 import com.addhen.kanalytics.viewer.app.shared.ui.ViewerAppScaffold
 import com.addhen.kanalytics.viewer.app.shared.ui.component.CheckboxPreference
-import com.addhen.kanalytics.viewer.app.shared.ui.component.DropdownPreference
 import com.addhen.kanalytics.viewer.app.shared.ui.component.Preference
 import com.addhen.kanalytics.viewer.app.shared.ui.component.PreferenceDivider
 import com.addhen.kanalytics.viewer.app.shared.ui.component.PreferenceHeader
@@ -45,17 +42,14 @@ import org.jetbrains.compose.resources.stringResource
 internal fun PreferencesScreen(onBack: () -> Unit) {
   val viewModel: PreferencesViewModel = viewModel(factory = PreferencesViewModel.Factory)
   val useDynamicColors by viewModel.defaultPreferences.useDynamicColors.collectAsState()
-  val dataRetentionDays by viewModel.defaultPreferences.dataRetentionDays.collectAsState()
   val theme by viewModel.defaultPreferences.theme.collectAsState()
 
   PreferencesContent(
     theme = theme,
     useDynamicColors = useDynamicColors,
-    selectedDay = dataRetentionDays,
     snackbarHostState = remember { SnackbarHostState() },
     onThemeSelected = { viewModel.action(PreferencesViewModel.UiAction.SaveTheme(it)) },
     onDynamicColorSelected = { viewModel.action(PreferencesViewModel.UiAction.UseDynamicColors) },
-    onDaySelected = { viewModel.action(PreferencesViewModel.UiAction.SelectDays(it)) },
     onBack = onBack,
   )
 }
@@ -65,10 +59,8 @@ internal fun PreferencesScreen(onBack: () -> Unit) {
 private fun PreferencesContent(
   theme: ViewerAppPreferences.Theme,
   useDynamicColors: Boolean,
-  selectedDay: Int,
   snackbarHostState: SnackbarHostState,
   onThemeSelected: (ViewerAppPreferences.Theme) -> Unit,
-  onDaySelected: (Int) -> Unit,
   onDynamicColorSelected: () -> Unit,
   onBack: () -> Unit,
 ) {
@@ -111,16 +103,6 @@ private fun PreferencesContent(
         )
       }
 
-      item { PreferenceDivider() }
-
-      item {
-        DropdownPreference(
-          selectedDay = selectedDay,
-          onDaySelected = onDaySelected,
-          title = stringResource(Res.string.settings_data_retention_title),
-          summary = stringResource(Res.string.settings_data_retention_summary),
-        )
-      }
       item { PreferenceDivider() }
     }
   }

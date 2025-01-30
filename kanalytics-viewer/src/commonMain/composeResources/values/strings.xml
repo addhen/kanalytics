@@ -30,10 +30,4 @@
   <string name="settings_icon_content_description">Settings Icon</string>
   <string name="settings_dynamic_color_summary">Use colors derived from your wallpaper</string>
   <string name="settings_dynamic_color_title">Dynamic colors</string>
-  <string name="settings_data_retention_title">Data Retention Policy</string>
-  <string name="settings_data_retention_summary">Events older than this will be deleted</string>
-  <plurals name="settings_data_retention_days">
-    <item quantity="one">%1$d day</item>
-    <item quantity="other">%1$d days</item>
-  </plurals>
 </resources>
