@@ -21,7 +21,7 @@ public fun SampleApp(
       AppNavGraph(
         navController = navController,
         HomeRoute::class,
-        sampleScreen = { SampleScreen(viewModel, onEventViewerTrigger) },
+        sampleScreen = { SampleScreen(onEventViewerTrigger) },
       )
     }
   }

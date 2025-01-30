@@ -14,14 +14,16 @@ import kotlinx.datetime.Instant
 
 internal class KAnalyticsCollector(
   private val repository: EventDataRepository = EventDataRepository.Instance,
-  private val retentionPolicyManager: RetentionPolicyManager = RetentionPolicyManager(
-    dayDuration = RetentionPolicyManager.DayDuration(numberOfDays = 7),
-    repository = repository,
-  ),
+  private val showNotification: Boolean = true,
+  duration: RetentionPolicyManager.DayDuration = RetentionPolicyManager.DayDuration(7),
   private val notificationManager: NotificationManager = NotificationManager(),
   private val appCoroutineDispatchers: AppCoroutineDispatchers = AppCoroutineDispatchers(),
 ) {
   private val scope = MainScope()
+  private val retentionPolicyManager: RetentionPolicyManager = RetentionPolicyManager(
+    dayDuration = duration,
+    repository = repository,
+  )
 
   fun onEventSent(kAnalyticsEvent: KAnalyticsEvent, trackerName: TrackerName, onSentDate: Instant) {
     scope.launch {
@@ -38,10 +40,12 @@ internal class KAnalyticsCollector(
         )
       }
 
-      notificationManager.showNotification(
-        eventName = kAnalyticsEvent.eventName,
-        trackerName = trackerName.value,
-      )
+      if (showNotification) {
+        notificationManager.showNotification(
+          eventName = kAnalyticsEvent.eventName,
+          trackerName = trackerName.value,
+        )
+      }
 
       withContext(appCoroutineDispatchers.io) {
         retentionPolicyManager.processDataRetention()
@@ -50,9 +54,15 @@ internal class KAnalyticsCollector(
   }
 
   companion object {
-    val instance: KAnalyticsCollector by lazy {
-      KAnalyticsCollector(
-        repository = EventDataRepository.Instance,
+
+    fun getInstance(
+      showNotification: Boolean,
+      duration: RetentionPolicyManager.DayDuration,
+    ): KAnalyticsCollector {
+      return KAnalyticsCollector(
+        duration = duration,
+        showNotification = showNotification,
+        repository = EventDataRepository.Instance
       )
     }
   }

@@ -11,21 +11,21 @@ import com.addhen.kanalytics.KAnalyticsInterceptor
 import com.addhen.kanalytics.sample.shared.trackers.FirebaseTracker
 import kotlin.reflect.KClass
 
-public val kanalytics: KAnalytics = KAnalytics.Builder()
+internal fun createKAnalytics(shouldShowNotification: Boolean, numberOfDays: Int): KAnalytics = KAnalytics.Builder()
   .addTracker(FirebaseTracker())
-  .addInterceptor(KAnalyticsInterceptor())
+  .addInterceptor(KAnalyticsInterceptor(numberOfDays, shouldShowNotification))
   .build()
 
 public val viewModel: SampleViewModel = SampleViewModelFactory(
-  kanalytics = kanalytics,
+  kAnalytics = createKAnalytics(shouldShowNotification = true, numberOfDays = 7),
 ).create(SampleViewModel::class, CreationExtras.Empty)
 
 @Suppress("UNCHECKED_CAST")
 public class SampleViewModelFactory(
-  private val kanalytics: KAnalytics,
+  private val kAnalytics: KAnalytics,
 ) : ViewModelProvider.Factory {
 
   public override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
-    return SampleViewModel(kanalytics) as T
+    return SampleViewModel(kAnalytics) as T
   }
 }

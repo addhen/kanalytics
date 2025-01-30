@@ -4,6 +4,7 @@
 package com.addhen.kanalytics
 
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
+import kotlin.jvm.JvmInline
 import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 
@@ -20,5 +21,6 @@ public class RetentionPolicyManager(
     repository.deleteAllOlderThan(Instant.fromEpochMilliseconds(retentionDeadlineInMillis))
   }
 
-  public data class DayDuration(val numberOfDays: Int)
+  @JvmInline
+  public value class DayDuration(public val numberOfDays: Int)
 }
