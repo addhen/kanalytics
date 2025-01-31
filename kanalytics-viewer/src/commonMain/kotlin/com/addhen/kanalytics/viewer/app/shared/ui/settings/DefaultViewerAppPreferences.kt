@@ -43,7 +43,7 @@ internal class DefaultViewerAppPreference(
   }
 
   override val useDynamicColors: Preference<Boolean> by lazy {
-    BooleanPreference(KEY_USE_DYNAMIC_COLORS, true)
+    BooleanPreference(KEY_USE_DYNAMIC_COLORS, false)
   }
 
   private inner class BooleanPreference(
