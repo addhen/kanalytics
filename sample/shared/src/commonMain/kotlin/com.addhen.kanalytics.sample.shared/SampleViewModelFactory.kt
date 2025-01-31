@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.addhen.kanalytics.KAnalytics
-import com.addhen.kanalytics.KAnalyticsInterceptor
+import com.addhen.kanalytics.viewer.KAnalyticsInterceptor
 import com.addhen.kanalytics.sample.shared.trackers.FirebaseTracker
 import kotlin.reflect.KClass
 

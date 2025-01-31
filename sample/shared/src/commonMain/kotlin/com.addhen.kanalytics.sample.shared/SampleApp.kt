@@ -9,7 +9,7 @@ import androidx.navigation.compose.rememberNavController
 import com.addhen.kanalytics.sample.shared.component.AppSurface
 import com.addhen.kanalytics.sample.shared.navigation.AppNavGraph
 import com.addhen.kanalytics.sample.shared.navigation.HomeRoute
-import com.addhen.kanalytics.viewer.app.shared.ui.launchViewerApp
+import com.addhen.kanalytics.viewer.launchViewerApp
 
 @Composable
 public fun SampleApp(

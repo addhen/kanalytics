@@ -1,7 +1,7 @@
 // Copyright 2025, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics.viewer.app.shared.ui
+package com.addhen.kanalytics.viewer
 
 import android.content.Intent
 import com.addhen.kanalytics.viewer.app.android.ContextInitializer

@@ -8,6 +8,7 @@ import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.DisposableEffect
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.addhen.kanalytics.viewer.disposeViewerAppWindow
 import com.addhen.kanalytics.viewer.app.shared.ui.component.AppSurface
 import com.addhen.kanalytics.viewer.app.shared.ui.navigation.AppNavGraph
 import com.addhen.kanalytics.viewer.app.shared.ui.navigation.EventViewerRoute

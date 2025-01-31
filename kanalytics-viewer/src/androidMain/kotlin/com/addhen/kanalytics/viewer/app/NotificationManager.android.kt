@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import com.addhen.kanalytics.viewer.app.android.ContextInitializer
 import com.addhen.kanalytics.viewer.app.android.MainActivity
-import com.addhen.kanalytics.viewer.app.android.R
+import com.addhen.kanalytics.viewer.R
 
 private const val CHANNEL_ID = "com.addhen.kanalytics.viewer.app.android.channel"
 private const val BUFFER_SIZE = 10

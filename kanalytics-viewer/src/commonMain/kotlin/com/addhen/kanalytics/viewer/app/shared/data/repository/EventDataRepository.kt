@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 
-internal class EventDataRepository(
+public class EventDataRepository(
   private val eventDataDao: EventDataDao,
 ) : EventRepository {
 

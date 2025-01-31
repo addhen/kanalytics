@@ -20,8 +20,8 @@ android {
 
   buildTypes {
     release {
-      isMinifyEnabled = true
-      isShrinkResources = true
+      isMinifyEnabled = false
+      isShrinkResources = false
       signingConfig = signingConfigs["debug"]
       proguardFiles(
         "proguard-rules.pro",
@@ -56,5 +56,4 @@ dependencies {
   implementation(libs.androidx.appcompat)
   implementation(libs.accompanist.permissions)
   implementation(libs.androidx.navigation.compose)
-  debugImplementation(projects.kanalyticsViewer)
 }

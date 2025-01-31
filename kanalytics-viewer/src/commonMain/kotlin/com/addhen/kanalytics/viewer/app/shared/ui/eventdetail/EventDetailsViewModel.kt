@@ -9,8 +9,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.addhen.kanalytics.handleErrorWithRetry
-import com.addhen.kanalytics.stateInWhileSubscribed
+import com.addhen.kanalytics.viewer.app.handleErrorWithRetry
+import com.addhen.kanalytics.viewer.app.stateInWhileSubscribed
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageManager

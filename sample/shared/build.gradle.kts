@@ -14,11 +14,16 @@ android {
 }
 
 kotlin {
+  val isDebug = project.extra["kanalytics.sampleDebug"] == "debug"
   sourceSets {
     commonMain {
       dependencies {
         implementation(projects.kanalytics)
-        implementation(projects.kanalyticsViewer)
+        if (isDebug) {
+          implementation(projects.kanalyticsViewerNoOp)
+        } else {
+          implementation(projects.kanalyticsViewer)
+        }
         api(compose.material3)
         api(libs.touchlab.kermit)
         implementation(compose.runtime)

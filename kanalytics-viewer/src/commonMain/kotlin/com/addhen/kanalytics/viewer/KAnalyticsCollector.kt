@@ -1,8 +1,10 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics
+package com.addhen.kanalytics.viewer
 
+import com.addhen.kanalytics.KAnalyticsEvent
+import com.addhen.kanalytics.TrackerName
 import com.addhen.kanalytics.viewer.app.NotificationManager
 import com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
@@ -12,7 +14,7 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
-internal class KAnalyticsCollector(
+public class KAnalyticsCollector(
   private val repository: EventDataRepository = EventDataRepository.Instance,
   private val showNotification: Boolean = true,
   duration: RetentionPolicyManager.DayDuration = RetentionPolicyManager.DayDuration(7),
@@ -25,7 +27,11 @@ internal class KAnalyticsCollector(
     repository = repository,
   )
 
-  fun onEventSent(kAnalyticsEvent: KAnalyticsEvent, trackerName: TrackerName, onSentDate: Instant) {
+  public fun onEventSent(
+    kAnalyticsEvent: KAnalyticsEvent,
+    trackerName: TrackerName,
+    onSentDate: Instant
+  ) {
     scope.launch {
       withContext(appCoroutineDispatchers.io) {
         repository.insert(
@@ -53,7 +59,7 @@ internal class KAnalyticsCollector(
     }
   }
 
-  companion object {
+  internal companion object {
 
     fun getInstance(
       showNotification: Boolean,

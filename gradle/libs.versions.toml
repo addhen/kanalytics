@@ -31,6 +31,7 @@ json-tree = "2.5.0-SNAPSHOT"
 kotlinx-atomicfu = "0.27.0"
 multiplatformsettings = "1.3.0"
 androidx-preference = "1.2.1"
+jetbrainsKotlinJvm = "2.1.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -84,3 +85,4 @@ kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }
+jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }

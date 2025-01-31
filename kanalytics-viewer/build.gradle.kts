@@ -64,7 +64,7 @@ kotlin {
 }
 
 android {
-  namespace = "com.addhen.kanalytics.viewer.app.android"
+  namespace = "com.addhen.kanalytics.viewer"
   defaultConfig {
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
@@ -90,8 +90,8 @@ publishing {
 
     // Provide artifacts information required by Maven Central
     pom {
-      name.set("KAnalytics")
-      description.set("A kotlin multiplatform library for getting a device's location")
+      name.set("kanalytics-viewer")
+      description.set("A kotlin multiplatform library for viewing kanalytics events")
     }
   }
 }

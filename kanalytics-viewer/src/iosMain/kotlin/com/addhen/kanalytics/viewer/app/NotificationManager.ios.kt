@@ -4,7 +4,7 @@
 package com.addhen.kanalytics.viewer.app
 
 import co.touchlab.kermit.Logger
-import com.addhen.kanalytics.viewer.app.shared.ui.launchViewerApp
+import com.addhen.kanalytics.viewer.launchViewerApp
 import platform.Foundation.NSError
 import platform.UserNotifications.UNAuthorizationOptionAlert
 import platform.UserNotifications.UNAuthorizationOptionBadge

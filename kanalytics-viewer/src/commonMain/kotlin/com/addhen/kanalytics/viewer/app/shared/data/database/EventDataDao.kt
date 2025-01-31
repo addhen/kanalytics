@@ -14,7 +14,7 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
-internal class EventDataDao(
+public class EventDataDao(
   private val database: EventViewerDatabase,
   private val appCoroutineDispatchers: AppCoroutineDispatchers,
 ) {

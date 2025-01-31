@@ -1,7 +1,7 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics
+package com.addhen.kanalytics.viewer
 
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
 import kotlin.jvm.JvmInline

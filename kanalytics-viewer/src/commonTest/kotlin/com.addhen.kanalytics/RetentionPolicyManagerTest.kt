@@ -3,6 +3,7 @@
 
 package com.addhen.kanalytics
 
+import com.addhen.kanalytics.viewer.RetentionPolicyManager
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
 import dev.mokkery.MockMode
 import dev.mokkery.answering.throws

@@ -35,3 +35,4 @@ include(
   ":sample:shared",
   ":sample:ios-framework",
 )
+include(":kanalytics-viewer-no-op")

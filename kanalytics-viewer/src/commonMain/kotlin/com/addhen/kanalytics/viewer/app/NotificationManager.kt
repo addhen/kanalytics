@@ -5,7 +5,7 @@ package com.addhen.kanalytics.viewer.app
 
 internal expect fun NotificationManager(): NotificationManager
 
-internal interface NotificationManager {
-  fun showNotification(eventName: String, trackerName: String)
-  fun clearBuffer()
+public interface NotificationManager {
+  public fun showNotification(eventName: String, trackerName: String)
+  public fun clearBuffer()
 }

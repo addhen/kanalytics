@@ -1,7 +1,7 @@
 // Copyright 2025, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics
+package com.addhen.kanalytics.viewer.app
 
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessage
 import com.addhen.kanalytics.viewer.app.shared.ui.component.UiMessageAction

@@ -1,8 +1,10 @@
 // Copyright 2025, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics.viewer.app.shared.ui
+package com.addhen.kanalytics.viewer
 
+import com.addhen.kanalytics.viewer.app.shared.ui.viewerAppViewController
+import com.addhen.kanalytics.viewer.app.shared.ui.viewerAppViewControllerInstance
 import platform.Foundation.NSProcessInfo
 import platform.UIKit.UIApplication
 import platform.UIKit.UIModalPresentationFullScreen

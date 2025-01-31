@@ -17,10 +17,15 @@ android {
 }
 
 kotlin {
+  val isDebug = project.extra["kanalytics.sampleDebug"] == "debug"
   sourceSets {
     commonMain {
       dependencies {
-        implementation(projects.kanalyticsViewer)
+        if (isDebug) {
+          implementation(projects.kanalyticsViewerNoOp)
+        } else {
+          implementation(projects.kanalyticsViewer)
+        }
         implementation(projects.sample.shared)
       }
     }
