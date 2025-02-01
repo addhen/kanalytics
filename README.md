@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/com.addhen.kanalytics/kanalytics)](https://search.maven.org/search?q=g:com.addhen.analytics) ![Build status](https://github.com/addhen/klocation/actions/workflows/gradle.yml/badge.svg)
+[![Maven Central](https://img.shields.io/maven-central/v/com.addhen.kanalytics/kanalytics)](https://search.maven.org/search?q=g:com.addhen.kanalytics) ![Build status](https://github.com/addhen/kanalytics/actions/workflows/gradle.yml/badge.svg)
 
 
 # KAnalytics
