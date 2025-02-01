@@ -15,7 +15,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 public fun SampleScreen(onEventViewerTrigger: () -> Unit) {
-  val viewModel  = viewModel
+  val viewModel = viewModel
   val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 
   when (uiState.flag) {

@@ -30,7 +30,7 @@ public class KAnalyticsCollector(
   public fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,
     trackerName: TrackerName,
-    onSentDate: Instant
+    onSentDate: Instant,
   ) {
     scope.launch {
       withContext(appCoroutineDispatchers.io) {
@@ -68,7 +68,7 @@ public class KAnalyticsCollector(
       return KAnalyticsCollector(
         duration = duration,
         showNotification = showNotification,
-        repository = EventDataRepository.Instance
+        repository = EventDataRepository.Instance,
       )
     }
   }

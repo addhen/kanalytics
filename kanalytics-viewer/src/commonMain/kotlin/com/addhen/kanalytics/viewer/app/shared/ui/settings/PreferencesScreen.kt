@@ -64,7 +64,6 @@ private fun PreferencesContent(
   onDynamicColorSelected: () -> Unit,
   onBack: () -> Unit,
 ) {
-
   ViewerAppScaffold(
     title = stringResource(Res.string.settings_title),
     snackbarHostState = snackbarHostState,
@@ -115,7 +114,6 @@ private fun ThemePreference(
   title: String,
   modifier: Modifier = Modifier,
 ) {
-
   Preference(
     title = title,
     control = {

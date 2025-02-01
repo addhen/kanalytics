@@ -12,13 +12,13 @@ public class KAnalyticsCollector(
   private val showNotification: Boolean = true,
   duration: RetentionPolicyManager.DayDuration = RetentionPolicyManager.DayDuration(7),
   private val notificationManager: Any,
-  private val appCoroutineDispatchers: Any
+  private val appCoroutineDispatchers: Any,
 ) {
 
   public fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,
     trackerName: TrackerName,
-    onSentDate: Instant
+    onSentDate: Instant,
   ) {
     // No-op for no-op artifact
   }

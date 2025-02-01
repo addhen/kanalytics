@@ -7,14 +7,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.addhen.kanalytics.KAnalytics
-import com.addhen.kanalytics.viewer.KAnalyticsInterceptor
 import com.addhen.kanalytics.sample.shared.trackers.FirebaseTracker
+import com.addhen.kanalytics.viewer.KAnalyticsInterceptor
 import kotlin.reflect.KClass
 
-internal fun createKAnalytics(shouldShowNotification: Boolean, numberOfDays: Int): KAnalytics = KAnalytics.Builder()
-  .addTracker(FirebaseTracker())
-  .addInterceptor(KAnalyticsInterceptor(numberOfDays, shouldShowNotification))
-  .build()
+internal fun createKAnalytics(shouldShowNotification: Boolean, numberOfDays: Int): KAnalytics =
+  KAnalytics.Builder()
+    .addTracker(FirebaseTracker())
+    .addInterceptor(KAnalyticsInterceptor(numberOfDays, shouldShowNotification))
+    .build()
 
 public val viewModel: SampleViewModel = SampleViewModelFactory(
   kAnalytics = createKAnalytics(shouldShowNotification = true, numberOfDays = 7),

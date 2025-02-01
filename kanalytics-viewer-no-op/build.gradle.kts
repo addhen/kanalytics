@@ -1,9 +1,13 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
+
 plugins {
   id("convention.plugin.android.library")
   id("convention.plugin.kotlin.multiplatform")
   id("org.jetbrains.dokka")
   id("convention.plugin.maven.publication")
-  //id("convention.plugin.compose")
+  // id("convention.plugin.compose")
   id("convention.plugin.metalava")
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.sqldelight)

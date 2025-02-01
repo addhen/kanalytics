@@ -11,7 +11,7 @@ public class KAnalyticsInterceptor(numberOfDays: Int, showNotification: Boolean)
 
   private val collector: KAnalyticsCollector = KAnalyticsCollector.getInstance(
     showNotification,
-    RetentionPolicyManager.DayDuration(numberOfDays)
+    RetentionPolicyManager.DayDuration(numberOfDays),
   )
 
   override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
