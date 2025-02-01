@@ -47,8 +47,8 @@ publishing {
 
     // Provide artifacts information required by Maven Central
     pom {
-      name.set("KAnalytics")
-      description.set("A kotlin multiplatform library for getting a device's location")
+      name.set("kanalytics")
+      description.set("A kotlin multiplatform library for sending analytics events to tracking platforms")
     }
   }
 }
