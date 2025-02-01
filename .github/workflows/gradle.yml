@@ -40,39 +40,35 @@ jobs:
     timeout-minutes: 60
 
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup
-      uses: ./.github/actions/setup
-    - name: Spotless Check
-      run: ./gradlew spotlessCheck --stacktrace
-    - name: Lint
-      run: ./gradlew lint --stacktrace
-    - name: Build with Gradle
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        arguments: ${{ matrix.target }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Spotless Check
+        run: ./gradlew spotlessCheck --stacktrace
+      - name: Lint
+        run: ./gradlew lint --stacktrace
+      - name: Run tests
+        run: ./gradlew ${{ matrix.target }}
   publish-snapshots:
     runs-on: macos-latest
     if: github.repository == 'addhen/kanalytics' && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
     needs: [build]
     steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-    - name: Setup
-      uses: ./.github/actions/setup
-    - name: Upload Snapshot
-      uses: gradle/actions/setup-gradle@v3
-      if: success() && endsWith(env.VERSION_NAME, '-SNAPSHOT')
-      env:
-        OSSRH_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
-        OSSRH_GPG_SECRET_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
-        OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
-        OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-        OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-      with:
-        arguments: |
-          --no-configuration-cache
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Upload Snapshot
+        if: success() && endsWith(env.VERSION_NAME, '-SNAPSHOT')
+        env:
+          OSSRH_GPG_SECRET_KEY_PASSWORD: ${{ secrets.OSSRH_GPG_SECRET_KEY_PASSWORD }}
+          OSSRH_GPG_SECRET_KEY_ID: ${{ secrets.OSSRH_GPG_SECRET_KEY_ID }}
+          OSSRH_GPG_SECRET_KEY: ${{ secrets.OSSRH_GPG_SECRET_KEY }}
+          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
+          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
+        run: >
+          ./gradlew --no-configuration-cache
           publishAllPublicationsToSonatypeRepository
           closeSonatypeStagingRepository
           -Psigning.gnupg.keyName='${{secrets.OSSRH_GPG_SECRET_KEY_ID}}'
