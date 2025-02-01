@@ -1,0 +1,34 @@
+// Signature format: 4.0
+package com.addhen.kanalytics.viewer {
+
+  public final class KAnalyticsCollector {
+    ctor public KAnalyticsCollector(Object repository, optional boolean showNotification, optional int duration, Object notificationManager, Object appCoroutineDispatchers);
+    method public void onEventSent(com.addhen.kanalytics.KAnalyticsEvent kAnalyticsEvent, String trackerName, kotlinx.datetime.Instant onSentDate);
+  }
+
+  public final class KAnalyticsInterceptor implements com.addhen.kanalytics.Interceptor {
+    ctor public KAnalyticsInterceptor(int numberOfDays, boolean showNotification);
+    method public com.addhen.kanalytics.KAnalyticsEvent intercept(com.addhen.kanalytics.Interceptor.Chain chain);
+  }
+
+  public final class LaunchViewerApp_androidKt {
+    method public static void launchViewerApp();
+  }
+
+  public final class LaunchViewerApp_iosKt {
+    method public static void launchViewerApp();
+  }
+
+  public final class RetentionPolicyManager {
+    ctor public RetentionPolicyManager(optional kotlinx.datetime.Clock clock, Object dayDuration, Object repository);
+    method public suspend Object? processDataRetention(kotlin.coroutines.Continuation<? super kotlin.Unit>);
+  }
+
+  @kotlin.jvm.JvmInline public static final value class RetentionPolicyManager.DayDuration {
+    ctor public RetentionPolicyManager.DayDuration(int numberOfDays);
+    method public int getNumberOfDays();
+    property public final int numberOfDays;
+  }
+
+}
+
