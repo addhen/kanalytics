@@ -26,7 +26,7 @@ enableFeaturePreview("STABLE_CONFIGURATION_CACHE")
 
 // setting project name to kanalytics-lib to curtail an issue with conflicts kanalytics name due to
 // gradle's typesafe project accessors feature
-rootProject.name = "kanalytics"
+rootProject.name = "kanalytics-lib"
 
 include(
   ":kanalytics",

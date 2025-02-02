@@ -14,7 +14,9 @@ fun Project.configureKotlin() {
 
   tasks.withType<KotlinCompilationTask<*>>().configureEach {
     compilerOptions {
-      allWarningsAsErrors.set(true)
+      // Turning this off due to:
+      //https://youtrack.jetbrains.com/issue/KT-66568/w-KLIB-resolver-The-same-uniquename...-found-in-more-than-one-library
+      allWarningsAsErrors.set(false)
       freeCompilerArgs.add(
         // expect/actual classes (including interfaces, objects, annotations, enums, actual typealiases) in Beta
         // https://youtrack.jetbrains.com/issue/KT-61573

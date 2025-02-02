@@ -20,9 +20,9 @@ kotlin {
       dependencies {
         implementation(projects.kanalytics)
         if (isDebug) {
-          implementation(projects.kanalyticsViewerNoOp)
-        } else {
           implementation(projects.kanalyticsViewer)
+        } else {
+          implementation(projects.kanalyticsViewerNoOp)
         }
         api(compose.material3)
         api(libs.touchlab.kermit)

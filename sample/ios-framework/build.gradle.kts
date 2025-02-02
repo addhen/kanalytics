@@ -22,9 +22,9 @@ kotlin {
     commonMain {
       dependencies {
         if (isDebug) {
-          implementation(projects.kanalyticsViewerNoOp)
-        } else {
           implementation(projects.kanalyticsViewer)
+        } else {
+          implementation(projects.kanalyticsViewerNoOp)
         }
         implementation(projects.sample.shared)
       }

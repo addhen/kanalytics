@@ -77,7 +77,9 @@ public fun NavController.buildNavOptions(): NavOptions = navOptions {
   // on the back stack as users select items
   // Fixes an issue with the back button causing the weather screen to be relaunched
   // after attempting to navigate back to the map screen.
-  popUpTo(graph.findStartDestination().id) { saveState = true }
+  // Using graph.findStartDestination().route due to:
+  // https://youtrack.jetbrains.com/issue/CMP-7513/Unresolved-reference-id-on-findStartDestination-in-Navigation
+  popUpTo(graph.findStartDestination().route ?: return@navOptions) { saveState = true }
   // Restore state when re-selecting a previously selected item
   restoreState = true
 }
