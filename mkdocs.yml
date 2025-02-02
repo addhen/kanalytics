@@ -1,0 +1,95 @@
+# pip install mkdocs mkdocs-material
+# mkdocs serve
+# mkdocs gh-deploy
+# https://www.mkdocs.org/getting-started/
+
+# Project information
+site_name: 'KAnalytics'
+site_description: 'A kotlin multiplatform library for implementing analytics tracking in your applications'
+site_author: 'Henry Addo'
+site_url: 'https://addhen.github.io/kanalytics/'
+edit_uri: 'tree/main/docs/'
+remote_branch: gh-pages
+
+docs_dir: docs
+
+repo_name: 'kanalyics'
+repo_url: 'https://github.com/addhen/kanalytics'
+
+# Navigation
+nav:
+  - 'Overview': index.md
+  - 'Setup': setup.md
+  - 'Usage': usage.md
+  - 'API reference': api/
+  - 'Sample code': https://github.com/addhen/kanalytics/tree/main/sample
+  - 'Change Log': changelog.md
+  - 'Contributing': contributing.md
+  - 'Code of Conduct': code-of-conduct.md
+
+# Configuration
+theme:
+  name: 'material'
+  language: 'en'
+  icon:
+    logo: material/map-marker-radius
+  user_color_mode_toggle: true
+  color_mode: auto
+  palette:
+    - media: '(prefers-color-scheme: light)'
+      scheme: default
+      primary: 'white'
+      accent: 'deep orange'
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      primary: 'black'
+      accent: 'deep orange'
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+  font:
+    text: 'Roboto Condensed'
+    code: 'Roboto Mono'
+  features:
+    - content.tabs.link
+    - content.code.copy
+    - content.code.select
+  shortcuts:
+    help: 191    # ?
+    next: 78     # n
+    previous: 80 # p
+    search: 83   # s
+
+plugins:
+  - social
+  - search
+  - mkdocs-video:
+      is_video: true
+      video_muted: true
+      video_controls: false
+      video_autoplay: true
+      video_loop: true
+      css_style:
+        width: "100%"
+        height: "30rem"
+
+# Extensions
+markdown_extensions:
+  - admonition
+  - attr_list
+  - codehilite:
+      guess_lang: false
+  - footnotes
+  - toc:
+      permalink: true
+  - pymdownx.betterem
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.details
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
