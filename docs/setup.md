@@ -11,7 +11,7 @@ production environments where you don't want to include the viewer.
 
 Add `kanalytics` artifact in your project to be able to collect analytics events:
 
-```kotlin
+```kotlin title="build.gradle.kts" linenums="1"
 dependencies {
   implementation("com.addhen.kanalytics:kanalytics:1.0.0")
 }
@@ -21,7 +21,7 @@ To view the analytics events, being sent to tracking tools, add the `kanalytics-
 
 **Note:** You might want to add this to your non production build type as you don't want to ship the viewer to production.
 
-```kotlin
+```kotlin title="build.gradle.kts" linenums="1"
 dependencies {
   if (buildType.name == "debug") {
     implementation("com.addhen.kanalytics:kanalytics-viewer:1.0.0")
@@ -39,7 +39,7 @@ dependencies {
 <summary>Snapshots of the development version are available in Sonatype's snapshots repository.</summary>
 <p>
 
-```groovy
+```groovy title="build.gradle.kts" linenums="1"
 repository {
   mavenCentral()
   maven {
