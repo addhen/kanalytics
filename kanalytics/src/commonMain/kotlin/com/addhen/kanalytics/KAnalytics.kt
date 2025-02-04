@@ -50,6 +50,13 @@ public class KAnalytics internal constructor(builder: Builder) {
     send(filteredTrackers, event)
   }
 
+  /**
+   * Sends an event to all trackers
+   *
+   * @param eventName The name of the event to send
+   * @param fieldName The name of the field to add to the event
+   * @param fieldValue The value of the field to add to the event
+   */
   public fun send(eventName: String, fieldName: String, fieldValue: Any?) {
     val event = KAnalyticsEvent(eventName = eventName).apply {
       addParameter(fieldName, fieldValue)
