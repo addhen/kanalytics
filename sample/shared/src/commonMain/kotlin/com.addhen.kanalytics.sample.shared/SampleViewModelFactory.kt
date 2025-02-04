@@ -8,8 +8,19 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.addhen.kanalytics.KAnalytics
 import com.addhen.kanalytics.sample.shared.trackers.FirebaseTracker
+import com.addhen.kanalytics.viewer.KAnalyticsCollector
 import com.addhen.kanalytics.viewer.KAnalyticsInterceptor
 import kotlin.reflect.KClass
+
+val collector = KAnalyticsCollector(
+  showNotification = true,
+  duration = RetentionPolicyManager.DayDuration(7),
+)
+
+val interceptor = KAnalyticsInterceptor(
+  numberOfDays = 7,
+  shouldShowNotification = true,
+)
 
 internal fun createKAnalytics(shouldShowNotification: Boolean, numberOfDays: Int): KAnalytics =
   KAnalytics.Builder()

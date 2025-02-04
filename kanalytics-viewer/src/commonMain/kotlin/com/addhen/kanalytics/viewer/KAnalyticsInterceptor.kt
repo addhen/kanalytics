@@ -7,16 +7,14 @@ import com.addhen.kanalytics.Interceptor
 import com.addhen.kanalytics.KAnalyticsEvent
 import kotlinx.datetime.Clock
 
-public class KAnalyticsInterceptor(numberOfDays: Int, showNotification: Boolean) : Interceptor {
-
-  private val collector: KAnalyticsCollector = KAnalyticsCollector.getInstance(
-    showNotification,
-    RetentionPolicyManager.DayDuration(numberOfDays),
-  )
+public class KAnalyticsInterceptor(
+  private val collector: KAnalyticsCollector = KAnalyticsCollector(),
+  private val clock: Clock = Clock.System,
+) : Interceptor {
 
   override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
     val event = chain.event
-    collector.onEventSent(event, chain.trackerName, Clock.System.now())
+    collector.onEventSent(event, chain.trackerName, clock.now())
     return event
   }
 }

@@ -59,17 +59,4 @@ public class KAnalyticsCollector(
       }
     }
   }
-
-  internal companion object {
-
-    fun getInstance(
-      showNotification: Boolean,
-      duration: RetentionPolicyManager.DayDuration,
-    ): KAnalyticsCollector {
-      return KAnalyticsCollector(
-        duration = duration,
-        showNotification = showNotification
-      )
-    }
-  }
 }
