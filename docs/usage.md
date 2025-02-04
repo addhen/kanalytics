@@ -78,13 +78,12 @@ kAnalytics.send(event)  // Sends to all trackers
 kAnalytics.send(event, FirebaseTracker::class)  // Sends only to Firebase
 ```
 
-## Configure
-
-If you're using `KAnalyticsViewer` to view the events to be sent and wants to configure its Interceptor:
-
 # Debug Tools
 
 ## KAnalyticsViewer Setup
+
+If you're using `KAnalyticsViewer` to view the events to be sent and wants to configure its Interceptor:
+
 
 ```kotlin linenums="1"
 // Configure event collection

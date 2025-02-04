@@ -14,7 +14,7 @@ tracking for multiple platforms.
 
 It comes with **KAnalytics Viewer**  a companion app that helps
 developers and QA teams manage analytics events in their
-applications. Its user-friendly interface simplifies event viewing,
+applications. Its user friendly interface simplifies event viewing,
 searching, and debugging.
 
 
@@ -24,7 +24,7 @@ KAnalytics is a flexible analytics library that allows you to:
 
 1. **Multi-Tracker Support**: Send events to multiple analytics services simultaneously.
 2. **Interceptor**: Intercept and modify events before they are sent.
-3. **Multi-Platform Support**: Works on both Android and iOS platforms.
+3. **Multiplatform Support**: Works on both Android and iOS platforms.
 4. **Viewer**: View and debug analytics events during development.
 
 ## Screenshots
