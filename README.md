@@ -2,6 +2,12 @@
 
 
 # KAnalytics
+<div style="display: inline-block"  align="center">
+  <figure>
+    <img src="docs/media/kanalytics-viewer-multi-window-support.gif" alt="KAnalytics Viewer in multi-window mode">
+    <figcaption>Android's multi-window support</figcaption>
+  </figure>
+</div>
 
 Checkout the [documentation](https://addhen.github.io/kanalytics/) for more information.
 
