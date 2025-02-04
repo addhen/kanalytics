@@ -15,17 +15,18 @@ import kotlinx.coroutines.withContext
 import kotlinx.datetime.Instant
 
 public class KAnalyticsCollector(
-  private val repository: EventDataRepository = EventDataRepository.Instance,
   private val showNotification: Boolean = true,
   duration: RetentionPolicyManager.DayDuration = RetentionPolicyManager.DayDuration(7),
-  private val notificationManager: NotificationManager = NotificationManager(),
-  private val appCoroutineDispatchers: AppCoroutineDispatchers = AppCoroutineDispatchers(),
 ) {
   private val scope = MainScope()
+  private val repository: EventDataRepository = EventDataRepository.Instance
   private val retentionPolicyManager: RetentionPolicyManager = RetentionPolicyManager(
     dayDuration = duration,
     repository = repository,
   )
+
+  private val appCoroutineDispatchers: AppCoroutineDispatchers = AppCoroutineDispatchers()
+  private val notificationManager: NotificationManager = NotificationManager()
 
   public fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,
@@ -67,8 +68,7 @@ public class KAnalyticsCollector(
     ): KAnalyticsCollector {
       return KAnalyticsCollector(
         duration = duration,
-        showNotification = showNotification,
-        repository = EventDataRepository.Instance,
+        showNotification = showNotification
       )
     }
   }
