@@ -14,7 +14,7 @@ public class KAnalyticsInterceptor(
 
   override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
     val event = chain.event
-    collector.onEventSent(event, chain.KTrackerName, clock.now())
+    collector.onEventSent(event, chain.kTrackerName, clock.now())
     return event
   }
 }
