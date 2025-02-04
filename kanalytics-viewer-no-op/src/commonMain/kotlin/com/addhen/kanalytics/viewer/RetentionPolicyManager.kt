@@ -3,11 +3,8 @@
 
 package com.addhen.kanalytics.viewer
 
-import kotlin.jvm.JvmInline
-import kotlinx.datetime.Clock
-
 public class RetentionPolicyManager(
-  private val clock: Clock = Clock.System,
+  private val clock: Any = Any(),
   private val dayDuration: Any,
   private val repository: Any,
 ) {
@@ -15,7 +12,4 @@ public class RetentionPolicyManager(
   public suspend fun processDataRetention() {
     // No-op for no-op artifact
   }
-
-  @JvmInline
-  public value class DayDuration(public val numberOfDays: Int)
 }

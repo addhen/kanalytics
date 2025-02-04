@@ -8,11 +8,8 @@ import com.addhen.kanalytics.TrackerName
 import kotlinx.datetime.Instant
 
 public class KAnalyticsCollector(
-  private val repository: Any,
-  private val showNotification: Boolean = true,
+  private val showNotification: Boolean = false,
   duration: RetentionPolicyManager.DayDuration = RetentionPolicyManager.DayDuration(7),
-  private val notificationManager: Any,
-  private val appCoroutineDispatchers: Any,
 ) {
 
   public fun onEventSent(

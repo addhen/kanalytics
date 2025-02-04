@@ -10,23 +10,19 @@ import com.addhen.kanalytics.KAnalytics
 import com.addhen.kanalytics.sample.shared.trackers.FirebaseTracker
 import com.addhen.kanalytics.viewer.KAnalyticsCollector
 import com.addhen.kanalytics.viewer.KAnalyticsInterceptor
+import com.addhen.kanalytics.viewer.RetentionPolicyManager
 import kotlin.reflect.KClass
 
-val collector = KAnalyticsCollector(
-  showNotification = true,
-  duration = RetentionPolicyManager.DayDuration(7),
-)
-
-val interceptor = KAnalyticsInterceptor(
-  numberOfDays = 7,
-  shouldShowNotification = true,
-)
-
-internal fun createKAnalytics(shouldShowNotification: Boolean, numberOfDays: Int): KAnalytics =
-  KAnalytics.Builder()
+internal fun createKAnalytics(shouldShowNotification: Boolean, numberOfDays: Int): KAnalytics {
+  val collector = KAnalyticsCollector(
+    showNotification = shouldShowNotification,
+    duration = RetentionPolicyManager.DayDuration(numberOfDays),
+  )
+  return KAnalytics.Builder()
     .addTracker(FirebaseTracker())
-    .addInterceptor(KAnalyticsInterceptor(numberOfDays, shouldShowNotification))
+    .addInterceptor(KAnalyticsInterceptor(collector))
     .build()
+}
 
 public val viewModel: SampleViewModel = SampleViewModelFactory(
   kAnalytics = createKAnalytics(shouldShowNotification = true, numberOfDays = 7),

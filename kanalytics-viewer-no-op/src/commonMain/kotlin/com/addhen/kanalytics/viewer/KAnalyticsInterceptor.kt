@@ -6,7 +6,10 @@ package com.addhen.kanalytics.viewer
 import com.addhen.kanalytics.Interceptor
 import com.addhen.kanalytics.KAnalyticsEvent
 
-public class KAnalyticsInterceptor(numberOfDays: Int, showNotification: Boolean) : Interceptor {
+public class KAnalyticsInterceptor(
+  private val collector: KAnalyticsCollector = KAnalyticsCollector(),
+  private val clock: Any = Any(),
+) : Interceptor {
 
   override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
     val event = chain.event
