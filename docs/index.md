@@ -1,39 +1,47 @@
+
 # KAnalytics
-A Kotlin Multiplatform library designed to help
-developers easily integrate and manage analytics events within
-their applications. This library provides a unified API for
-tracking events, making it easier to collect and analyze user
-behavior across different platforms.
+KAnalytics is a powerful Kotlin Multiplatform library that streamlines
+analytics integration across Android and iOS applications. It provides
+a unified, type-safe API for tracking user events while simplifying
+cross-platform analytics management.
 
 ## Motivation
 The primary motivation behind **KAnalytics** is to provide a simple
 and efficient way to integrate analytics tracking into your
-applications. By using a shared codebase, developers can ensure consistency and reduce the effort required to implement analytics tracking for multiple platforms.
+applications. By using a shared codebase, developers can ensure
+consistency and reduce the effort required to implement analytics
+tracking for multiple platforms.
 
-It comes with **KAnalytics Viewer**  a companion app that helps developers and QA teams manage analytics events in their applications. Its user-friendly interface simplifies event viewing, searching, and debugging.
+It comes with **KAnalytics Viewer**  a companion app that helps
+developers and QA teams manage analytics events in their
+applications. Its user-friendly interface simplifies event viewing,
+searching, and debugging.
 
 
 ## Features
-1. **Cross-Platform Support**: Works on both Android and iOS platforms.
-2. **A Companion App:** View, search, and delete analytics events.
-3. **Interceptor:** To intercept a events being sent to the tracking tool like Firebase, Amplitude, etc
 
+KAnalytics is a flexible analytics library that allows you to:
 
+1. **Multi-Tracker Support**: Send events to multiple analytics services simultaneously.
+2. **Interceptor**: Intercept and modify events before they are sent.
+3. **Multi-Platform Support**: Works on both Android and iOS platforms.
+4. **Viewer**: View and debug analytics events during development.
 
+## Screenshots
 
 | Android | iOS |
 |---------|-----|
 | <picture><source media="(prefers-color-scheme: dark)" srcset="./media/android-dark.mp4"><source media="(prefers-color-scheme: light)" srcset="./media/android-light.mp4"><video width="300" controls><source src="./media/android-light.mp4" type="video/mp4">Your browser does not support the video tag.</video></picture> | <picture><source media="(prefers-color-scheme: dark)" srcset="./media/ios-dark.mp4"><source media="(prefers-color-scheme: light)" srcset="./media/ios-light.mp4"><video width="300" controls><source src="./media/ios-light.mp4" type="video/mp4">Your browser does not support the video tag.</video></picture> |
 
 
-Supports the following platforms:
+## Platform Support
 
 | Platform      | Supported        |
 |---------------|------------------|
 | Android       | ✅               |
 | iOS           | ✅               |
 
-## License
+# License
 
 ```
 Copyright 2025 Addhen Ltd and the KAnalytics project contributors
