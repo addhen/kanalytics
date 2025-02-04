@@ -4,7 +4,7 @@
 # KAnalytics
 <div style="display: inline-block"  align="center">
   <figure>
-    <img src="docs/media/multi-window.gif" height="380px" alt="KAnalytics Viewer in multi-window mode">
+    <img src="docs/media/multi-window.gif" alt="KAnalytics Viewer in multi-window mode">
     <figcaption>Android's multi-window support</figcaption>
   </figure>
 </div>
