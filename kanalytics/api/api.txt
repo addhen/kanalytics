@@ -8,10 +8,10 @@ package com.addhen.kanalytics {
 
   public static interface Interceptor.Chain {
     method public com.addhen.kanalytics.KAnalyticsEvent getEvent();
-    method public String getTrackerName();
+    method public String getKTrackerName();
     method public com.addhen.kanalytics.KAnalyticsEvent proceed(com.addhen.kanalytics.KAnalyticsEvent event);
     property public abstract com.addhen.kanalytics.KAnalyticsEvent event;
-    property public abstract String trackerName;
+    property public abstract String kTrackerName;
   }
 
   public static final class Interceptor.Companion {
@@ -22,14 +22,14 @@ package com.addhen.kanalytics {
     ctor public KAnalytics();
     method public com.addhen.kanalytics.KAnalytics.Builder newBuilder();
     method public void send(com.addhen.kanalytics.KAnalyticsEvent event);
-    method public void send(com.addhen.kanalytics.KAnalyticsEvent event, kotlin.reflect.KClass<? extends com.addhen.kanalytics.Tracker>... trackerNames);
+    method public void send(com.addhen.kanalytics.KAnalyticsEvent event, kotlin.reflect.KClass<? extends com.addhen.kanalytics.KTracker>... kTrackerNames);
     method public void send(String eventName, String fieldName, Object? fieldValue);
   }
 
   public static final class KAnalytics.Builder {
     ctor public KAnalytics.Builder();
     method public com.addhen.kanalytics.KAnalytics.Builder addInterceptor(com.addhen.kanalytics.Interceptor interceptor);
-    method public com.addhen.kanalytics.KAnalytics.Builder addTracker(com.addhen.kanalytics.Tracker tracker);
+    method public com.addhen.kanalytics.KAnalytics.Builder addTracker(com.addhen.kanalytics.KTracker kTracker);
     method public com.addhen.kanalytics.KAnalytics build();
   }
 
@@ -46,12 +46,12 @@ package com.addhen.kanalytics {
     property public final java.util.Map<java.lang.String,java.lang.Object> properties;
   }
 
-  public interface Tracker {
+  public interface KTracker {
     method public void send(com.addhen.kanalytics.KAnalyticsEvent event);
   }
 
-  @kotlin.jvm.JvmInline public final value class TrackerName {
-    ctor public TrackerName(String value);
+  @kotlin.jvm.JvmInline public final value class KTrackerName {
+    ctor public KTrackerName(String value);
     method public String getValue();
     property public final String value;
   }

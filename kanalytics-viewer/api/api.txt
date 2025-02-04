@@ -2,12 +2,12 @@
 package com.addhen.kanalytics.viewer {
 
   public final class KAnalyticsCollector {
-    ctor public KAnalyticsCollector(optional com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository repository, optional boolean showNotification, optional int duration, optional com.addhen.kanalytics.viewer.app.NotificationManager notificationManager, optional com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers appCoroutineDispatchers);
-    method public void onEventSent(com.addhen.kanalytics.KAnalyticsEvent kAnalyticsEvent, String trackerName, kotlinx.datetime.Instant onSentDate);
+    ctor public KAnalyticsCollector(optional boolean showNotification, optional int duration);
+    method public void onEventSent(com.addhen.kanalytics.KAnalyticsEvent kAnalyticsEvent, String kTrackerName, kotlinx.datetime.Instant onSentDate);
   }
 
   public final class KAnalyticsInterceptor implements com.addhen.kanalytics.Interceptor {
-    ctor public KAnalyticsInterceptor(int numberOfDays, boolean showNotification);
+    ctor public KAnalyticsInterceptor(optional com.addhen.kanalytics.viewer.KAnalyticsCollector collector, optional kotlinx.datetime.Clock clock);
     method public com.addhen.kanalytics.KAnalyticsEvent intercept(com.addhen.kanalytics.Interceptor.Chain chain);
   }
 
