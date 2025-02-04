@@ -48,7 +48,7 @@ repository {
 }
 
 dependencies {
-  implementation("com.addhen.kanalytics:kanalytics:1.1.0-SNAPSHOT")
+  implementation("com.addhen.kanalytics:kanalytics:1.0.0-SNAPSHOT")
   if (buildType.name == "debug") {
     implementation("com.addhen.kanalytics:kanalytics-viewer:1.0.0-SNAPSHOT")
   } else {
