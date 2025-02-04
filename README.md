@@ -3,13 +3,14 @@
 
 # KAnalytics
 <div style="display: inline-block"  align="center">
-  <figure>
-    <img src="docs/media/multi-window.gif" alt="KAnalytics Viewer in multi-window mode">
-    <figcaption>Android's multi-window support</figcaption>
-  </figure>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/media/multi-window-dark.gif">
+    <source media="(prefers-color-scheme: light)" srcset="docs/media/multi-window-light.gif">
+    <img alt="app-cover-readme-file" src="docs/media/multi-window-light.gif">
+  </picture>
 </div>
 
-Checkout the [documentation](https://addhen.github.io/kanalytics/) for more information.
+<p>Checkout the [documentation](https://addhen.github.io/kanalytics/) for more information.</p>
 
 ## License
 
