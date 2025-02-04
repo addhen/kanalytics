@@ -6,9 +6,9 @@ package com.addhen.kanalytics
 import kotlin.jvm.JvmInline
 
 @JvmInline
-public value class TrackerName(public val value: String)
+public value class KTrackerName(public val value: String)
 
-public interface Tracker {
+public interface KTracker {
 
   public fun send(event: KAnalyticsEvent)
 }

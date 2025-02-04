@@ -16,7 +16,7 @@ public fun interface Interceptor {
   public interface Chain {
 
     public val event: KAnalyticsEvent
-    public val trackerName: TrackerName
+    public val kTrackerName: KTrackerName
 
     public fun proceed(event: KAnalyticsEvent): KAnalyticsEvent
   }

@@ -5,9 +5,9 @@ package com.addhen.kanalytics.sample.shared.trackers
 
 import co.touchlab.kermit.Logger
 import com.addhen.kanalytics.KAnalyticsEvent
-import com.addhen.kanalytics.Tracker
+import com.addhen.kanalytics.KTracker
 
-public class FirebaseTracker : Tracker {
+public class FirebaseTracker : KTracker {
 
   private val analyticsEvents = mutableListOf<KAnalyticsEvent>()
 

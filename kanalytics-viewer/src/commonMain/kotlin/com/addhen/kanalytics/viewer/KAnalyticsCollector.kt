@@ -4,7 +4,7 @@
 package com.addhen.kanalytics.viewer
 
 import com.addhen.kanalytics.KAnalyticsEvent
-import com.addhen.kanalytics.TrackerName
+import com.addhen.kanalytics.KTrackerName
 import com.addhen.kanalytics.viewer.app.NotificationManager
 import com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
@@ -30,7 +30,7 @@ public class KAnalyticsCollector(
 
   public fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,
-    trackerName: TrackerName,
+    kTrackerName: KTrackerName,
     onSentDate: Instant,
   ) {
     scope.launch {
@@ -39,7 +39,7 @@ public class KAnalyticsCollector(
           eventData = EventData(
             id = null,
             name = kAnalyticsEvent.eventName,
-            trackerName = trackerName.value,
+            trackerName = kTrackerName.value,
             description = kAnalyticsEvent.eventDescription,
             createdAt = onSentDate,
             properties = kAnalyticsEvent.properties.mapValues { it.value ?: "" },
@@ -50,7 +50,7 @@ public class KAnalyticsCollector(
       if (showNotification) {
         notificationManager.showNotification(
           eventName = kAnalyticsEvent.eventName,
-          trackerName = trackerName.value,
+          trackerName = kTrackerName.value,
         )
       }
 

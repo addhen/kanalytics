@@ -4,7 +4,7 @@
 package com.addhen.kanalytics.viewer
 
 import com.addhen.kanalytics.KAnalyticsEvent
-import com.addhen.kanalytics.TrackerName
+import com.addhen.kanalytics.KTrackerName
 import kotlinx.datetime.Instant
 
 public class KAnalyticsCollector(
@@ -14,7 +14,7 @@ public class KAnalyticsCollector(
 
   public fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,
-    trackerName: TrackerName,
+    KTrackerName: KTrackerName,
     onSentDate: Instant,
   ) {
     // No-op for no-op artifact

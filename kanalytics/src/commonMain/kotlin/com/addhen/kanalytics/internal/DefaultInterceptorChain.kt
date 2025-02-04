@@ -5,22 +5,22 @@ package com.addhen.kanalytics.internal
 
 import com.addhen.kanalytics.Interceptor
 import com.addhen.kanalytics.KAnalyticsEvent
-import com.addhen.kanalytics.TrackerName
+import com.addhen.kanalytics.KTrackerName
 import kotlinx.atomicfu.atomic
 
 internal class DefaultInterceptorChain(
   private val interceptors: List<Interceptor>,
   private val index: Int,
-  override val trackerName: TrackerName,
+  override val kTrackerName: KTrackerName,
   override val event: KAnalyticsEvent,
 ) : Interceptor.Chain {
   private val calls = atomic(0)
 
   internal fun copy(
     index: Int = this.index,
-    trackerName: TrackerName = this.trackerName,
+    kTrackerName: KTrackerName = this.kTrackerName,
     event: KAnalyticsEvent = this.event,
-  ) = DefaultInterceptorChain(interceptors, index, trackerName, event)
+  ) = DefaultInterceptorChain(interceptors, index, kTrackerName, event)
 
   override fun proceed(event: KAnalyticsEvent): KAnalyticsEvent {
     check(calls.incrementAndGet() == 1) {
@@ -35,6 +35,6 @@ internal class DefaultInterceptorChain(
   }
 
   override fun toString(): String {
-    return "DefaultInterceptorChain(index=$index, trackerName=$trackerName, event=$event)"
+    return "DefaultInterceptorChain(index=$index, trackerName=$kTrackerName, event=$event)"
   }
 }

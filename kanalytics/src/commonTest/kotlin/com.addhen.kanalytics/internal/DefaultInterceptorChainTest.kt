@@ -5,7 +5,7 @@ package com.addhen.kanalytics.internal
 
 import com.addhen.kanalytics.Interceptor
 import com.addhen.kanalytics.KAnalyticsEvent
-import com.addhen.kanalytics.TrackerName
+import com.addhen.kanalytics.KTrackerName
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFailsWith
@@ -20,7 +20,7 @@ class DefaultInterceptorChainTest {
     val chain = DefaultInterceptorChain(
       interceptors = listOf(fakeInterceptor),
       index = 0,
-      trackerName = TrackerName("testTracker"),
+      kTrackerName = KTrackerName("testTracker"),
       event = event,
     )
 
@@ -35,7 +35,7 @@ class DefaultInterceptorChainTest {
     val chain = DefaultInterceptorChain(
       interceptors = listOf(fakeInterceptor),
       index = 0,
-      trackerName = TrackerName("testTracker"),
+      kTrackerName = KTrackerName("testTracker"),
       event = event,
     )
 
@@ -52,7 +52,7 @@ class DefaultInterceptorChainTest {
     val chain = DefaultInterceptorChain(
       interceptors = emptyList(),
       index = 0,
-      trackerName = TrackerName("testTracker"),
+      kTrackerName = KTrackerName("testTracker"),
       event = event,
     )
 
@@ -67,14 +67,14 @@ class DefaultInterceptorChainTest {
     val chain = DefaultInterceptorChain(
       interceptors = listOf(fakeInterceptor),
       index = 0,
-      trackerName = TrackerName("testTracker"),
+      kTrackerName = KTrackerName("testTracker"),
       event = event,
     )
 
     val newEvent = KAnalyticsEvent("newTestEvent")
     val newChain = chain.copy(index = 1, event = newEvent)
     val expectedChain =
-      DefaultInterceptorChain(listOf(fakeInterceptor), 1, TrackerName("testTracker"), newEvent)
+      DefaultInterceptorChain(listOf(fakeInterceptor), 1, KTrackerName("testTracker"), newEvent)
 
     assertEquals(expectedChain.toString(), newChain.toString())
   }

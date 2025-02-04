@@ -178,7 +178,7 @@ class KAnalyticsTest {
     }
   }
 
-  inner class FirebaseTracker : Tracker {
+  inner class FirebaseTracker : KTracker {
 
     val analyticsEvents = mutableListOf<KAnalyticsEvent>()
 
@@ -188,7 +188,7 @@ class KAnalyticsTest {
     }
   }
 
-  inner class AdjustTracker : Tracker {
+  inner class AdjustTracker : KTracker {
 
     val analyticsEvents = mutableListOf<KAnalyticsEvent>()
 
@@ -201,11 +201,11 @@ class KAnalyticsTest {
   inner class FakeTrackerIntercept : Interceptor {
 
     var event: KAnalyticsEvent? = null
-    var tracker: TrackerName? = null
+    var tracker: KTrackerName? = null
 
     override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
       this.event = chain.event.copy(eventName = "Intercepted ${chain.event.eventName}")
-      this.tracker = chain.trackerName
+      this.tracker = chain.kTrackerName
       return chain.proceed(this.event!!)
     }
   }
@@ -213,11 +213,11 @@ class KAnalyticsTest {
   inner class FakeTrackerIntercept2 : Interceptor {
 
     var event: KAnalyticsEvent? = null
-    var tracker: TrackerName? = null
+    var tracker: KTrackerName? = null
 
     override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
       this.event = chain.event.copy(eventName = "Mock2 Intercepted ${chain.event.eventName}")
-      this.tracker = chain.trackerName
+      this.tracker = chain.kTrackerName
       return chain.proceed(this.event!!)
     }
   }

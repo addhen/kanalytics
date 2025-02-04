@@ -23,7 +23,7 @@ import kotlinx.collections.immutable.toImmutableSet
  */
 public class KAnalytics internal constructor(builder: Builder) {
 
-  private val trackers: ImmutableList<Tracker> = builder.trackers.toImmutableList()
+  private val kTrackers: ImmutableList<KTracker> = builder.kTrackers.toImmutableList()
   private val interceptors: ImmutableList<Interceptor> = builder.interceptors.toImmutableList()
 
   public constructor() : this(Builder())
@@ -34,18 +34,18 @@ public class KAnalytics internal constructor(builder: Builder) {
    * @param event The event to send
    */
   public fun send(event: KAnalyticsEvent) {
-    send(trackers, event)
+    send(kTrackers, event)
   }
 
   /**
    * Sends an event to the specified trackers
    *
    * @param event The event to send
-   * @param trackerNames The trackers to send the event to
+   * @param kTrackerNames The trackers to send the event to
    */
-  public fun send(event: KAnalyticsEvent, vararg trackerNames: KClass<out Tracker>) {
-    val trackerNamesSet = trackerNames.toImmutableSet()
-    val filteredTrackers = trackers.filter { trackerNamesSet.contains(it::class) }
+  public fun send(event: KAnalyticsEvent, vararg kTrackerNames: KClass<out KTracker>) {
+    val trackerNamesSet = kTrackerNames.toImmutableSet()
+    val filteredTrackers = kTrackers.filter { trackerNamesSet.contains(it::class) }
 
     send(filteredTrackers, event)
   }
@@ -62,22 +62,22 @@ public class KAnalytics internal constructor(builder: Builder) {
    */
   public fun newBuilder(): Builder = Builder(this)
 
-  private fun send(trackers: List<Tracker>, event: KAnalyticsEvent) {
-    if (trackers.isEmpty()) return
+  private fun send(kTrackers: List<KTracker>, event: KAnalyticsEvent) {
+    if (kTrackers.isEmpty()) return
 
     if (!interceptors.isEmpty()) {
-      trackers.forEach { tracker ->
+      kTrackers.forEach { tracker ->
         val chain = DefaultInterceptorChain(
           interceptors = interceptors,
           index = 0,
-          trackerName = TrackerName(this::class.simpleName ?: ""),
+          kTrackerName = KTrackerName(this::class.simpleName ?: ""),
           event = event,
         )
         val interceptedEvent = chain.proceed(event)
         tracker.send(interceptedEvent.copy())
       }
     } else {
-      trackers.forEach { it.send(event.copy()) }
+      kTrackers.forEach { it.send(event.copy()) }
     }
   }
 
@@ -85,24 +85,24 @@ public class KAnalytics internal constructor(builder: Builder) {
    * Builder class for KAnalytics
    */
   public class Builder() {
-    private val trackersAtomicRef = atomic(mutableListOf<Tracker>())
+    private val trackersAtomicRef = atomic(mutableListOf<KTracker>())
     private val interceptorsAtomicRef = atomic(mutableListOf<Interceptor>())
 
-    internal val trackers: List<Tracker>
+    internal val kTrackers: List<KTracker>
       get() = trackersAtomicRef.value
     internal val interceptors: List<Interceptor>
       get() = interceptorsAtomicRef.value
 
     internal constructor(kAnalytics: KAnalytics) : this() {
-      this.trackersAtomicRef.value += kAnalytics.trackers
+      this.trackersAtomicRef.value += kAnalytics.kTrackers
       this.interceptorsAtomicRef.value += kAnalytics.interceptors
     }
 
     /**
      * Add a tracker to the list of trackers
      */
-    public fun addTracker(tracker: Tracker): Builder = apply {
-      trackersAtomicRef.value.add(tracker)
+    public fun addTracker(kTracker: KTracker): Builder = apply {
+      trackersAtomicRef.value.add(kTracker)
     }
 
     /**
