@@ -28,6 +28,7 @@ kotlin {
         api(libs.touchlab.kermit)
         implementation(compose.runtime)
         implementation(compose.components.resources)
+        implementation(libs.kotlinx.datetime)
         implementation(libs.lifecycle.viewmodel.compose)
         implementation(libs.androidx.navigation.compose)
         implementation(libs.kotlinx.serialization)
