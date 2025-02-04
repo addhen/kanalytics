@@ -9,7 +9,7 @@
     <img alt="app-cover-readme-file" src="docs/media/multi-window-light.gif">
   </picture>
 </div>
-
+<br /><br />
 <p>Checkout the [documentation](https://addhen.github.io/kanalytics/) for more information.</p>
 
 ## License
