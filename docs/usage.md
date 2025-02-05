@@ -28,7 +28,7 @@ class FirebaseTracker(private val context: Context) : KTracker {
 ## 2. Creating Interceptors
 
 Interceptors process events before they reach the trackers.
-They can modify, filter, or log events. Implement the
+They can modify, or log events. Implement the
 `Interceptor` interface to create a custom interceptor:
 
 ```kotlin linenums="1"
@@ -69,11 +69,11 @@ val event = KAnalyticsEvent("user_login").apply {
 kAnalytics.send(event)  // Sends to all trackers
 ```
 
-## Send to Specific Tracker
+## Send to Specific Trackers
 
 ```kotlin linenums="1"
 
-kAnalytics.send(event, FirebaseTracker::class)  // Sends only to Firebase
+kAnalytics.send(event, FirebaseTracker::class, AmplitudeTracker::class)  // Sends only to Firebase and Amplitude
 ```
 
 # Debug Tools
