@@ -41,6 +41,16 @@ KAnalytics is a flexible analytics library that allows you to:
 | Android       | ✅               |
 | iOS           | ✅               |
 
+
+# Credits
+
+This project was highly inspired by the following projects:
+
+- [OkHttp](https://square.github.io/okhttp/) - For the interceptor pattern implementation
+- [Chucker](https://github.com/ChuckerTeam/chucker/) - For the kanalytics viewer implementation
+- [Inspektify](https://github.com/BVantur/inspektify) - Ideas for the kanalytics viewer implementation
+- [Inspektor](https://github.com/ShreyashKore/inspektor) - Ideas for the kanalytics viewer implementation
+
 # License
 
 ```
