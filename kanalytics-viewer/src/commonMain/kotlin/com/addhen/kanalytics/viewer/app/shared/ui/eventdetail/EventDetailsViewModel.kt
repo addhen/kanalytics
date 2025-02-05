@@ -22,7 +22,8 @@ internal class EventDetailsViewModel(
   private val eventRepository: EventDataRepository,
   internal val uiMessageStateHolder: UiMessageStateHolder,
   private val eventId: Long,
-) : ViewModel(), UiMessageStateHolder by uiMessageStateHolder {
+) : ViewModel(),
+  UiMessageStateHolder by uiMessageStateHolder {
 
   val viewState: StateFlow<EventDetailsUiState> = eventRepository.getEventById(eventId)
     .map { eventDataEntity ->
@@ -38,10 +39,7 @@ internal class EventDetailsViewModel(
     )
 
   @Stable
-  data class EventDetailsUiState(
-    val event: EventData? = null,
-    val flag: Flag = Flag.IDLE,
-  ) {
+  data class EventDetailsUiState(val event: EventData? = null, val flag: Flag = Flag.IDLE) {
     enum class Flag {
       LOADING,
       IDLE,

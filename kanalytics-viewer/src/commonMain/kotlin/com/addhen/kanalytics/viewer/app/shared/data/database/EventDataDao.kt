@@ -63,19 +63,17 @@ public class EventDataDao(
       database.event_dataQueries.deleteAllEventDataOlderThan(date)
     }
 
-  internal fun search(query: String): Flow<List<EventDataEntity>> {
-    return database.event_dataQueries.searchEvents(query, eventQueriesMapper)
+  internal fun search(query: String): Flow<List<EventDataEntity>> =
+    database.event_dataQueries.searchEvents(query, eventQueriesMapper)
       .asFlow()
       .map { it.executeAsList() }
       .flowOn(appCoroutineDispatchers.databaseRead)
-  }
 
-  internal fun getEventById(id: Long): Flow<EventDataEntity> {
-    return database.event_dataQueries.getEventDataById(id, eventQueriesMapper)
+  internal fun getEventById(id: Long): Flow<EventDataEntity> =
+    database.event_dataQueries.getEventDataById(id, eventQueriesMapper)
       .asFlow()
       .map { it.executeAsOne() }
       .flowOn(appCoroutineDispatchers.databaseRead)
-  }
 
   internal companion object {
     val Instance: EventDataDao by lazy {

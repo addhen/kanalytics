@@ -7,15 +7,12 @@ import android.content.Context
 import app.cash.sqldelight.db.SqlDriver
 import app.cash.sqldelight.driver.android.AndroidSqliteDriver
 
-internal class AndroidSqlDriverFactory(
-  private val applicationContext: Context,
-) : SqlDriverFactory {
+internal class AndroidSqlDriverFactory(private val applicationContext: Context) :
+  SqlDriverFactory {
 
-  override fun createDriver(): SqlDriver {
-    return AndroidSqliteDriver(
-      EventViewerDatabase.Schema,
-      applicationContext,
-      Constants.DB_NAME,
-    )
-  }
+  override fun createDriver(): SqlDriver = AndroidSqliteDriver(
+    EventViewerDatabase.Schema,
+    applicationContext,
+    Constants.DB_NAME,
+  )
 }

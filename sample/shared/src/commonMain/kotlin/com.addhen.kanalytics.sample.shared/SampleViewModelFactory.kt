@@ -29,11 +29,9 @@ public val viewModel: SampleViewModel = SampleViewModelFactory(
 ).create(SampleViewModel::class, CreationExtras.Empty)
 
 @Suppress("UNCHECKED_CAST")
-public class SampleViewModelFactory(
-  private val kAnalytics: KAnalytics,
-) : ViewModelProvider.Factory {
+public class SampleViewModelFactory(private val kAnalytics: KAnalytics) :
+  ViewModelProvider.Factory {
 
-  public override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T {
-    return SampleViewModel(kAnalytics) as T
-  }
+  public override fun <T : ViewModel> create(modelClass: KClass<T>, extras: CreationExtras): T =
+    SampleViewModel(kAnalytics) as T
 }

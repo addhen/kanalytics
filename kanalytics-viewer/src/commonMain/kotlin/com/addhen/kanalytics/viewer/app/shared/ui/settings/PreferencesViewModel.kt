@@ -11,9 +11,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import co.touchlab.kermit.Logger
 import kotlinx.coroutines.launch
 
-internal class PreferencesViewModel(
-  preferences: ViewerAppPreferences,
-) : ViewModel() {
+internal class PreferencesViewModel(preferences: ViewerAppPreferences) : ViewModel() {
 
   val defaultPreferences by lazy { preferences }
 

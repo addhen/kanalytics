@@ -15,13 +15,11 @@ internal fun Map<String, Any>.toPrettyPrintJsonString(): String {
   return this.toJsonString(json)
 }
 
-internal fun Map<String, Any>.toJsonString(json: Json = Json): String {
-  return try {
-    json.encodeToString(JsonElement.serializer(), this.toJsonElement())
-  } catch (ignore: Exception) {
-    ignore.printStackTrace()
-    ""
-  }
+internal fun Map<String, Any>.toJsonString(json: Json = Json): String = try {
+  json.encodeToString(JsonElement.serializer(), this.toJsonElement())
+} catch (ignore: Exception) {
+  ignore.printStackTrace()
+  ""
 }
 
 private fun Collection<*>.toJsonElement(): JsonElement {

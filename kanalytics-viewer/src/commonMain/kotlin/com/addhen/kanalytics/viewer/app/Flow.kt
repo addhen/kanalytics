@@ -17,13 +17,11 @@ import kotlinx.coroutines.flow.stateIn
 internal fun <T> Flow<T>.stateInWhileSubscribed(
   scope: CoroutineScope,
   initialValue: T,
-): StateFlow<T> {
-  return stateIn(
-    scope = scope,
-    started = SharingStarted.WhileSubscribed(5_000),
-    initialValue = initialValue,
-  )
-}
+): StateFlow<T> = stateIn(
+  scope = scope,
+  started = SharingStarted.WhileSubscribed(5_000),
+  initialValue = initialValue,
+)
 
 internal fun <T> Flow<T>.handleErrorWithRetry(uiMessageStateHolder: UiMessageStateHolder): Flow<T> =
   retry { throwable ->

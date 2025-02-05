@@ -17,9 +17,7 @@ import com.addhen.kanalytics.viewer.app.android.MainActivity
 private const val CHANNEL_ID = "com.addhen.kanalytics.viewer.app.android.channel"
 private const val BUFFER_SIZE = 10
 
-internal actual fun NotificationManager(): NotificationManager {
-  return NotificationManagerImpl.Instance
-}
+internal actual fun NotificationManager(): NotificationManager = NotificationManagerImpl.Instance
 
 internal class NotificationManagerImpl : NotificationManager {
   private val notificationId = 10000

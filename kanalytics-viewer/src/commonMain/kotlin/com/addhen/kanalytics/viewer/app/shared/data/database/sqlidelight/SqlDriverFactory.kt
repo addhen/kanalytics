@@ -15,15 +15,13 @@ internal expect object DriverFactory {
   fun createDbDriver(): SqlDriver
 }
 
-internal fun createDatabase(): EventViewerDatabase {
-  return EventViewerDatabase(
-    driver = DriverFactory.createDbDriver(),
-    event_dataAdapter = Event_data.Adapter(
-      event_propertiesAdapter = mapAdapter,
-      event_created_dateAdapter = instantAdapter,
-    ),
-  )
-}
+internal fun createDatabase(): EventViewerDatabase = EventViewerDatabase(
+  driver = DriverFactory.createDbDriver(),
+  event_dataAdapter = Event_data.Adapter(
+    event_propertiesAdapter = mapAdapter,
+    event_created_dateAdapter = instantAdapter,
+  ),
+)
 
 internal object Constants {
   const val DB_NAME = "event_viewer.db"

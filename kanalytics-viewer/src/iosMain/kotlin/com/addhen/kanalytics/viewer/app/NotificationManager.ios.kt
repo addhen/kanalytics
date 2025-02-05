@@ -21,9 +21,7 @@ import platform.UserNotifications.UNUserNotificationCenter
 import platform.UserNotifications.UNUserNotificationCenterDelegateProtocol
 import platform.darwin.NSObject
 
-internal actual fun NotificationManager(): NotificationManager {
-  return NotificationManagerImpl()
-}
+internal actual fun NotificationManager(): NotificationManager = NotificationManagerImpl()
 
 internal class NotificationManagerImpl : NotificationManager {
   private val notificationId: String = "com.addhen.kanalytics.notification"
@@ -105,7 +103,5 @@ internal class NotificationManagerImpl : NotificationManager {
     notificationCenter.removeDeliveredNotificationsWithIdentifiers(listOf(notificationId))
   }
 
-  private fun NSError.toThrowable(): Throwable {
-    return Throwable(this.localizedDescription)
-  }
+  private fun NSError.toThrowable(): Throwable = Throwable(this.localizedDescription)
 }

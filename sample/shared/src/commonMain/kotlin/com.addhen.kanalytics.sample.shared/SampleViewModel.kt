@@ -20,9 +20,7 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-public class SampleViewModel(
-  private val kanalytics: KAnalytics,
-) : ViewModel() {
+public class SampleViewModel(private val kanalytics: KAnalytics) : ViewModel() {
   private val viewStateEmitter =
     MutableStateFlow(LocationUiState(flag = LocationUiState.Flag.LOADING))
   private val actionStateFlow = MutableSharedFlow<UiAction>()
@@ -76,7 +74,5 @@ public class SampleViewModel(
     }
   }
 
-  private fun generateRandomString(): String {
-    return Random.nextInt(1000).toString()
-  }
+  private fun generateRandomString(): String = Random.nextInt(1000).toString()
 }

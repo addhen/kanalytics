@@ -50,11 +50,9 @@ public class KAnalyticsEvent(
   /**
    * Returns a string representation of the event.
    */
-  override fun toString(): String {
-    return "KAnalyticsEvent(" +
-      "eventName='$eventName', " +
-      "eventDescription='$eventDescription', " +
-      "properties=$properties" +
-      ")"
-  }
+  override fun toString(): String = "KAnalyticsEvent(" +
+    "eventName='$eventName', " +
+    "eventDescription='$eventDescription', " +
+    "properties=$properties" +
+    ")"
 }

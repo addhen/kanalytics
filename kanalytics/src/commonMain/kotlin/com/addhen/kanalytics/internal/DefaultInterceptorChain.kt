@@ -34,7 +34,6 @@ internal class DefaultInterceptorChain(
     return interceptors[index].intercept(nextChain)
   }
 
-  override fun toString(): String {
-    return "DefaultInterceptorChain(index=$index, trackerName=$kTrackerName, event=$event)"
-  }
+  override fun toString(): String =
+    "DefaultInterceptorChain(index=$index, trackerName=$kTrackerName, event=$event)"
 }

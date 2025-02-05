@@ -10,9 +10,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.datetime.Instant
 
-public class EventDataRepository(
-  private val eventDataDao: EventDataDao,
-) : EventRepository {
+public class EventDataRepository(private val eventDataDao: EventDataDao) : EventRepository {
 
   override suspend fun insert(eventData: EventData) {
     eventDataDao.insert(
@@ -32,8 +30,21 @@ public class EventDataRepository(
   override suspend fun deleteAllOlderThan(date: Instant): Unit =
     eventDataDao.deleteAllOlderThan(date)
 
-  override fun getAll(): Flow<List<EventData>> {
-    return eventDataDao.getEvents().map { eventDataEntities ->
+  override fun getAll(): Flow<List<EventData>> = eventDataDao.getEvents().map { eventDataEntities ->
+    eventDataEntities.map { eventDataEntity ->
+      EventData(
+        id = eventDataEntity.id,
+        name = eventDataEntity.name,
+        trackerName = eventDataEntity.trackerName,
+        description = eventDataEntity.description,
+        createdAt = eventDataEntity.createdAt,
+        properties = eventDataEntity.properties,
+      )
+    }
+  }
+
+  override fun search(query: String): Flow<List<EventData>> =
+    eventDataDao.search(query).map { eventDataEntities ->
       eventDataEntities.map { eventDataEntity ->
         EventData(
           id = eventDataEntity.id,
@@ -45,36 +56,18 @@ public class EventDataRepository(
         )
       }
     }
-  }
 
-  override fun search(query: String): Flow<List<EventData>> {
-    return eventDataDao.search(query).map { eventDataEntities ->
-      eventDataEntities.map { eventDataEntity ->
-        EventData(
-          id = eventDataEntity.id,
-          name = eventDataEntity.name,
-          trackerName = eventDataEntity.trackerName,
-          description = eventDataEntity.description,
-          createdAt = eventDataEntity.createdAt,
-          properties = eventDataEntity.properties,
-        )
-      }
+  override fun getEventById(id: Long): Flow<EventData> = eventDataDao.getEventById(id)
+    .map { eventDataEntity ->
+      EventData(
+        id = eventDataEntity.id,
+        name = eventDataEntity.name,
+        trackerName = eventDataEntity.trackerName,
+        description = eventDataEntity.description,
+        createdAt = eventDataEntity.createdAt,
+        properties = eventDataEntity.properties,
+      )
     }
-  }
-
-  override fun getEventById(id: Long): Flow<EventData> {
-    return eventDataDao.getEventById(id)
-      .map { eventDataEntity ->
-        EventData(
-          id = eventDataEntity.id,
-          name = eventDataEntity.name,
-          trackerName = eventDataEntity.trackerName,
-          description = eventDataEntity.description,
-          createdAt = eventDataEntity.createdAt,
-          properties = eventDataEntity.properties,
-        )
-      }
-  }
 
   internal companion object {
     val Instance by lazy { EventDataRepository(eventDataDao = EventDataDao.Instance) }

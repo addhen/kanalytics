@@ -226,20 +226,18 @@ private fun PaginatedDataTableContent(
 }
 
 @Composable
-private fun String.highlightText(text: String): AnnotatedString {
-  return buildAnnotatedString {
-    val highlightRange = text.getMatchIndexRange(this@highlightText)
-    append(text.take(highlightRange.first))
-    withStyle(
-      SpanStyle(
-        background = searchHighlightTextColor(),
-        textDecoration = TextDecoration.Underline,
-      ),
-    ) {
-      append(text.substring(highlightRange))
-    }
-    append(text.takeLast(kotlin.math.max((text.lastIndex - highlightRange.last), 0)))
+private fun String.highlightText(text: String): AnnotatedString = buildAnnotatedString {
+  val highlightRange = text.getMatchIndexRange(this@highlightText)
+  append(text.take(highlightRange.first))
+  withStyle(
+    SpanStyle(
+      background = searchHighlightTextColor(),
+      textDecoration = TextDecoration.Underline,
+    ),
+  ) {
+    append(text.substring(highlightRange))
   }
+  append(text.takeLast(kotlin.math.max((text.lastIndex - highlightRange.last), 0)))
 }
 
 @Composable
