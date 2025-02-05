@@ -35,10 +35,8 @@ They can modify, filter, or log events. Implement the
 class LogInterceptor : Interceptor {
 
   override fun intercept(chain: Interceptor.Chain): KAnalyticsEvent {
-    val modifiedEvent = chain.event.copy(
-      eventName = "Modified: ${chain.event.eventName}"
-    )
-    return chain.proceed(modifiedEvent)
+    Logger.d { "Event: ${chain.event.eventName} is intercepted and being sent to Firebase: ${chain.kTrackerName}" }
+    return chain.proceed(chain.event)
   }
 }
 ```
