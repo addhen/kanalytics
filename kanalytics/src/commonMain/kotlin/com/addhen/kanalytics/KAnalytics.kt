@@ -6,7 +6,6 @@ package com.addhen.kanalytics
 import com.addhen.kanalytics.KAnalytics.Builder
 import com.addhen.kanalytics.internal.DefaultInterceptorChain
 import kotlin.reflect.KClass
-import kotlinx.atomicfu.atomic
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.collections.immutable.toImmutableSet
@@ -92,36 +91,37 @@ public class KAnalytics internal constructor(builder: Builder) {
    * Builder class for KAnalytics
    */
   public class Builder() {
-    private val trackersAtomicRef = atomic(mutableListOf<KTracker>())
-    private val interceptorsAtomicRef = atomic(mutableListOf<Interceptor>())
-
-    internal val kTrackers: List<KTracker>
-      get() = trackersAtomicRef.value
-    internal val interceptors: List<Interceptor>
-      get() = interceptorsAtomicRef.value
+    internal val kTrackers = mutableListOf<KTracker>()
+    internal val interceptors = mutableListOf<Interceptor>()
 
     internal constructor(kAnalytics: KAnalytics) : this() {
-      this.trackersAtomicRef.value += kAnalytics.kTrackers
-      this.interceptorsAtomicRef.value += kAnalytics.interceptors
+      this.kTrackers += kAnalytics.kTrackers
+      this.interceptors += kAnalytics.interceptors
     }
 
     /**
      * Add a tracker to the list of trackers
      */
     public fun addTracker(kTracker: KTracker): Builder = apply {
-      trackersAtomicRef.value.add(kTracker)
+      kTrackers.add(kTracker)
     }
 
     /**
      * Add an interceptor to the list of interceptors
      */
     public fun addInterceptor(interceptor: Interceptor): Builder = apply {
-      interceptorsAtomicRef.value.add(interceptor)
+      interceptors.add(interceptor)
     }
 
     /**
      * Build the KAnalytics instance
+     *
+     * @return [KAnalytics] instance
+     * @throws [IllegalStateException] if no trackers are added
      */
-    public fun build(): KAnalytics = KAnalytics(this)
+    public fun build(): KAnalytics {
+      check(kTrackers.isNotEmpty()) { "At least one tracker must be added." }
+      return KAnalytics(this)
+    }
   }
 }
