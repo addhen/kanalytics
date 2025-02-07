@@ -31,8 +31,10 @@ public class KAnalytics internal constructor(builder: Builder) {
    * Sends an event to all trackers
    *
    * @param event The event to send
+   * @throws [IllegalStateException] if the event name is blank
    */
   public fun send(event: KAnalyticsEvent) {
+    check(event.eventName.isNotBlank()) { "Event name cannot be blank" }
     send(kTrackers, event)
   }
 

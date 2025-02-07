@@ -6,6 +6,7 @@ package com.addhen.kanalytics
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertFailsWith
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
@@ -152,6 +153,27 @@ class KAnalyticsTest {
       assertEquals(SCREEN_NAME, it.properties[SCREEN_NAME])
       assertEquals(3, it.properties.size)
       assertEquals(VALUE_ONE, it.properties[KEY_ONE])
+    }
+  }
+
+  @Test
+  fun `should throw exception if no trackers are added`() {
+    assertFailsWith<IllegalStateException>("At least one tracker must be added.") {
+      KAnalytics.Builder().build()
+    }
+  }
+
+  @Test
+  fun `should throw exception if event name is empty`() {
+    assertFailsWith<IllegalStateException>("Event name cannot be blank") {
+      kanalytics.send(KAnalyticsEvent(""))
+    }
+  }
+
+  @Test
+  fun `should throw exception if event name is blank`() {
+    assertFailsWith<IllegalStateException>("Event name cannot be blank") {
+      kanalytics.send(KAnalyticsEvent("   "))
     }
   }
 
