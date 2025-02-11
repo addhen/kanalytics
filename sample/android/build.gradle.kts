@@ -7,6 +7,8 @@ plugins {
   id("convention.plugin.kotlin.android")
   id("convention.plugin.compose")
   alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -56,4 +58,10 @@ dependencies {
   implementation(libs.androidx.appcompat)
   implementation(libs.accompanist.permissions)
   implementation(libs.androidx.navigation.compose)
+  implementation(libs.androidx.profileinstaller)
+}
+
+baselineProfile {
+  mergeIntoMain = true
+  saveInSrc = true
 }

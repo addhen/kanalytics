@@ -31,8 +31,9 @@ rootProject.name = "kanalytics-lib"
 include(
   ":kanalytics",
   ":kanalytics-viewer",
+  ":kanalytics-viewer-no-op",
+  ":kanalytics-viewer-base-profile",
   ":sample:android",
   ":sample:shared",
   ":sample:ios-framework",
 )
-include(":kanalytics-viewer-no-op")
