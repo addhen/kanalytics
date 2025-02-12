@@ -1,3 +1,6 @@
+// Copyright 2025, Addhen Ltd and the kanalytics project contributors
+// SPDX-License-Identifier: Apache-2.0
+
 package com.addhen.kanalytics.android.common.test
 
 import android.os.SystemClock
@@ -63,9 +66,8 @@ object AppTestScenarios {
     error("Object with selector [$selector] not found")
   }
 
-  fun <R> UiDevice.wait(condition: SearchCondition<R>, timeout: Duration): R {
-    return wait(condition, timeout.inWholeMilliseconds)
-  }
+  fun <R> UiDevice.wait(condition: SearchCondition<R>, timeout: Duration): R =
+    wait(condition, timeout.inWholeMilliseconds)
 
   private fun retry(maxRetries: Int, delay: Duration, block: () -> Unit) {
     repeat(maxRetries) { run ->

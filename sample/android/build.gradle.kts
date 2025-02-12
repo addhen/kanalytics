@@ -1,5 +1,3 @@
-import com.android.build.api.dsl.ManagedVirtualDevice
-
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 

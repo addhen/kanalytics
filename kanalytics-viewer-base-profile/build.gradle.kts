@@ -46,7 +46,7 @@ dependencies {
   implementation(projects.androidCommonTest)
   implementation(libs.androidx.test.junit)
   implementation(libs.androidx.benchmark.macro)
-  //implementation(libs.androidx.uiautomator)
+  // implementation(libs.androidx.uiautomator)
 }
 
 androidComponents {
