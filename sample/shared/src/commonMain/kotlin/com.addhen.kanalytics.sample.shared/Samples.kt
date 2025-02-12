@@ -16,7 +16,11 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
+
+public const val TRIGGER_ANALYTICS_EVENT_TEST_TAG: String = "trigger_analytics_event"
+public const val EVENT_VIEWER_TEST_TAG: String = "event_viewer"
 
 @Composable
 public fun SampleTheme(
@@ -30,18 +34,27 @@ public fun SampleTheme(
 }
 
 @Composable
-public fun Sample(onTriggerAnalytics: () -> Unit, onEventViewer: () -> Unit) {
+public fun Sample(
+  modifier: Modifier,
+  onTriggerAnalytics: () -> Unit,
+  onEventViewer: () -> Unit
+) {
   Column(
-    modifier = Modifier.padding(16.dp).fillMaxSize(),
+    modifier = modifier.padding(16.dp).fillMaxSize(),
     verticalArrangement = Arrangement.spacedBy(8.dp),
   ) {
     Text("Sample app showing how to use kanalytics")
     HorizontalDivider(thickness = 2.dp)
-    Button(onClick = onTriggerAnalytics) {
+    Button(
+      onClick = onTriggerAnalytics,
+      modifier = Modifier.testTag(TRIGGER_ANALYTICS_EVENT_TEST_TAG),
+    ) {
       Text("Trigger an analytics event")
     }
 
-    Button(onClick = onEventViewer) {
+    Button(onClick = onEventViewer,
+      modifier = Modifier.testTag(EVENT_VIEWER_TEST_TAG),
+    ) {
       Text("Start viewer")
     }
   }

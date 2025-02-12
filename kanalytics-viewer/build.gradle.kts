@@ -77,7 +77,7 @@ android {
   }
 
   dependencies {
-    baselineProfile(project(":kanalytics-viewer-base-profile"))
+    baselineProfile(projects.kanalyticsViewerBaseProfile)
   }
 
   baselineProfile {

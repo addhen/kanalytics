@@ -17,6 +17,8 @@ android {
 
   defaultConfig {
     minSdk = 28
+
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   compileOptions {
@@ -40,17 +42,11 @@ android {
   targetProjectPath = ":sample:android"
 }
 
-// This is the configuration block for the Baseline Profile plugin.
-// You can specify to run the generators on a managed devices or connected devices.
-baselineProfile {
-  useConnectedDevices = true
-}
-
 dependencies {
-  implementation(libs.androidx.junit)
-  implementation(libs.androidx.espresso.core)
-  implementation(libs.androidx.uiautomator)
-  implementation(libs.androidx.benchmark.macro.junit4)
+  implementation(projects.androidCommonTest)
+  implementation(libs.androidx.test.junit)
+  implementation(libs.androidx.benchmark.macro)
+  //implementation(libs.androidx.uiautomator)
 }
 
 androidComponents {

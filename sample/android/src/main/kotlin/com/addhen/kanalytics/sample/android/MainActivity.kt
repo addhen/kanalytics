@@ -14,6 +14,10 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.ui.ExperimentalComposeUiApi
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.addhen.kanalytics.sample.shared.SampleApp
@@ -43,11 +47,17 @@ class MainActivity : ComponentActivity() {
       }
     }
 
+
   override fun onCreate(savedInstanceState: Bundle?) {
     enableEdgeToEdge()
     super.onCreate(savedInstanceState)
     setContent {
-      SampleApp()
+      SampleApp(
+        modifier = Modifier.semantics {
+          @OptIn(ExperimentalComposeUiApi::class)
+          testTagsAsResourceId = true
+        },
+      )
     }
   }
 
