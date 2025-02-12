@@ -21,7 +21,9 @@ public fun SampleScreen(modifier: Modifier, onEventViewerTrigger: () -> Unit) {
   when (uiState.flag) {
     SampleViewModel.LocationUiState.Flag.LOADING -> FullScreenLoading()
     SampleViewModel.LocationUiState.Flag.IDLE -> {
-      Sample(modifier, onTriggerAnalytics = { viewModel.sendAnalyticsEvent() }, onEventViewerTrigger)
+      Sample(modifier, onTriggerAnalytics = {
+        viewModel.sendAnalyticsEvent()
+      }, onEventViewerTrigger)
     }
   }
 }
