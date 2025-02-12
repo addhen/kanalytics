@@ -22,6 +22,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.testTag
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
 import com.addhen.kanalytics.kanalytics_viewer.generated.resources.back_icon_content_description
@@ -37,6 +38,8 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.PreferenceDivider
 import com.addhen.kanalytics.viewer.app.shared.ui.component.PreferenceHeader
 import com.addhen.kanalytics.viewer.app.shared.ui.component.collectAsState
 import org.jetbrains.compose.resources.stringResource
+
+internal const val NAVIGATE_BACK_FROM_SETTINGS_TEST_TAG = "navigate_back_from_settings_test_tag"
 
 @Composable
 internal fun PreferencesScreen(onBack: () -> Unit) {
@@ -68,7 +71,10 @@ private fun PreferencesContent(
     title = stringResource(Res.string.settings_title),
     snackbarHostState = snackbarHostState,
     navigationIcon = {
-      IconButton(onClick = onBack) {
+      IconButton(
+        onClick = onBack,
+        modifier = Modifier.testTag(NAVIGATE_BACK_FROM_SETTINGS_TEST_TAG),
+      ) {
         Icon(
           imageVector = Icons.AutoMirrored.Filled.ArrowBack,
           contentDescription = stringResource(Res.string.back_icon_content_description),

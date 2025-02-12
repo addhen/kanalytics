@@ -31,6 +31,11 @@ object AppTestScenarios {
     device.testEventViewerApp() || return
     device.navigateToEventDetail()
     device.navigateFromEventDetailsToEventList()
+
+    // Settings screen triggers
+    device.testSettings() || return
+    device.launchSettings()
+    device.navigateFromSettingsToEventList()
   }
 
   fun UiDevice.testSampleMainActivity(): Boolean {
@@ -50,10 +55,35 @@ object AppTestScenarios {
     return false
   }
 
+  fun UiDevice.testSettings(): Boolean {
+    repeat(2) {
+      if (wait(Until.hasObject(By.res("event_item_test_tag")), 5.seconds)) {
+        return true
+      }
+      SystemClock.sleep(1.seconds.inWholeMilliseconds)
+      waitForIdle()
+    }
+    return false
+  }
+
+  fun UiDevice.launchSettings() {
+    Log.i(TAG, "Launching Settings")
+    waitForIdle()
+    runAction(By.res("settings_test_tag")) { click() }
+    waitForIdle()
+  }
+
   fun UiDevice.navigateFromEventDetailsToEventList() {
     Log.i(TAG, "Navigating to Event List Screen")
     waitForIdle()
     runAction(By.res("navigate_back_to_events_test_tag")) { click() }
+    waitForIdle()
+  }
+
+  fun UiDevice.navigateFromSettingsToEventList() {
+    Log.i(TAG, "Navigating to Event List Screen")
+    waitForIdle()
+    runAction(By.res("navigate_back_from_settings_test_tag")) { click() }
     waitForIdle()
   }
 
