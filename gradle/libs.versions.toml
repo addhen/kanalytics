@@ -76,9 +76,6 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
-androidx-test-core = "androidx.test:core-ktx:1.6.1"
-androidx-test-rules = "androidx.test:rules:1.6.1"
-
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
