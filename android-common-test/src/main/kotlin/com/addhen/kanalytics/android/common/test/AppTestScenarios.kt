@@ -38,6 +38,14 @@ object AppTestScenarios {
     device.navigateFromSettingsToEventList()
   }
 
+  fun viewerAppStartUp(device: UiDevice) {
+    Log.i(TAG, "Starting viewer app scenario")
+    // Sample App triggers
+    device.testSampleMainActivity() || return
+    device.triggerEvent()
+    device.launchViewerApp()
+  }
+
   fun UiDevice.testSampleMainActivity(): Boolean {
     waitForIdle()
     return true

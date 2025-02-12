@@ -204,39 +204,38 @@ private fun PaginatedDataTableContent(
     state = rememberPaginatedDataTableState(10),
   ) {
     for (rowIndex in 0 until events.size) {
-
       val event = events[rowIndex]
 
-        row {
-          onClick = {
-            onNavigateToDetail(event.id ?: 0, event.name)
-          }
+      row {
+        onClick = {
+          onNavigateToDetail(event.id ?: 0, event.name)
+        }
 
-          cell {
-            Text(
-              text = event.createdAt.toFormattedString(),
-              // Doing this to allow us to do a click to navigate to the
-              // event details in tests
-              modifier = Modifier
-                .clickable {
-                  onNavigateToDetail(event.id ?: 0, event.name)
-                }
-                .testTag(EVENT_LIST_ITEM_TEST_TAG),
-            )
-          }
-          cell {
-            Text(searchText.highlightText(event.name), color = eventNameTextColor())
-          }
-          cell {
-            Text(
-              searchText.highlightText(event.properties.toJsonString()),
-              maxLines = 2,
-              overflow = TextOverflow.Ellipsis,
-              color = eventPropertiesTextColor(),
-            )
-          }
+        cell {
+          Text(
+            text = event.createdAt.toFormattedString(),
+            // Doing this to allow us to do a click to navigate to the
+            // event details in tests
+            modifier = Modifier
+              .clickable {
+                onNavigateToDetail(event.id ?: 0, event.name)
+              }
+              .testTag(EVENT_LIST_ITEM_TEST_TAG),
+          )
+        }
+        cell {
+          Text(searchText.highlightText(event.name), color = eventNameTextColor())
+        }
+        cell {
+          Text(
+            searchText.highlightText(event.properties.toJsonString()),
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            color = eventPropertiesTextColor(),
+          )
         }
       }
+    }
   }
 }
 
