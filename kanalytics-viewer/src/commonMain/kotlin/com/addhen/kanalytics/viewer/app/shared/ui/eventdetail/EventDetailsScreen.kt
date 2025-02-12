@@ -73,8 +73,9 @@ import kotlinx.coroutines.launch
 import org.jetbrains.compose.resources.stringResource
 import toFormattedString
 
-internal const val SEARCH_RESULT_ARROW_DOWN_TEST_TAG = "SearchResultArrowDownTestTag"
-internal const val SEARCH_RESULT_ARROW_UP_TEST_TAG = "SearchResultArrowUpTestTag"
+internal const val SEARCH_RESULT_ARROW_DOWN_TEST_TAG = "search_result_arrow_down_test_tag"
+internal const val SEARCH_RESULT_ARROW_UP_TEST_TAG = "search_result_arrow_up_test_tag"
+internal const val NAVIGATE_BACK_TO_EVENTS_TEST_TAG = "navigate_back_to_events_test_tag"
 
 @Composable
 internal fun EventDetailsScreen(eventId: Long, eventName: String, onBack: () -> Unit) {
@@ -114,7 +115,10 @@ internal fun EventDetailsScreen(
     title = stringResource(Res.string.event_details_title, eventName),
     snackbarHostState = snackbarHostState,
     navigationIcon = {
-      IconButton(onClick = onBack) {
+      IconButton(
+        onClick = onBack,
+        modifier = Modifier.testTag(NAVIGATE_BACK_TO_EVENTS_TEST_TAG),
+      ) {
         Icon(
           imageVector = Icons.AutoMirrored.Filled.ArrowBack,
           contentDescription = stringResource(Res.string.back_icon_content_description),

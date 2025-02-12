@@ -22,15 +22,39 @@ object AppTestScenarios {
     Log.i(TAG, "Starting all scenarios")
     device.waitForIdle()
 
+    // Sample App triggers
     device.testSampleMainActivity() || return
     device.triggerEvent()
     device.launchViewerApp()
+
+    // Event Viewer triggers
+    device.testEventViewerApp() || return
     device.navigateToEventDetail()
+    device.navigateFromEventDetailsToEventList()
   }
 
   fun UiDevice.testSampleMainActivity(): Boolean {
     waitForIdle()
     return true
+  }
+
+  fun UiDevice.testEventViewerApp(): Boolean {
+    // Keep waiting until an event list is displayed
+    repeat(2) {
+      if (wait(Until.hasObject(By.res("event_item_test_tag")), 5.seconds)) {
+        return true
+      }
+      SystemClock.sleep(1.seconds.inWholeMilliseconds)
+      waitForIdle()
+    }
+    return false
+  }
+
+  fun UiDevice.navigateFromEventDetailsToEventList() {
+    Log.i(TAG, "Navigating to Event List Screen")
+    waitForIdle()
+    runAction(By.res("navigate_back_to_events_test_tag")) { click() }
+    waitForIdle()
   }
 
   fun UiDevice.triggerEvent() {
