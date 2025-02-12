@@ -25,6 +25,7 @@ object AppTestScenarios {
     device.testSampleMainActivity() || return
     device.triggerEvent()
     device.launchViewerApp()
+    device.navigateToEventDetail()
   }
 
   fun UiDevice.testSampleMainActivity(): Boolean {
@@ -34,13 +35,20 @@ object AppTestScenarios {
 
   fun UiDevice.triggerEvent() {
     waitForIdle()
-    runAction(By.res("trigger_analytics_event")) { click() }
+    runAction(By.res("trigger_analytics_event_test_tag")) { click() }
     waitForIdle()
   }
 
   fun UiDevice.launchViewerApp() {
     waitForIdle()
-    runAction(By.res("event_viewer")) { click() }
+    runAction(By.res("event_viewer_test_tag")) { click() }
+    waitForIdle()
+  }
+
+  fun UiDevice.navigateToEventDetail() {
+    Log.i(TAG, "Navigating to Event Detail Screen")
+    waitForIdle()
+    runAction(By.res("event_item_test_tag")) { click() }
     waitForIdle()
   }
 

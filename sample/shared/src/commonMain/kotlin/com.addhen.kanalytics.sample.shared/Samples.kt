@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 
-public const val TRIGGER_ANALYTICS_EVENT_TEST_TAG: String = "trigger_analytics_event"
-public const val EVENT_VIEWER_TEST_TAG: String = "event_viewer"
+public const val TRIGGER_ANALYTICS_EVENT_TEST_TAG: String = "trigger_analytics_event_test_tag"
+public const val EVENT_VIEWER_TEST_TAG: String = "event_viewer_test_tag"
 
 @Composable
 public fun SampleTheme(
