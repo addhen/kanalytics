@@ -34,8 +34,6 @@ class StartupBenchmarks {
       startupMode = StartupMode.COLD,
       iterations = 10,
       setupBlock = {
-        println("Allow notifications")
-        println(packageName)
         device.allowNotifications(packageName)
       },
       measureBlock = {

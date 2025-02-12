@@ -28,9 +28,6 @@ class BaselineProfileGenerator {
       // See: https://d.android.com/topic/performance/baselineprofiles/dex-layout-optimizations
       includeInStartupProfile = true,
     ) {
-      Log.i("BaselineProfileGenerator", "Allow notifications: $packageName")
-      println("Allow notifications")
-      println(packageName)
       startActivityAndWait()
       device.allowNotifications(packageName)
       AppTestScenarios.allScenarios(device)
