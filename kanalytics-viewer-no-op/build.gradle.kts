@@ -7,11 +7,7 @@ plugins {
   id("convention.plugin.kotlin.multiplatform")
   id("org.jetbrains.dokka")
   id("convention.plugin.maven.publication")
-  // id("convention.plugin.compose")
   id("convention.plugin.metalava")
-  alias(libs.plugins.kotlin.serialization)
-  alias(libs.plugins.sqldelight)
-  alias(libs.plugins.mokkery)
 }
 
 kotlin {
