@@ -74,6 +74,7 @@ internal const val SEARCH_SCREEN_TEST_TAG = "search_screen_test_tag"
 internal const val DELETE_ALL_EVENTS_TEST_TAG = "delete_all_events_test_tag"
 internal const val SETTINGS_TEST_TAG = "settings_test_tag"
 internal const val EVENT_LIST_ITEM_TEST_TAG = "event_item_test_tag"
+internal const val SCROLL_EVENT_LIST_TEST_TAG = "scroll_event_list_test_tag"
 
 @Composable
 internal fun AnalyticsEventsScreen(
@@ -173,6 +174,7 @@ private fun AnalyticsEventsContent(
             events = uiState.events.toImmutableList(),
             searchText = uiState.searchQuery,
             onNavigateToDetail = onNavigateToDetail,
+            modifier = Modifier.testTag(SCROLL_EVENT_LIST_TEST_TAG),
           )
         }
       }

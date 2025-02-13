@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.BySelector
+import androidx.test.uiautomator.Direction
 import androidx.test.uiautomator.SearchCondition
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
@@ -23,9 +24,7 @@ object AppTestScenarios {
     device.waitForIdle()
 
     // Sample App triggers
-    device.testSampleMainActivity() || return
-    device.triggerEvent()
-    device.launchViewerApp()
+    viewerAppStartUp(device)
 
     // Event Viewer triggers
     device.testEventViewerApp() || return
@@ -151,5 +150,14 @@ object AppTestScenarios {
         SystemClock.sleep(delay.inWholeMilliseconds)
       }
     }
+  }
+
+  private fun UiDevice.setGestureMargins(uiObject: UiObject2) {
+    uiObject.setGestureMargins(
+      (displayWidth * 0.1f).toInt(), // left
+      (displayHeight * 0.2f).toInt(), // top
+      (displayWidth * 0.1f).toInt(), // right
+      (displayHeight * 0.2f).toInt(), // bottom
+    )
   }
 }

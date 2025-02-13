@@ -3,7 +3,6 @@
 
 package com.addhen.kanalytics.viewer.base.profile
 
-import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -23,17 +22,16 @@ class StartupBenchmarks {
   val rule = MacrobenchmarkRule()
 
   @Test
-  fun startup() = benchmark(CompilationMode.None())
+  fun startup() = benchmark()
 
-  private fun benchmark(compilationMode: CompilationMode) {
+  private fun benchmark() {
     // The application id for the running build variant is read from the instrumentation arguments.
     rule.measureRepeated(
       packageName = InstrumentationRegistry.getArguments().getString("targetAppId")
         ?: throw Exception("targetAppId not passed as instrumentation runner arg"),
       metrics = listOf(StartupTimingMetric()),
-      compilationMode = compilationMode,
       startupMode = StartupMode.COLD,
-      iterations = 10,
+      iterations = 5,
       setupBlock = {
         device.allowNotifications(packageName)
       },
