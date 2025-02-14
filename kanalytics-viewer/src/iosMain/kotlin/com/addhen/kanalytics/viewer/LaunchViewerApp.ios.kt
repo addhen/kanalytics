@@ -62,3 +62,6 @@ private val topWindow: UIWindow?
         .lastOrNull { it.isKeyWindow() }
     }
   }
+
+internal actual fun setupShortcut(shouldCreateShortcut: Boolean) {
+}

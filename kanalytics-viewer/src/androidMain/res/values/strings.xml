@@ -3,4 +3,5 @@
   <string name="viewer_app_name">KAnalytics Viewer</string>
   <string name="notification_title">Analytics Event Sent!</string>
   <string name="notification_message">%1$s sent to %2$s</string>
+  <string name="shortcut_long_label">Open KAnalytics Viewer</string>
 </resources>
