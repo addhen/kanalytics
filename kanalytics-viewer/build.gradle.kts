@@ -12,6 +12,7 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.sqldelight)
   alias(libs.plugins.mokkery)
+  alias(libs.plugins.androidx.baselineprofile)
 }
 
 kotlin {
@@ -72,6 +73,18 @@ android {
   testOptions {
     unitTests {
       isIncludeAndroidResources = true
+    }
+  }
+
+  dependencies {
+    baselineProfile(projects.kanalyticsViewerBaseProfile)
+  }
+
+  baselineProfile {
+    mergeIntoMain = true
+    saveInSrc = true
+    filter {
+      include("com.addhen.kanalytics.viewer.**")
     }
   }
 }

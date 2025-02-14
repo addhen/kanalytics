@@ -20,6 +20,8 @@ fun Project.configureAndroid() {
     defaultConfig {
       minSdk = localMinSdk
       targetSdk = localTargetSdk
+
+      testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {

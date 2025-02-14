@@ -14,14 +14,16 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
-public fun SampleScreen(onEventViewerTrigger: () -> Unit) {
+public fun SampleScreen(modifier: Modifier, onEventViewerTrigger: () -> Unit) {
   val viewModel = viewModel
   val uiState by viewModel.viewState.collectAsStateWithLifecycle()
 
   when (uiState.flag) {
     SampleViewModel.LocationUiState.Flag.LOADING -> FullScreenLoading()
     SampleViewModel.LocationUiState.Flag.IDLE -> {
-      Sample(onTriggerAnalytics = { viewModel.sendAnalyticsEvent() }, onEventViewerTrigger)
+      Sample(modifier, onTriggerAnalytics = {
+        viewModel.sendAnalyticsEvent()
+      }, onEventViewerTrigger)
     }
   }
 }

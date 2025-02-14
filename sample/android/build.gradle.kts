@@ -7,6 +7,8 @@ plugins {
   id("convention.plugin.kotlin.android")
   id("convention.plugin.compose")
   alias(libs.plugins.kotlin.android)
+  alias(libs.plugins.android.application)
+  alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -16,6 +18,8 @@ android {
     versionCode = 1
     versionName = "1.0"
     applicationId = "com.addhen.kanalytics.sample.android"
+
+    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   buildTypes {
@@ -56,4 +60,10 @@ dependencies {
   implementation(libs.androidx.appcompat)
   implementation(libs.accompanist.permissions)
   implementation(libs.androidx.navigation.compose)
+  implementation(libs.androidx.profileinstaller)
+}
+
+baselineProfile {
+  mergeIntoMain = true
+  saveInSrc = true
 }

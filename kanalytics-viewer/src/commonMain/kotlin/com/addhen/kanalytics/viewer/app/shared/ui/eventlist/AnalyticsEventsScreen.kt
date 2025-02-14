@@ -7,6 +7,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -69,9 +70,11 @@ import kotlinx.collections.immutable.toImmutableList
 import org.jetbrains.compose.resources.stringResource
 import toFormattedString
 
-internal const val SEARCH_SCREEN_TEST_TAG = "SearchScreenTestTag"
-internal const val DELETE_ALL_EVENTS_TEST_TAG = "DeleteAllEventsTestTag"
-internal const val SETTINGS_TEST_TAG = "SettingsTestTag"
+internal const val SEARCH_SCREEN_TEST_TAG = "search_screen_test_tag"
+internal const val DELETE_ALL_EVENTS_TEST_TAG = "delete_all_events_test_tag"
+internal const val SETTINGS_TEST_TAG = "settings_test_tag"
+internal const val EVENT_LIST_ITEM_TEST_TAG = "event_item_test_tag"
+internal const val SCROLL_EVENT_LIST_TEST_TAG = "scroll_event_list_test_tag"
 
 @Composable
 internal fun AnalyticsEventsScreen(
@@ -168,9 +171,10 @@ private fun AnalyticsEventsContent(
           )
         } else {
           PaginatedDataTableContent(
-            uiState.events.toImmutableList(),
-            uiState.searchQuery,
-            onNavigateToDetail,
+            events = uiState.events.toImmutableList(),
+            searchText = uiState.searchQuery,
+            onNavigateToDetail = onNavigateToDetail,
+            modifier = Modifier.testTag(SCROLL_EVENT_LIST_TEST_TAG),
           )
         }
       }
@@ -180,6 +184,7 @@ private fun AnalyticsEventsContent(
 
 @Composable
 private fun PaginatedDataTableContent(
+  modifier: Modifier = Modifier,
   events: ImmutableList<EventData>,
   searchText: String,
   onNavigateToDetail: (Long, String) -> Unit,
@@ -197,17 +202,28 @@ private fun PaginatedDataTableContent(
       },
     ),
     contentPadding = PaddingValues(horizontal = 8.dp),
-    modifier = Modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
+    modifier = modifier.verticalScroll(rememberScrollState()).fillMaxWidth(),
     state = rememberPaginatedDataTableState(10),
   ) {
     for (rowIndex in 0 until events.size) {
       val event = events[rowIndex]
+
       row {
         onClick = {
           onNavigateToDetail(event.id ?: 0, event.name)
         }
+
         cell {
-          Text(event.createdAt.toFormattedString())
+          Text(
+            text = event.createdAt.toFormattedString(),
+            // Doing this to allow us to do a click to navigate to the
+            // event details in tests
+            modifier = Modifier
+              .clickable {
+                onNavigateToDetail(event.id ?: 0, event.name)
+              }
+              .testTag(EVENT_LIST_ITEM_TEST_TAG),
+          )
         }
         cell {
           Text(searchText.highlightText(event.name), color = eventNameTextColor())

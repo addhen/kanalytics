@@ -19,6 +19,7 @@ plugins {
   alias(libs.plugins.compose.compiler) apply false
   alias(libs.plugins.dokka)
   alias(libs.plugins.jetbrains.kotlin.jvm) apply false
+  alias(libs.plugins.androidx.baselineprofile) apply false
 }
 
 tasks.register("printVersionName") {

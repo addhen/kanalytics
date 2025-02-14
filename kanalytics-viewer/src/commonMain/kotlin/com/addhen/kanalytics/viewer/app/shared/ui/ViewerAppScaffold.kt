@@ -54,7 +54,7 @@ public fun ViewerAppScaffold(
 ) {
   Scaffold(
     topBar = topBar,
-    modifier = Modifier.fillMaxSize(),
+    modifier = Modifier.fillMaxSize().testTagsAsResourceId(true),
     snackbarHost = { AppSnackbarHost(hostState = snackbarHostState) },
   ) { contentPadding ->
 
