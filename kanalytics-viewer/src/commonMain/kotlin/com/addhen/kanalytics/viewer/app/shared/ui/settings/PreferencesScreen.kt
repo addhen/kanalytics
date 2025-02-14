@@ -40,6 +40,7 @@ import com.addhen.kanalytics.viewer.app.shared.ui.component.collectAsState
 import org.jetbrains.compose.resources.stringResource
 
 internal const val NAVIGATE_BACK_FROM_SETTINGS_TEST_TAG = "navigate_back_from_settings_test_tag"
+internal const val SCROLL_SETTINGS_TEST_TAG = "scroll_settings_test_tag"
 
 @Composable
 internal fun PreferencesScreen(onBack: () -> Unit) {
@@ -83,7 +84,9 @@ private fun PreferencesContent(
     },
   ) {
     LazyColumn(
-      modifier = Modifier.fillMaxWidth(),
+      modifier = Modifier
+        .testTag(SCROLL_SETTINGS_TEST_TAG)
+        .fillMaxWidth(),
     ) {
       stickyHeader {
         PreferenceHeader(stringResource(Res.string.settings_ui_theme_category_title))

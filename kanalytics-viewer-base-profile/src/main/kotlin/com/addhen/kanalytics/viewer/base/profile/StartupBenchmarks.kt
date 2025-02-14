@@ -33,11 +33,11 @@ class StartupBenchmarks {
       startupMode = StartupMode.COLD,
       iterations = 5,
       setupBlock = {
-        device.allowNotifications(packageName)
+        pressHome()
       },
       measureBlock = {
-        pressHome()
         startActivityAndWait()
+        device.allowNotifications(packageName)
         AppTestScenarios.viewerAppStartUp(device)
       },
     )

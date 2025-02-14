@@ -7,6 +7,7 @@ import android.os.SystemClock
 import android.util.Log
 import androidx.test.uiautomator.By
 import androidx.test.uiautomator.BySelector
+import androidx.test.uiautomator.Direction
 import androidx.test.uiautomator.SearchCondition
 import androidx.test.uiautomator.UiDevice
 import androidx.test.uiautomator.UiObject2
@@ -33,6 +34,7 @@ object AppTestScenarios {
     // Settings screen triggers
     device.testSettings() || return
     device.launchSettings()
+    device.scrollSettings()
     device.navigateFromSettingsToEventList()
   }
 
@@ -102,6 +104,16 @@ object AppTestScenarios {
   fun UiDevice.launchViewerApp() {
     waitForIdle()
     runAction(By.res("event_viewer_test_tag")) { click() }
+    waitForIdle()
+  }
+
+  fun UiDevice.scrollSettings() {
+    Log.i(TAG, "Scrolling Settings")
+    waitForIdle()
+    runAction(By.res("scroll_settings_test_tag")) {
+      setGestureMargins(this)
+      scroll(Direction.DOWN, 0.8f)
+    }
     waitForIdle()
   }
 
