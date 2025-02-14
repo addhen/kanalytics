@@ -1,0 +1,75 @@
+# Credits: https://github.com/chrisbanes/tivi/blob/main/.github/workflows/baseline-profile.yml
+name: Baseline profile generation
+
+on:
+  # Every Sunday at 00:30 UTC
+  schedule:
+    - cron: '30 0 * * 0'
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'kanalytics-viewer-base-profile/**'
+      - '.github/workflows/baseline-profile.yml'
+jobs:
+  baseline-profile:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # We need to use a Personal Access Token from an admin to be able to commit to main,
+          # as it is a protected branch.
+          # https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token#creating-a-fine-grained-personal-access-token
+          token: ${{ secrets.OWNER_PAT_TOKEN }}
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      - name: Enable KVM
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Accept Android SDK licenses
+        run: yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
+
+      # This allows us to build most of what we need without the emulator running
+      # and using resources
+      - name: Build app and benchmark
+        run: ./gradlew assembleNonMinifiedRelease
+
+      - name: Clear Gradle Managed Devices
+        run: ./gradlew cleanManagedDevices
+
+      - name: Run benchmark on Gradle Managed Device
+        run: |
+          ./gradlew generateBaselineProfile \
+            -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" \
+            -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile \
+            -Pandroid.experimental.testOptions.managedDevices.setupTimeoutMinutes=10 \
+            --no-configuration-cache
+
+      # If we're on main branch, copy over the baseline profile and
+      # commit it to the repository (if changed)
+      - name: Commit baseline profile into main
+        if: github.ref == 'refs/heads/main'
+        run: |
+          # If the baseline profile has changed, commit it
+          if [[ $(git diff --stat kanalytics-viewer-base-profile/src) != '' ]]; then
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+            git add kanalytics-viewer-base-profile/src
+            git commit -m "Update app baseline profile"
+            git pull --rebase
+            git push
+          fi
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: reports
+          path: |
+            **/build/reports/*
