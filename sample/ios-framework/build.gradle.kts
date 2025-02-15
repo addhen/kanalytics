@@ -22,7 +22,7 @@ kotlin {
     commonMain {
       dependencies {
         if (isDebug) {
-          implementation(projects.kanalyticsViewer)
+          api(projects.kanalyticsViewer)
         } else {
           implementation(projects.kanalyticsViewerNoOp)
         }
@@ -34,6 +34,7 @@ kotlin {
       binaries.framework {
         isStatic = true
         baseName = "KAnalyticsKt"
+        export(projects.kanalyticsViewer)
       }
     }
   }

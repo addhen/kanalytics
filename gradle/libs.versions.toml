@@ -8,7 +8,13 @@ kotlin = "2.1.10"
 nexus-publish = "2.0.0"
 spotless = "7.0.2"
 metalava = "0.3.5"
-compose-multiplatform = "1.7.3"
+# Using alpha version of compose to avoid this issue:
+#
+# Uncaught Kotlin exception: kotlin.native.internal.IrLinkageError: Can not read value from
+# backing field of property 'androidx_compose_runtime_ProvidedValue$stable': Private backing
+# field of property declared in module <org.jetbrains.compose.runtime:runtime> can not be
+# accessed in module <org.jetbrains.compose.material3:material3>
+compose-multiplatform = "1.8.0-alpha03"
 cacheFixPlugin = "3.0.1"
 dokka = "2.0.0"
 coroutines = "1.10.1"

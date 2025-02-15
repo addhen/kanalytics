@@ -26,6 +26,7 @@ kotlin {
         }
         api(compose.material3)
         api(libs.touchlab.kermit)
+        implementation(compose.material3)
         implementation(compose.runtime)
         implementation(compose.components.resources)
         implementation(libs.kotlinx.datetime)

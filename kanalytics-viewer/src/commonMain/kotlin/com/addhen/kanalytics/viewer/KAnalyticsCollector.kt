@@ -29,7 +29,9 @@ public class KAnalyticsCollector(
   private val appCoroutineDispatchers: AppCoroutineDispatchers = AppCoroutineDispatchers()
   private val notificationManager: NotificationManager = NotificationManager()
 
-  init { setupShortcut(createShortcut) }
+  init {
+    setupShortcut(createShortcut)
+  }
 
   public fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,

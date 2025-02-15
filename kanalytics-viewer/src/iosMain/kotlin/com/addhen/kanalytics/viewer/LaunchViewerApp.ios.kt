@@ -7,12 +7,18 @@ import com.addhen.kanalytics.viewer.app.shared.ui.viewerAppViewController
 import com.addhen.kanalytics.viewer.app.shared.ui.viewerAppViewControllerInstance
 import platform.Foundation.NSProcessInfo
 import platform.UIKit.UIApplication
+import platform.UIKit.UIApplicationShortcutIcon
+import platform.UIKit.UIApplicationShortcutIconType
+import platform.UIKit.UIApplicationShortcutItem
 import platform.UIKit.UIModalPresentationFullScreen
 import platform.UIKit.UINavigationController
 import platform.UIKit.UITabBarController
 import platform.UIKit.UIViewController
 import platform.UIKit.UIWindow
 import platform.UIKit.UIWindowScene
+import platform.UIKit.shortcutItems
+
+public const val SHORTCUT_TYPE: String = "com.addhen.kanalytics.viewer.launch"
 
 public actual fun launchViewerApp() {
   if (viewerAppViewControllerInstance != null) return // Already launched
@@ -64,4 +70,39 @@ private val topWindow: UIWindow?
   }
 
 internal actual fun setupShortcut(shouldCreateShortcut: Boolean) {
+  if (shouldCreateShortcut) {
+    setupShortcut()
+  } else {
+    UIApplication.sharedApplication.shortcutItems = UIApplication.sharedApplication
+      .shortcutItems?.filter {
+        if (it is UIApplicationShortcutItem) {
+          it.type != SHORTCUT_TYPE
+        } else {
+          true
+        }
+      }
+  }
+}
+
+private fun setupShortcut() {
+  if (UIApplication.sharedApplication.shortcutItems?.any {
+      (it as? UIApplicationShortcutItem)?.type == SHORTCUT_TYPE
+    } == true
+  ) {
+    return
+  }
+  val shortcutItem = UIApplicationShortcutItem(
+    type = SHORTCUT_TYPE,
+
+    localizedTitle = "KAnalytics Viewer",
+    localizedSubtitle = "Open KAnalytics Viewer",
+    icon = UIApplicationShortcutIcon.iconWithType(
+      UIApplicationShortcutIconType.UIApplicationShortcutIconTypeCompose,
+    ),
+    userInfo = mapOf<Any?, Any>(),
+  )
+  UIApplication.sharedApplication.shortcutItems =
+    (UIApplication.sharedApplication.shortcutItems?.toMutableList() ?: mutableListOf()).apply {
+      add(shortcutItem)
+    }
 }

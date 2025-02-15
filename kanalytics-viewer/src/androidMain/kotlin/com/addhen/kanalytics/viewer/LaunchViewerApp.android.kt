@@ -28,7 +28,8 @@ internal actual fun setupShortcut(shouldCreateShortcut: Boolean) {
     createShortcut()
   } else {
     ShortcutManagerCompat.removeDynamicShortcuts(
-      ContextInitializer.applicationContext, listOf(SHORTCUT_ID)
+      ContextInitializer.applicationContext,
+      listOf(SHORTCUT_ID),
     )
   }
 }
@@ -37,13 +38,15 @@ private fun createShortcut() {
   val shortcut = ShortcutInfoCompat.Builder(ContextInitializer.applicationContext, SHORTCUT_ID)
     .setShortLabel(ContextInitializer.applicationContext.getText(R.string.viewer_app_name))
     .setLongLabel(ContextInitializer.applicationContext.getText(R.string.shortcut_long_label))
-    .setIcon(IconCompat.createWithResource(ContextInitializer.applicationContext, R.drawable.ic_app_icon))
+    .setIcon(
+      IconCompat.createWithResource(ContextInitializer.applicationContext, R.drawable.ic_app_icon),
+    )
     .setIntent(
       Intent(ContextInitializer.applicationContext, MainActivity::class.java)
         .also { intent ->
           intent.action = Intent.ACTION_VIEW
           intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        }
+        },
     )
     .build()
 
