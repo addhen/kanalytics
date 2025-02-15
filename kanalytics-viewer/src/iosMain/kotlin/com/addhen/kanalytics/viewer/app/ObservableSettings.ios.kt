@@ -7,6 +7,5 @@ import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.ObservableSettings
 import platform.Foundation.NSUserDefaults
 
-internal actual fun provideObservableSettings(): ObservableSettings {
-  return NSUserDefaultsSettings(delegate = NSUserDefaults.standardUserDefaults)
-}
+internal actual fun provideObservableSettings(): ObservableSettings =
+  NSUserDefaultsSettings(delegate = NSUserDefaults.standardUserDefaults)
