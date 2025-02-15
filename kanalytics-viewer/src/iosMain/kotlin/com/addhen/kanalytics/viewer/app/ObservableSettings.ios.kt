@@ -3,8 +3,10 @@
 
 package com.addhen.kanalytics.viewer.app
 
+import com.russhwolf.settings.NSUserDefaultsSettings
 import com.russhwolf.settings.ObservableSettings
+import platform.Foundation.NSUserDefaults
 
 internal actual fun provideObservableSettings(): ObservableSettings {
-  TODO("Not yet implemented")
+  return NSUserDefaultsSettings(delegate = NSUserDefaults.standardUserDefaults)
 }
