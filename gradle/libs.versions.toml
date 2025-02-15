@@ -8,13 +8,7 @@ kotlin = "2.1.10"
 nexus-publish = "2.0.0"
 spotless = "7.0.2"
 metalava = "0.3.5"
-# Using alpha version of compose to avoid this issue:
-#
-# Uncaught Kotlin exception: kotlin.native.internal.IrLinkageError: Can not read value from
-# backing field of property 'androidx_compose_runtime_ProvidedValue$stable': Private backing
-# field of property declared in module <org.jetbrains.compose.runtime:runtime> can not be
-# accessed in module <org.jetbrains.compose.material3:material3>
-compose-multiplatform = "1.8.0-alpha03"
+compose-multiplatform = "1.7.3"
 cacheFixPlugin = "3.0.1"
 dokka = "2.0.0"
 coroutines = "1.10.1"
@@ -22,8 +16,16 @@ androidx-core-ktx = "1.15.0"
 androidx-activity-compose = "1.10.0"
 material = "1.12.0"
 appcompat = "1.7.0"
-accompanist-permissions = "0.37.0"
-navigation-compose = "2.8.0-alpha13" # Make use of type-safe compose navigation
+
+# Version 2.8.0-alpha13 causes this issue on iOS builds:
+#
+# Uncaught Kotlin exception: kotlin.native.internal.IrLinkageError: Can not read value from
+# backing field of property 'androidx_compose_runtime_ProvidedValue$stable': Private backing
+# field of property declared in module <org.jetbrains.compose.runtime:runtime> can not be
+# accessed in module <org.jetbrains.compose.material3:material3>
+# Before you bump this version higher than 2.8.0-alpha13 check the iOS app to make
+# it still works.
+navigation-compose = "2.8.0-alpha12" # Make use of type-safe compose navigation
 kotlinx-serializer = "1.8.0"
 lifecycle-viewmodel-compose = "2.8.4"
 kermit = "2.0.5"
@@ -59,7 +61,6 @@ androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = 
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "androidx-activity-compose" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
-accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanist-permissions" }
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serializer" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
@@ -83,7 +84,6 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 androidx-benchmark-macro = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
 androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
-androidx-rules = { group = "androidx.test", name = "rules", version.ref = "rules" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
