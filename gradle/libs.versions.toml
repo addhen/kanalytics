@@ -45,7 +45,6 @@ espressoCore = "3.6.1"
 uiautomator = "2.3.0"
 benchmarkMacroJunit4 = "1.3.3"
 profileinstaller = "1.4.1"
-rules = "1.6.1"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
