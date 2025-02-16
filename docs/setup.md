@@ -13,7 +13,7 @@ Add `kanalytics` artifact in your project to be able to collect analytics events
 
 ```kotlin title="build.gradle.kts" linenums="1"
 dependencies {
-  implementation("com.addhen.kanalytics:kanalytics:1.0.0")
+  implementation("com.addhen.kanalytics:kanalytics:x.y.z")
 }
 ```
 
@@ -24,14 +24,14 @@ To view the analytics events, being sent to tracking tools, add the `kanalytics-
 ```kotlin title="build.gradle.kts" linenums="1"
 dependencies {
   if (buildType.name == "debug") {
-    implementation("com.addhen.kanalytics:kanalytics-viewer:1.0.0")
+    implementation("com.addhen.kanalytics:kanalytics-viewer:x.y.z")
   } else {
-    implementation("com.addhen.kanalytics:kanalytics-viewer-no-op:1.0.0")
+    implementation("com.addhen.kanalytics:kanalytics-viewer-no-op:x.y.z")
   }
 
   //On Android, it will simply be
-  debugimplementation("com.addhen.kanalytics:kanalytics-viewer:1.0.0")
-  releaseimplementation("com.addhen.kanalytics:kanalytics-viewer-no-op:1.0.0")
+  debugimplementation("com.addhen.kanalytics:kanalytics-viewer:x.y.z")
+  releaseimplementation("com.addhen.kanalytics:kanalytics-viewer-no-op:x.y.z")
 }
 ```
 
@@ -48,11 +48,11 @@ repository {
 }
 
 dependencies {
-  implementation("com.addhen.kanalytics:kanalytics:1.0.0-SNAPSHOT")
+  implementation("com.addhen.kanalytics:kanalytics:x.y.z-SNAPSHOT")
   if (buildType.name == "debug") {
-    implementation("com.addhen.kanalytics:kanalytics-viewer:1.0.0-SNAPSHOT")
+    implementation("com.addhen.kanalytics:kanalytics-viewer:x.y.z-SNAPSHOT")
   } else {
-    implementation("com.addhen.kanalytics:kanalytics-viewer-no-op:1.0.0-SNAPSHOT")
+    implementation("com.addhen.kanalytics:kanalytics-viewer-no-op:x.y.z-SNAPSHOT")
   }
 }
 ```
