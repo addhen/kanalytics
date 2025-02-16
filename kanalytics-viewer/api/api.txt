@@ -2,7 +2,7 @@
 package com.addhen.kanalytics.viewer {
 
   public final class KAnalyticsCollector {
-    ctor public KAnalyticsCollector(optional boolean showNotification, optional int duration);
+    ctor public KAnalyticsCollector(optional boolean showNotification, optional boolean showShortcut, optional int duration);
     method public void onEventSent(com.addhen.kanalytics.KAnalyticsEvent kAnalyticsEvent, String kTrackerName, kotlinx.datetime.Instant onSentDate);
   }
 
@@ -11,12 +11,18 @@ package com.addhen.kanalytics.viewer {
     method public com.addhen.kanalytics.KAnalyticsEvent intercept(com.addhen.kanalytics.Interceptor.Chain chain);
   }
 
+  public final class KAnalyticsViewerShorcutHandlerKt {
+    method public static String getShortcutType();
+    method public static error.NonExistentClass! getUISceneConfiguration(error.NonExistentClass configurationForConnectingSceneSession);
+  }
+
   public final class LaunchViewerApp_androidKt {
     method public static void launchViewerApp();
   }
 
   public final class LaunchViewerApp_iosKt {
     method public static void launchViewerApp();
+    field public static final String SHORTCUT_TYPE = "com.addhen.kanalytics.viewer.launch";
   }
 
   public final class RetentionPolicyManager {
@@ -128,6 +134,14 @@ package com.addhen.kanalytics.viewer.app.shared.data.repository {
 }
 
 package com.addhen.kanalytics.viewer.app.shared.ui {
+
+  public final class ModifierTestTags_androidKt {
+    method @androidx.compose.runtime.Stable public static androidx.compose.ui.Modifier testTagsAsResourceId(androidx.compose.ui.Modifier, boolean enable);
+  }
+
+  public final class ModifierTestTags_iosKt {
+    method @androidx.compose.runtime.Stable public static androidx.compose.ui.Modifier testTagsAsResourceId(androidx.compose.ui.Modifier, boolean enable);
+  }
 
   public final class ViewerAppKt {
     method @androidx.compose.runtime.Composable public static void ViewerApp(optional androidx.navigation.NavHostController navController);
