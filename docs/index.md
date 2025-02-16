@@ -26,6 +26,7 @@ KAnalytics is a flexible analytics library that allows you to:
 2. **Interceptor**: Intercept and modify events before they are sent.
 3. **Multiplatform Support**: Works on both Android and iOS platforms.
 4. **Viewer**: View and debug analytics events during development.
+5. **Shortcuts or Quick Actions**: Allows you to launch KAnalytics Viewer via app shortcuts on Android and Quick action on iOS.
 
 ## Screenshots
 

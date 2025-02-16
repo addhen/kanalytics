@@ -6,3 +6,5 @@ package com.addhen.kanalytics.viewer
 public expect fun launchViewerApp()
 
 internal expect fun disposeViewerAppWindow()
+
+internal expect fun setupShortcut(shouldCreateShortcut: Boolean)

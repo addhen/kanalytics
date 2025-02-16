@@ -1,4 +1,4 @@
-[![Maven Central](https://img.shields.io/maven-central/v/com.addhen.kanalytics/kanalytics)](https://search.maven.org/search?q=g:com.addhen.kanalytics) ![Build status](https://github.com/addhen/kanalytics/actions/workflows/gradle.yml/badge.svg)
+[![Sonatype Snapshots](https://img.shields.io/nexus/s/com.addhen.kanalytics/kanalytics?server=https%3A%2F%2Foss.sonatype.org)](https://oss.sonatype.org/content/repositories/snapshots/com/addhen/kanalytics/) [![Maven Central](https://img.shields.io/maven-central/v/com.addhen.kanalytics/kanalytics)](https://search.maven.org/search?q=g:com.addhen.kanalytics) ![Build status](https://github.com/addhen/kanalytics/actions/workflows/gradle.yml/badge.svg)
 
 
 # KAnalytics

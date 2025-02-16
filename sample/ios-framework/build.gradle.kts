@@ -22,7 +22,7 @@ kotlin {
     commonMain {
       dependencies {
         if (isDebug) {
-          implementation(projects.kanalyticsViewer)
+          api(projects.kanalyticsViewer)
         } else {
           implementation(projects.kanalyticsViewerNoOp)
         }
@@ -33,7 +33,8 @@ kotlin {
     targets.withType<KotlinNativeTarget>().configureEach {
       binaries.framework {
         isStatic = true
-        baseName = "KAnalyticsKt"
+        baseName = "KAnalyticsViewerKt"
+        export(projects.kanalyticsViewer)
       }
     }
   }

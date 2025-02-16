@@ -87,6 +87,7 @@ If you're using `KAnalyticsViewer` to view the events to be sent and wants to co
 // Configure event collection
 val collector = KAnalyticsCollector(
   showNotification = true,
+  showShortcut = true,
   duration = RetentionPolicyManager.DayDuration(7)  // Keep events for 7 days
 )
 

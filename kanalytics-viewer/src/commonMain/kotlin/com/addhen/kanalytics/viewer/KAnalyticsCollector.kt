@@ -16,6 +16,7 @@ import kotlinx.datetime.Instant
 
 public class KAnalyticsCollector(
   private val showNotification: Boolean = true,
+  showShortcut: Boolean = true,
   duration: RetentionPolicyManager.DayDuration = RetentionPolicyManager.DayDuration(7),
 ) {
   private val scope = MainScope()
@@ -27,6 +28,10 @@ public class KAnalyticsCollector(
 
   private val appCoroutineDispatchers: AppCoroutineDispatchers = AppCoroutineDispatchers()
   private val notificationManager: NotificationManager = NotificationManager()
+
+  init {
+    setupShortcut(showShortcut)
+  }
 
   public fun onEventSent(
     kAnalyticsEvent: KAnalyticsEvent,
