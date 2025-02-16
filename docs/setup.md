@@ -39,7 +39,7 @@ dependencies {
 <summary>Snapshots of the development version are available in Sonatype's snapshots repository.</summary>
 <p>
 
-```groovy title="build.gradle.kts" linenums="1"
+```kotlin title="build.gradle.kts" linenums="1"
 repository {
   mavenCentral()
   maven {
@@ -58,3 +58,55 @@ dependencies {
 ```
 </p>
 </details>
+
+
+## Setup Quick Actions on iOS
+
+The quick actions support on iOS requires some manual setup before you can use it.
+
+
+### Install dependency
+
+Export the `kanalytics-viewer` to used in your swift project:
+
+```kotlin title="ios-framework/build.gradle.kts" linenums="1"
+
+kotlin {
+  sourceSets {
+    commonMain {
+      dependencies {
+        // Existing dependencies...
+        // `api` is important here to allow it be exported in the binary framework below
+        api(projects.kanalyticsViewer)
+      }
+    }
+
+    targets.withType<KotlinNativeTarget>().configureEach {
+      binaries.framework {
+        isStatic = true
+        baseName = "KAnalyticsViewerKt"
+        export(projects.kanalyticsViewer)
+      }
+    }
+  }
+}
+```
+
+### Handle Quick Actions in AppDelegate
+Add Quick Actions support by implementing the necessary delegate method in your `AppDelegate` class:
+
+```swift title="AppDelegate.swift" linenums="1"
+import KAnalyticsKt
+
+class AppDelegate: NSObject, UIApplicationDelegate {
+    func application(
+        _ application: UIApplication,
+        configurationForConnecting connectingSceneSession: UISceneSession,
+        options: UIScene.ConnectionOptions
+    ) -> UISceneConfiguration {
+        return KAnalyticsViewerShorcutHandlerKt.getUISceneConfiguration(configurationForConnectingSceneSession: connectingSceneSession)
+    }
+}
+```
+
+For a sample implementation see the sample [iOS app](../sample/ios/iosApp/AppDelegate.swift).

@@ -33,7 +33,7 @@ kotlin {
     targets.withType<KotlinNativeTarget>().configureEach {
       binaries.framework {
         isStatic = true
-        baseName = "KAnalyticsKt"
+        baseName = "KAnalyticsViewerKt"
         export(projects.kanalyticsViewer)
       }
     }

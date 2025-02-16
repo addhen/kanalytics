@@ -1,5 +1,5 @@
 import UIKit
-import KAnalyticsKt
+import KAnalyticsViewerKt
 
 class AppDelegate: NSObject, UIApplicationDelegate {
     func application(
