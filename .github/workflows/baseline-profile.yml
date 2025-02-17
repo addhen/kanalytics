@@ -12,10 +12,26 @@ on:
       - '.github/workflows/baseline-profile.yml'
 jobs:
   baseline-profile:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     timeout-minutes: 45
 
+    concurrency:
+      group: baseline-profile-update-baseline-profile
+      cancel-in-progress: true
+
     steps:
+      - name: Set ANDROID_USER_HOME
+        run: echo "ANDROID_USER_HOME=$HOME/.android" >> $GITHUB_ENV
+
+      - name: Enable KVM group perms
+        run: |
+            echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+            sudo udevadm control --reload-rules
+            sudo udevadm trigger --name-match=kvm
+            ls /dev/kvm
+
+      - name: Download emulator package
+        run: $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager emulator
       - name: Checkout
         uses: actions/checkout@v4
         with:
@@ -25,6 +41,18 @@ jobs:
           token: ${{ secrets.OWNER_PAT_TOKEN }}
       - name: Setup
         uses: ./.github/actions/setup
+
+      - name: Cache AVD
+        if: false
+        uses: actions/cache@v4
+        with:
+          path: |
+            ${{ env.ANDROID_USER_HOME }}/avd/gradle-managed/*
+            ${{ env.ANDROID_USER_HOME }}/adb*
+          key: v7-${{ runner.os }}-baseline-profile
+
+      - name: Accept licenses
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses
 
       # This allows us to build most of what we need without the emulator running
       # and using resources
@@ -36,12 +64,13 @@ jobs:
 
       - name: Run benchmark on Gradle Managed Device
         run: |
-          ./gradlew generateBaselineProfile \
+          generate_profile () { ./gradlew generateBaselineProfile \
             -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" \
             -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile \
             -Pandroid.experimental.testOptions.managedDevices.setupTimeoutMinutes=20 \
             --no-configuration-cache \
-            -Dorg.gradle.workers.max=4
+            -Dorg.gradle.workers.max=4; }
+          (echo "==== Attempt 1 ====" && generate_profile) || (echo "==== Attempt 2 ====" && generate_profile) || (echo "==== Both attempts failed ====" && exit 1)
 
       # If we're on main branch, copy over the baseline profile and
       # commit it to the repository (if changed)
