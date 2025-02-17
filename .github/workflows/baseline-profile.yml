@@ -12,8 +12,8 @@ on:
       - '.github/workflows/baseline-profile.yml'
 jobs:
   baseline-profile:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
+    runs-on: macos-latest
+    timeout-minutes: 45
 
     steps:
       - name: Checkout
@@ -26,30 +26,22 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
-      - name: Enable KVM
-        run: |
-          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
-          sudo udevadm control --reload-rules
-          sudo udevadm trigger --name-match=kvm
-
-      - name: Accept Android SDK licenses
-        run: yes | $ANDROID_SDK_ROOT/cmdline-tools/latest/bin/sdkmanager --licenses
-
       # This allows us to build most of what we need without the emulator running
       # and using resources
       - name: Build app and benchmark
         run: ./gradlew assembleNonMinifiedRelease
 
       - name: Clear Gradle Managed Devices
-        run: ./gradlew cleanManagedDevices
+        run: ./gradlew cleanManagedDevices --unused-only
 
       - name: Run benchmark on Gradle Managed Device
         run: |
           ./gradlew generateBaselineProfile \
             -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" \
             -Pandroid.testInstrumentationRunnerArguments.androidx.benchmark.enabledRules=BaselineProfile \
-            -Pandroid.experimental.testOptions.managedDevices.setupTimeoutMinutes=10 \
-            --no-configuration-cache
+            -Pandroid.experimental.testOptions.managedDevices.setupTimeoutMinutes=20 \
+            --no-configuration-cache \
+            -Dorg.gradle.workers.max=4
 
       # If we're on main branch, copy over the baseline profile and
       # commit it to the repository (if changed)
