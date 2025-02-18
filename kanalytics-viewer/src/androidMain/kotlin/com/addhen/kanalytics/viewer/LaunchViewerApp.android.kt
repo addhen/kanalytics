@@ -11,6 +11,7 @@ import com.addhen.kanalytics.viewer.app.android.ContextInitializer
 import com.addhen.kanalytics.viewer.app.android.MainActivity
 
 private const val SHORTCUT_ID = "kanalytics_viewer_shortcut"
+
 public actual fun launchViewerApp() {
   val context = ContextInitializer.applicationContext
   context.startActivity(
@@ -23,14 +24,16 @@ internal actual fun disposeViewerAppWindow() {
   MainActivity.viewerAppMainActivityInstance = null
 }
 
-internal actual fun setupShortcut(shouldCreateShortcut: Boolean) {
-  if (shouldCreateShortcut) {
-    createShortcut()
-  } else {
-    ShortcutManagerCompat.removeDynamicShortcuts(
-      ContextInitializer.applicationContext,
-      listOf(SHORTCUT_ID),
-    )
+public actual class DefaultShortcutManager : ShortcutManager {
+  override fun setupShortcut(show: Boolean) {
+    if (show) {
+      createShortcut()
+    } else {
+      ShortcutManagerCompat.removeDynamicShortcuts(
+        ContextInitializer.applicationContext,
+        listOf(SHORTCUT_ID),
+      )
+    }
   }
 }
 

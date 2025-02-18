@@ -17,6 +17,7 @@ internal class ContextInitializer : Initializer<Context> {
 
   companion object {
     private var _applicationContext: Context? = null
-    val applicationContext: Context get() = _applicationContext!!
+    val applicationContext: Context get() = _applicationContext
+      ?: throw IllegalStateException("Context not initialized")
   }
 }

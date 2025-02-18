@@ -7,4 +7,10 @@ public expect fun launchViewerApp()
 
 internal expect fun disposeViewerAppWindow()
 
-internal expect fun setupShortcut(shouldCreateShortcut: Boolean)
+// Create a ShortcutManager interface
+public interface ShortcutManager {
+  public fun setupShortcut(show: Boolean)
+}
+
+// Default implementation that will be used in Android
+public expect class DefaultShortcutManager() : ShortcutManager

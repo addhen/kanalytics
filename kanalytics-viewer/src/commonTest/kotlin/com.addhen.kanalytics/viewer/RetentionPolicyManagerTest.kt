@@ -1,9 +1,8 @@
 // Copyright 2025, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
-package com.addhen.kanalytics
+package com.addhen.kanalytics.viewer
 
-import com.addhen.kanalytics.viewer.RetentionPolicyManager
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
 import dev.mokkery.MockMode
 import dev.mokkery.answering.throws
