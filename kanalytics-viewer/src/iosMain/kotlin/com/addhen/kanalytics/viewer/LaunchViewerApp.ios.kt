@@ -69,18 +69,21 @@ private val topWindow: UIWindow?
     }
   }
 
-internal actual fun setupShortcut(shouldCreateShortcut: Boolean) {
-  if (shouldCreateShortcut) {
-    setupShortcut()
-  } else {
-    UIApplication.sharedApplication.shortcutItems = UIApplication.sharedApplication
-      .shortcutItems?.filter {
-        if (it is UIApplicationShortcutItem) {
-          it.type != SHORTCUT_TYPE
-        } else {
-          true
+public actual class DefaultShortcutManager : ShortcutManager {
+
+  override fun setupShortcut(show: Boolean) {
+    if (show) {
+      setupShortcut()
+    } else {
+      UIApplication.sharedApplication.shortcutItems = UIApplication.sharedApplication
+        .shortcutItems?.filter {
+          if (it is UIApplicationShortcutItem) {
+            it.type != SHORTCUT_TYPE
+          } else {
+            true
+          }
         }
-      }
+    }
   }
 }
 

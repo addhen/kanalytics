@@ -78,7 +78,7 @@ public class KAnalytics internal constructor(builder: Builder) {
         val chain = DefaultInterceptorChain(
           interceptors = interceptors,
           index = 0,
-          kTrackerName = KTrackerName(this::class.simpleName ?: ""),
+          kTrackerName = KTrackerName(tracker::class.simpleName ?: ""),
           event = event,
         )
         val interceptedEvent = chain.proceed(event)
