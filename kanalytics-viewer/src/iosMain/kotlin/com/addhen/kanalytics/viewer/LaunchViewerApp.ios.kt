@@ -71,7 +71,7 @@ private val topWindow: UIWindow?
 
 public actual class DefaultShortcutManager : ShortcutManager {
 
-  override fun setupShortcut(show: Boolean) {
+  actual override fun setupShortcut(show: Boolean) {
     if (show) {
       setupShortcut()
     } else {

@@ -13,4 +13,6 @@ public interface ShortcutManager {
 }
 
 // Default implementation that will be used in Android
-public expect class DefaultShortcutManager() : ShortcutManager
+public expect class DefaultShortcutManager() : ShortcutManager {
+  override fun setupShortcut(show: Boolean)
+}

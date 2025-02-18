@@ -25,7 +25,7 @@ internal actual fun disposeViewerAppWindow() {
 }
 
 public actual class DefaultShortcutManager : ShortcutManager {
-  override fun setupShortcut(show: Boolean) {
+  actual override fun setupShortcut(show: Boolean) {
     if (show) {
       createShortcut()
     } else {
