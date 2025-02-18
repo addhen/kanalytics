@@ -1,8 +1,18 @@
 // Signature format: 4.0
 package com.addhen.kanalytics.viewer {
 
+  public final class DefaultShortcutManager implements com.addhen.kanalytics.viewer.ShortcutManager {
+    ctor public DefaultShortcutManager();
+    method public void setupShortcut(boolean show);
+  }
+
+  public final class DefaultShortcutManager implements com.addhen.kanalytics.viewer.ShortcutManager {
+    ctor public DefaultShortcutManager();
+    method public void setupShortcut(boolean show);
+  }
+
   public final class KAnalyticsCollector {
-    ctor public KAnalyticsCollector(optional boolean showNotification, optional boolean showShortcut, optional int duration);
+    ctor public KAnalyticsCollector(optional boolean showShortcut, optional int duration, optional com.addhen.kanalytics.viewer.ShortcutManager shortcutManager, optional boolean showNotification, optional kotlinx.coroutines.CoroutineScope scope, optional com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository repository, optional com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers appCoroutineDispatchers, optional com.addhen.kanalytics.viewer.app.NotificationManager notificationManager);
     method public void onEventSent(com.addhen.kanalytics.KAnalyticsEvent kAnalyticsEvent, String kTrackerName, kotlinx.datetime.Instant onSentDate);
   }
 
@@ -34,6 +44,10 @@ package com.addhen.kanalytics.viewer {
     ctor public RetentionPolicyManager.DayDuration(int numberOfDays);
     method public int getNumberOfDays();
     property public final int numberOfDays;
+  }
+
+  public interface ShortcutManager {
+    method public void setupShortcut(boolean show);
   }
 
 }
