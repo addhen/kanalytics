@@ -25,6 +25,10 @@ class FirebaseTracker(private val context: Context) : KTracker {
 
 ```
 
+**Note:** The tracker class eg. `FirebaseTracker` is used as the name of the tracker so by convention
+it's better if you use the name of the analytics service provider in the tracker class name. This
+helps to know which tracker events have been sent to.
+
 ## 2. Creating Interceptors
 
 Interceptors process events before they reach the trackers.
