@@ -50,7 +50,7 @@ internal class NotificationManagerImpl : NotificationManager {
   private fun createNotification(context: Context): Notification {
     val notificationBuilder = NotificationCompat.Builder(context, CHANNEL_ID)
       .setContentTitle(context.getString(R.string.notification_title))
-      .setSmallIcon((R.drawable.ic_app_icon))
+      .setSmallIcon((R.drawable.ic_notification))
       .setAutoCancel(true)
       .setChannelId(CHANNEL_ID)
       .setContentIntent(
