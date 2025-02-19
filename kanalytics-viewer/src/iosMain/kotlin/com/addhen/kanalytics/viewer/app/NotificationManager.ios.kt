@@ -3,9 +3,6 @@
 
 package com.addhen.kanalytics.viewer.app
 
-import co.touchlab.kermit.Logger
-import com.addhen.kanalytics.viewer.launchViewerApp
-import platform.Foundation.NSError
 import platform.UserNotifications.UNAuthorizationOptionAlert
 import platform.UserNotifications.UNAuthorizationOptionBadge
 import platform.UserNotifications.UNAuthorizationOptionSound
@@ -14,94 +11,86 @@ import platform.UserNotifications.UNNotificationAction
 import platform.UserNotifications.UNNotificationActionOptionForeground
 import platform.UserNotifications.UNNotificationCategory
 import platform.UserNotifications.UNNotificationCategoryOptionNone
+import platform.UserNotifications.UNNotificationInterruptionLevel
 import platform.UserNotifications.UNNotificationRequest
-import platform.UserNotifications.UNNotificationResponse
 import platform.UserNotifications.UNNotificationSound
+import platform.UserNotifications.UNTimeIntervalNotificationTrigger
 import platform.UserNotifications.UNUserNotificationCenter
-import platform.UserNotifications.UNUserNotificationCenterDelegateProtocol
-import platform.darwin.NSObject
 
-internal actual fun NotificationManager(): NotificationManager = NotificationManagerImpl()
+internal const val notificationActionId: String = "com.addhen.kanalytics.notificationAction"
 
-internal class NotificationManagerImpl : NotificationManager {
+internal actual fun NotificationManager(): NotificationManager = NotificationManagerIOsImpl()
+
+internal class NotificationManagerIOsImpl : NotificationManager {
   private val notificationId: String = "com.addhen.kanalytics.notification"
+  private val notificationCategoryId: String = "com.addhen.kanalytics.notificationCategory"
+
+  private val notificationCenter = UNUserNotificationCenter.currentNotificationCenter().apply {
+    setDelegate(NotificationDelegate())
+  }
 
   private val notificationAction = UNNotificationAction.actionWithIdentifier(
-    identifier = "OPEN_VIEWER_APP_ACTION",
+    identifier = notificationActionId,
     title = "Open Viewer App",
     options = UNNotificationActionOptionForeground,
   )
 
   private val notificationCategory = UNNotificationCategory.categoryWithIdentifier(
-    identifier = "KANALYTICS_CATEGORY",
+    identifier = notificationCategoryId,
     actions = listOf(notificationAction),
     intentIdentifiers = listOf<String>(),
     options = UNNotificationCategoryOptionNone,
   )
 
   override fun showNotification(eventName: String, trackerName: String) {
-    val notificationCenter = UNUserNotificationCenter.currentNotificationCenter()
-    try {
-      // Requesting notification permissions
-      notificationCenter.requestAuthorizationWithOptions(
-        options = UNAuthorizationOptionAlert +
-          UNAuthorizationOptionBadge +
-          UNAuthorizationOptionSound,
-      ) { granted, error ->
-        if (!granted || error != null) {
-          throw IllegalStateException(
-            error?.localizedDescription ?: "Error requesting notification permissions.",
-          )
-        }
-      }
+    if (!notificationCenter.isNotificationPermissionGranted()) {
+      return
+    }
 
-      val content = UNMutableNotificationContent().apply {
-        setTitle(eventName)
-        setBody(trackerName)
-        setCategoryIdentifier("KANALYTICS_CATEGORY")
-        setSound(UNNotificationSound.defaultSound())
-      }
+    val body = "$eventName sent to $trackerName"
+    val content = UNMutableNotificationContent().apply {
+      setTitle("Analytics Event Sent!")
+      setBody(body)
+      setCategoryIdentifier(notificationCategoryId)
+      setSound(UNNotificationSound.defaultSound)
+      setInterruptionLevel(UNNotificationInterruptionLevel.UNNotificationInterruptionLevelActive)
+    }
 
-      // Create a new notification
-      val request = UNNotificationRequest.requestWithIdentifier(
-        notificationId,
-        content,
-        null,
-      )
+    val trigger = UNTimeIntervalNotificationTrigger
+      .triggerWithTimeInterval(0.1, repeats = false)
+    val request = UNNotificationRequest
+      .requestWithIdentifier(notificationId, content, trigger)
 
-      notificationCenter.setNotificationCategories(setOf(notificationCategory))
-      notificationCenter.addNotificationRequest(request) { error ->
-        if (error != null) {
-          Logger.e(error.toThrowable()) {
-            "Error adding notification request: ${error.localizedDescription}"
-          }
-        } else {
-          Logger.i { "Notification request added successfully." }
-        }
+    notificationCenter.setNotificationCategories(setOf(notificationCategory))
+    notificationCenter.addNotificationRequest(request) { error ->
+      if (error != null) {
+        println("Error adding notification request: ${error.localizedDescription}")
+      } else {
+        println("Notification request added successfully.")
       }
-
-      notificationCenter.delegate = object : NSObject(), UNUserNotificationCenterDelegateProtocol {
-        override fun userNotificationCenter(
-          center: UNUserNotificationCenter,
-          didReceiveNotificationResponse: UNNotificationResponse,
-          withCompletionHandler: () -> Unit,
-        ) {
-          if (didReceiveNotificationResponse.actionIdentifier == "OPEN_VIEWER_APP_ACTION") {
-            launchViewerApp()
-          }
-          withCompletionHandler()
-        }
-      }
-    } catch (e: IllegalStateException) {
-      Logger.e(e) { "Error requesting notification permission: $e" }
     }
   }
 
   override fun clearBuffer() {
     // Clear the notification buffer
-    val notificationCenter = UNUserNotificationCenter.currentNotificationCenter()
     notificationCenter.removeDeliveredNotificationsWithIdentifiers(listOf(notificationId))
+    notificationCenter.removePendingNotificationRequestsWithIdentifiers(listOf(notificationId))
   }
 
-  private fun NSError.toThrowable(): Throwable = Throwable(this.localizedDescription)
+  private fun UNUserNotificationCenter.isNotificationPermissionGranted(): Boolean = try {
+    // Requesting notification permissions
+    requestAuthorizationWithOptions(
+      UNAuthorizationOptionAlert or UNAuthorizationOptionSound or UNAuthorizationOptionBadge,
+    ) { granted, error ->
+      if (!granted || error != null) {
+        throw IllegalStateException(
+          error?.localizedDescription ?: "Error requesting notification permissions.",
+        )
+      }
+    }
+    true
+  } catch (e: IllegalStateException) {
+    println("Error requesting notification permission: ${e.message}")
+    false
+  }
 }

@@ -1,5 +1,5 @@
 import SwiftUI
-import KAnalyticsKt
+import KAnalyticsViewerKt
 
 @main
 struct iOSApp: App {

@@ -14,6 +14,6 @@ public class FirebaseTracker : KTracker {
   override fun send(event: KAnalyticsEvent) {
     // Send event to firebase
     analyticsEvents.add(event)
-    Logger.d(tag = "MainActivity", messageString = "FirebaseTracker: $event")
+    Logger.d { "FirebaseTracker: $event" }
   }
 }
