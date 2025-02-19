@@ -7,7 +7,7 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
-import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.MainScope
 
 public data class AppCoroutineDispatchers(
   val io: CoroutineDispatcher = Dispatchers.IO,
@@ -24,4 +24,4 @@ public data class AppCoroutineDispatchers(
 }
 
 internal val applicationCoroutineScope: CoroutineScope
-  get() = CoroutineScope(AppCoroutineDispatchers.Instance.main + SupervisorJob())
+  get() = MainScope()

@@ -13,12 +13,10 @@ import com.russhwolf.settings.coroutines.toFlowSettings
 import com.russhwolf.settings.set
 import kotlin.time.Duration.Companion.seconds
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.WhileSubscribed
 import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.withContext
 
@@ -76,12 +74,13 @@ internal class DefaultViewerAppPreference(
     private val fromValue: (V) -> String,
   ) : Preference<V> {
 
-    override val flow: Flow<V> by lazy {
+    override val flow: StateFlow<V> by lazy {
       flowSettings.getStringOrNullFlow(key)
         .map { it?.let(toValue) ?: defaultValue }
-        .shareIn(
+        .stateIn(
           scope = coroutineScope,
           started = SharingStarted.WhileSubscribed(SUBSCRIBED_TIMEOUT),
+          initialValue = defaultValue,
         )
     }
 
