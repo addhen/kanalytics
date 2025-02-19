@@ -17,7 +17,7 @@ import platform.UserNotifications.UNNotificationSound
 import platform.UserNotifications.UNTimeIntervalNotificationTrigger
 import platform.UserNotifications.UNUserNotificationCenter
 
-internal const val notificationActionId: String = "com.addhen.kanalytics.notificationAction"
+internal const val NOTIFICATION_ACTION_ID: String = "com.addhen.kanalytics.notificationAction"
 
 internal actual fun NotificationManager(): NotificationManager = NotificationManagerIOsImpl()
 
@@ -30,7 +30,7 @@ internal class NotificationManagerIOsImpl : NotificationManager {
   }
 
   private val notificationAction = UNNotificationAction.actionWithIdentifier(
-    identifier = notificationActionId,
+    identifier = NOTIFICATION_ACTION_ID,
     title = "Open Viewer App",
     options = UNNotificationActionOptionForeground,
   )
