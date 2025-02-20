@@ -3,7 +3,8 @@
 KAnalytics is a powerful Kotlin Multiplatform library that streamlines
 analytics integration across Android and iOS applications. It provides
 a unified, type safe API for tracking user events while simplifying
-cross-platform analytics management.
+cross-platform analytics management. It also eliminates vendor lock-in
+as analytics providers are pluggable and can be easily swapped out.
 
 ## Motivation
 The primary motivation behind **KAnalytics** is to provide a simple
