@@ -15,8 +15,8 @@ tracking for multiple platforms.
 It comes with **KAnalytics Viewer**  a companion app that helps
 developers and QA teams manage analytics events in their
 applications. Its user friendly interface simplifies event viewing,
-searching, and debugging.
-
+searching, and debugging. Very useful for QA teams to easily verify
+the events being sent.
 
 ## Features
 
