@@ -3,6 +3,7 @@
 
 package com.addhen.kanalytics.viewer.app
 
+import platform.Foundation.NSLock
 import platform.UserNotifications.UNAuthorizationOptionAlert
 import platform.UserNotifications.UNAuthorizationOptionBadge
 import platform.UserNotifications.UNAuthorizationOptionSound
@@ -18,12 +19,15 @@ import platform.UserNotifications.UNTimeIntervalNotificationTrigger
 import platform.UserNotifications.UNUserNotificationCenter
 
 internal const val NOTIFICATION_ACTION_ID: String = "com.addhen.kanalytics.notificationAction"
+private const val BUFFER_SIZE = 10
 
 internal actual fun NotificationManager(): NotificationManager = NotificationManagerIOsImpl()
 
 internal class NotificationManagerIOsImpl : NotificationManager {
   private val notificationId: String = "com.addhen.kanalytics.notification"
   private val notificationCategoryId: String = "com.addhen.kanalytics.notificationCategory"
+  private val lock = NSLock()
+  private val notificationBuffer = mutableListOf<String>()
 
   private val notificationCenter = UNUserNotificationCenter.currentNotificationCenter().apply {
     setDelegate(NotificationDelegate())
@@ -47,26 +51,37 @@ internal class NotificationManagerIOsImpl : NotificationManager {
       return
     }
 
-    val body = "$eventName sent to $trackerName"
-    val content = UNMutableNotificationContent().apply {
-      setTitle("Analytics Event Sent!")
-      setBody(body)
-      setCategoryIdentifier(notificationCategoryId)
-      setSound(UNNotificationSound.defaultSound)
-      setInterruptionLevel(UNNotificationInterruptionLevel.UNNotificationInterruptionLevelActive)
-    }
+    addNotificationToBuffer("$eventName sent to $trackerName")
+    lock.withLock {
+      val body = buildString {
+        for ((counter, i) in (notificationBuffer.lastIndex downTo 0).withIndex()) {
+          val notification = notificationBuffer[i]
+          if (counter < BUFFER_SIZE) {
+            append(notification)
+          }
+        }
+      }
 
-    val trigger = UNTimeIntervalNotificationTrigger
-      .triggerWithTimeInterval(0.1, repeats = false)
-    val request = UNNotificationRequest
-      .requestWithIdentifier(notificationId, content, trigger)
+      val content = UNMutableNotificationContent().apply {
+        setTitle("Analytics Event Sent!")
+        setBody(body)
+        setCategoryIdentifier(notificationCategoryId)
+        setSound(UNNotificationSound.defaultSound)
+        setInterruptionLevel(UNNotificationInterruptionLevel.UNNotificationInterruptionLevelActive)
+      }
 
-    notificationCenter.setNotificationCategories(setOf(notificationCategory))
-    notificationCenter.addNotificationRequest(request) { error ->
-      if (error != null) {
-        println("Error adding notification request: ${error.localizedDescription}")
-      } else {
-        println("Notification request added successfully.")
+      val trigger = UNTimeIntervalNotificationTrigger
+        .triggerWithTimeInterval(0.1, repeats = false)
+      val request = UNNotificationRequest
+        .requestWithIdentifier(notificationId, content, trigger)
+
+      notificationCenter.setNotificationCategories(setOf(notificationCategory))
+      notificationCenter.addNotificationRequest(request) { error ->
+        if (error != null) {
+          println("Error adding notification request: ${error.localizedDescription}")
+        } else {
+          println("Notification request added successfully.")
+        }
       }
     }
   }
@@ -75,6 +90,9 @@ internal class NotificationManagerIOsImpl : NotificationManager {
     // Clear the notification buffer
     notificationCenter.removeDeliveredNotificationsWithIdentifiers(listOf(notificationId))
     notificationCenter.removePendingNotificationRequestsWithIdentifiers(listOf(notificationId))
+    lock.withLock {
+      notificationBuffer.clear()
+    }
   }
 
   private fun UNUserNotificationCenter.isNotificationPermissionGranted(): Boolean = try {
@@ -92,5 +110,20 @@ internal class NotificationManagerIOsImpl : NotificationManager {
   } catch (e: IllegalStateException) {
     println("Error requesting notification permission: ${e.message}")
     false
+  }
+
+  private fun addNotificationToBuffer(notification: String) {
+    lock.withLock {
+      notificationBuffer.add(notification)
+    }
+  }
+
+  private fun NSLock.withLock(action: () -> Unit) {
+    lock()
+    try {
+      action()
+    } finally {
+      unlock()
+    }
   }
 }
