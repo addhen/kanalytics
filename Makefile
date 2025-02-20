@@ -40,6 +40,19 @@ help:		# Display this help
 
 .PHONY: housekeeping
 housekeeping:			# Perform some git housekeeping
-	git fsck
-	git gc --aggressive
-	git remote update --prune
+	@git fsck
+	@git gc --aggressive
+	@git remote update --prune
+
+.PHONY: release
+release: check-version-args # Release the library to maven.Usage: make release <current-version> <next-version>
+	@./scripts/release.sh $(word 2,$(MAKECMDGOALS)) $(word 3,$(MAKECMDGOALS))
+
+check-version-args:
+	@if [ "$(word 2,$(MAKECMDGOALS))" = "" ] || [ "$(word 3,$(MAKECMDGOALS))" = "" ]; then \
+		echo "Usage: make release <current-version> <next-version>"; \
+		exit 1; \
+	fi
+
+%:
+	@:
