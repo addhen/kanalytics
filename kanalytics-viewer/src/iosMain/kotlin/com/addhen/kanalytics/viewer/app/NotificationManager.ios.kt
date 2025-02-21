@@ -100,7 +100,7 @@ internal class NotificationManagerIOsImpl : NotificationManager {
     requestAuthorizationWithOptions(
       UNAuthorizationOptionAlert or UNAuthorizationOptionSound or UNAuthorizationOptionBadge,
     ) { granted, error ->
-      if (!granted || error != null) {
+      if (error != null) {
         throw IllegalStateException(
           error?.localizedDescription ?: "Error requesting notification permissions.",
         )

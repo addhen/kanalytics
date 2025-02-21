@@ -31,9 +31,9 @@ KAnalytics is a flexible analytics library that allows you to:
 
 ## Screenshots
 
-| Android | iOS |
-|---------|-----|
-| <picture><source media="(prefers-color-scheme: dark)" srcset="./media/android-dark.mp4"><source media="(prefers-color-scheme: light)" srcset="./media/android-light.mp4"><video width="300" controls><source src="./media/android-light.mp4" type="video/mp4">Your browser does not support the video tag.</video></picture> | <picture><source media="(prefers-color-scheme: dark)" srcset="./media/ios-dark.mp4"><source media="(prefers-color-scheme: light)" srcset="./media/ios-light.mp4"><video width="300" controls><source src="./media/ios-light.mp4" type="video/mp4">Your browser does not support the video tag.</video></picture> |
+| Android                                                                                                                                                                                                                                                  | iOS                                                                                                                                                                                                                                                |
+|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| <picture><source media="(prefers-color-scheme: dark)" srcset="./media/android-dark.gif"><source media="(prefers-color-scheme: light)" srcset="./media/android-light.gif"><img src="./media/android-light.gif" alt="Android App Screenshot"  width="300" /></picture> | <picture><source media="(prefers-color-scheme: dark)" srcset="./media/ios-dark.gif"><source media="(prefers-color-scheme: light)" srcset="./media/ios-light.gif"><img src="./media/ios-light.gif"  width="300" alt="Ios App Screenshot"/></picture> |
 
 
 ## Platform Support
