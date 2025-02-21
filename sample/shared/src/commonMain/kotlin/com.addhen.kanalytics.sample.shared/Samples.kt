@@ -40,7 +40,7 @@ public fun Sample(
   onTriggerAirshipAnalytics: () -> Unit,
   onTriggerAmplitudeAnalytics: () -> Unit,
   onTriggerFirebaseAnalytics: () -> Unit,
-  onEventViewer: () -> Unit
+  onEventViewer: () -> Unit,
 ) {
   Column(
     modifier = modifier.padding(16.dp).fillMaxSize(),
