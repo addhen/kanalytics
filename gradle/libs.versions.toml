@@ -1,5 +1,5 @@
 [versions]
-kanalytics = "1.0.0"
+kanalytics = "1.1.0-SNAPSHOT"
 minSdk = "24"
 targetSdk = "35"
 compileSdk = "35"
