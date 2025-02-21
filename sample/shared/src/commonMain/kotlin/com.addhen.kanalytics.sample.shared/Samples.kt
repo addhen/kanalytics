@@ -6,7 +6,9 @@ package com.addhen.kanalytics.sample.shared
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
@@ -48,6 +50,7 @@ public fun Sample(
   ) {
     Text("Sample app showing how to use kanalytics")
     HorizontalDivider(thickness = 2.dp)
+    Spacer(Modifier.height(16.dp))
     Button(
       onClick = onTriggerAirshipAnalytics,
       modifier = Modifier.testTag(TRIGGER_ANALYTICS_EVENT_TEST_TAG),
@@ -75,7 +78,7 @@ public fun Sample(
     ) {
       Text("Send analytics event to all trackers")
     }
-
+    Spacer(Modifier.height(32.dp))
     Button(
       onClick = onEventViewer,
       modifier = Modifier.testTag(EVENT_VIEWER_TEST_TAG),
