@@ -7,6 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.addhen.kanalytics.KAnalytics
 import com.addhen.kanalytics.KAnalyticsEvent
+import com.addhen.kanalytics.sample.shared.trackers.AirshipTracker
+import com.addhen.kanalytics.sample.shared.trackers.AmplitudeTracker
+import com.addhen.kanalytics.sample.shared.trackers.FirebaseTracker
 import kotlin.random.Random
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -57,6 +60,27 @@ public class SampleViewModel(private val kanalytics: KAnalytics) : ViewModel() {
       addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
     }
     kanalytics.send(event)
+  }
+
+  public fun sendAirshipAnalyticsEvent() {
+    val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
+      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
+    }
+    kanalytics.send(event, AirshipTracker::class)
+  }
+
+  public fun sendAmplitudeAnalyticsEvent() {
+    val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
+      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
+    }
+    kanalytics.send(event, AmplitudeTracker::class)
+  }
+
+  public fun sendFirebaseAnalyticsEvent() {
+    val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
+      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
+    }
+    kanalytics.send(event, FirebaseTracker::class)
   }
 
   public sealed interface UiAction {

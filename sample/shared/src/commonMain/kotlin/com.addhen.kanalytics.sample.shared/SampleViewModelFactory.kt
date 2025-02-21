@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.CreationExtras
 import com.addhen.kanalytics.KAnalytics
+import com.addhen.kanalytics.sample.shared.trackers.AirshipTracker
+import com.addhen.kanalytics.sample.shared.trackers.AmplitudeTracker
 import com.addhen.kanalytics.sample.shared.trackers.FirebaseTracker
 import com.addhen.kanalytics.viewer.KAnalyticsCollector
 import com.addhen.kanalytics.viewer.KAnalyticsInterceptor
@@ -20,6 +22,8 @@ internal fun createKAnalytics(shouldShowNotification: Boolean, numberOfDays: Int
   )
   return KAnalytics.Builder()
     .addTracker(FirebaseTracker())
+    .addTracker(AmplitudeTracker())
+    .addTracker(AirshipTracker())
     .addInterceptor(KAnalyticsInterceptor(collector))
     .build()
 }

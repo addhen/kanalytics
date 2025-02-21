@@ -34,7 +34,14 @@ public fun SampleTheme(
 }
 
 @Composable
-public fun Sample(modifier: Modifier, onTriggerAnalytics: () -> Unit, onEventViewer: () -> Unit) {
+public fun Sample(
+  modifier: Modifier,
+  onTriggerAnalytics: () -> Unit,
+  onTriggerAirshipAnalytics: () -> Unit,
+  onTriggerAmplitudeAnalytics: () -> Unit,
+  onTriggerFirebaseAnalytics: () -> Unit,
+  onEventViewer: () -> Unit
+) {
   Column(
     modifier = modifier.padding(16.dp).fillMaxSize(),
     verticalArrangement = Arrangement.spacedBy(8.dp),
@@ -42,10 +49,31 @@ public fun Sample(modifier: Modifier, onTriggerAnalytics: () -> Unit, onEventVie
     Text("Sample app showing how to use kanalytics")
     HorizontalDivider(thickness = 2.dp)
     Button(
+      onClick = onTriggerAirshipAnalytics,
+      modifier = Modifier.testTag(TRIGGER_ANALYTICS_EVENT_TEST_TAG),
+    ) {
+      Text("Send analytics event to Airship tracker")
+    }
+
+    Button(
+      onClick = onTriggerAmplitudeAnalytics,
+      modifier = Modifier.testTag(TRIGGER_ANALYTICS_EVENT_TEST_TAG),
+    ) {
+      Text("Send analytics event to Amplitude tracker")
+    }
+
+    Button(
+      onClick = onTriggerFirebaseAnalytics,
+      modifier = Modifier.testTag(TRIGGER_ANALYTICS_EVENT_TEST_TAG),
+    ) {
+      Text("Send analytics event to Firebase tracker")
+    }
+
+    Button(
       onClick = onTriggerAnalytics,
       modifier = Modifier.testTag(TRIGGER_ANALYTICS_EVENT_TEST_TAG),
     ) {
-      Text("Trigger an analytics event")
+      Text("Send analytics event to all trackers")
     }
 
     Button(
