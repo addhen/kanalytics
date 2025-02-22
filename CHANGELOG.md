@@ -1,7 +1,8 @@
 ## [Unreleased]
 
-### Added
-- TBA
+### Changed
+
+- Made `KAnalyticsEvent#properties` a `Map` instead of a `MutableMap`.
 
 ## [1.0.0] - 2025-02-21
 
