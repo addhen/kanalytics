@@ -37,7 +37,7 @@ class KAnalyticsTest {
   @Test
   fun `should send event to all trackers`() {
     val event = KAnalyticsEvent(EVENT_NAME).apply {
-      addParameters(
+      addProperties(
         mapOf(
           SCREEN_NAME to SCREEN_NAME,
           KEY_ONE to VALUE_ONE,
@@ -58,9 +58,9 @@ class KAnalyticsTest {
   @Test
   fun `should send event to specific tracker`() {
     val event = KAnalyticsEvent(EVENT_NAME).apply {
-      addParameter(SCREEN_NAME, SCREEN_NAME)
-      addParameter(KEY_ONE, VALUE_ONE)
-      addParameter(KEY_TWO, VALUE_TWO)
+      addProperty(SCREEN_NAME, SCREEN_NAME)
+      addProperty(KEY_ONE, VALUE_ONE)
+      addProperty(KEY_TWO, VALUE_TWO)
     }
 
     kanalytics.send(event, FirebaseTracker::class)
@@ -74,9 +74,9 @@ class KAnalyticsTest {
   @Test
   fun `should send event with parameters`() {
     val event = KAnalyticsEvent(EVENT_NAME).apply {
-      addParameter(SCREEN_NAME, SCREEN_NAME)
-      addParameter(KEY_ONE, VALUE_ONE)
-      addParameter(KEY_TWO, VALUE_TWO)
+      addProperty(SCREEN_NAME, SCREEN_NAME)
+      addProperty(KEY_ONE, VALUE_ONE)
+      addProperty(KEY_TWO, VALUE_TWO)
     }
 
     kanalytics.send(event)
@@ -91,9 +91,9 @@ class KAnalyticsTest {
   @Test
   fun `should send event with parameters to specific tracker`() {
     val event = KAnalyticsEvent(EVENT_NAME).apply {
-      addParameter(SCREEN_NAME, SCREEN_NAME)
-      addParameter(KEY_ONE, VALUE_ONE)
-      addParameter(KEY_TWO, VALUE_TWO)
+      addProperty(SCREEN_NAME, SCREEN_NAME)
+      addProperty(KEY_ONE, VALUE_ONE)
+      addProperty(KEY_TWO, VALUE_TWO)
     }
 
     kanalytics.send(event, AdjustTracker::class)
@@ -113,7 +113,7 @@ class KAnalyticsTest {
       .build()
 
     val event = KAnalyticsEvent(EVENT_NAME).apply {
-      addParameters(
+      addProperties(
         mapOf(
           SCREEN_NAME to SCREEN_NAME,
           KEY_ONE to VALUE_ONE,

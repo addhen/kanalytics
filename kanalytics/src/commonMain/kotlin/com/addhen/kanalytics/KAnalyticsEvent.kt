@@ -13,25 +13,29 @@ package com.addhen.kanalytics
 public class KAnalyticsEvent(
   public val eventName: String,
   public val eventDescription: String? = null,
-  public val properties: MutableMap<String, Any?> = mutableMapOf(),
+  properties: Map<String, Any?> = emptyMap(),
 ) {
 
+  private val _properties = properties.toMutableMap()
+
+  public val properties: Map<String, Any?> = _properties
+
   /**
-   * Adds a parameter to the event.
-   * @param parameterName The name of the parameter.
-   * @param value The value of the parameter.
+   * Adds a property to the event.
+   * @param propertyName The name of the property.
+   * @param value The value of the property.
    */
-  public fun addParameter(parameterName: String, value: Any?): KAnalyticsEvent = apply {
-    properties[parameterName] = value
+  public fun addProperty(propertyName: String, value: Any?): KAnalyticsEvent = apply {
+    _properties[propertyName] = value
   }
 
   /**
-   * Adds multiple parameters to the event.
+   * Adds multiple properties to the event.
    *
-   * @param map A map of parameters to add.
+   * @param map A map of properties to add.
    */
-  public fun addParameters(map: Map<String, Any?>): KAnalyticsEvent = apply {
-    properties.putAll(map)
+  public fun addProperties(map: Map<String, Any?>): KAnalyticsEvent = apply {
+    _properties.putAll(map)
   }
 
   /**
@@ -39,13 +43,13 @@ public class KAnalyticsEvent(
    *
    * @param eventName The name of the event.
    * @param eventDescription The description of the event.
-   * @param parameters The parameters of the event.
+   * @param properties The properties of the event.
    */
   public fun copy(
     eventName: String = this.eventName,
     eventDescription: String? = this.eventDescription,
-    parameters: MutableMap<String, Any?> = this.properties,
-  ): KAnalyticsEvent = KAnalyticsEvent(eventName, eventDescription, parameters)
+    properties: Map<String, Any?> = this.properties,
+  ): KAnalyticsEvent = KAnalyticsEvent(eventName, eventDescription, properties)
 
   /**
    * Returns a string representation of the event.

@@ -57,28 +57,28 @@ public class SampleViewModel(private val kanalytics: KAnalytics) : ViewModel() {
 
   public fun sendAnalyticsEvent() {
     val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
-      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
+      addProperty("key ${generateRandomString()}", "value ${generateRandomString()}")
     }
     kanalytics.send(event)
   }
 
   public fun sendAirshipAnalyticsEvent() {
     val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
-      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
+      addProperty("key ${generateRandomString()}", "value ${generateRandomString()}")
     }
     kanalytics.send(event, AirshipTracker::class)
   }
 
   public fun sendAmplitudeAnalyticsEvent() {
     val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
-      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
+      addProperty("key ${generateRandomString()}", "value ${generateRandomString()}")
     }
     kanalytics.send(event, AmplitudeTracker::class)
   }
 
   public fun sendFirebaseAnalyticsEvent() {
     val event = KAnalyticsEvent("EventName ${generateRandomString()}").apply {
-      addParameter("key ${generateRandomString()}", "value ${generateRandomString()}")
+      addProperty("key ${generateRandomString()}", "value ${generateRandomString()}")
     }
     kanalytics.send(event, FirebaseTracker::class)
   }

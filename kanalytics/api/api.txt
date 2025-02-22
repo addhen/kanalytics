@@ -34,10 +34,10 @@ package com.addhen.kanalytics {
   }
 
   public final class KAnalyticsEvent {
-    ctor public KAnalyticsEvent(String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,java.lang.Object> properties);
-    method public com.addhen.kanalytics.KAnalyticsEvent addParameter(String parameterName, Object? value);
-    method public com.addhen.kanalytics.KAnalyticsEvent addParameters(java.util.Map<java.lang.String,?> map);
-    method public com.addhen.kanalytics.KAnalyticsEvent copy(optional String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,java.lang.Object> parameters);
+    ctor public KAnalyticsEvent(String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,?> properties);
+    method public com.addhen.kanalytics.KAnalyticsEvent addProperties(java.util.Map<java.lang.String,?> map);
+    method public com.addhen.kanalytics.KAnalyticsEvent addProperty(String propertyName, Object? value);
+    method public com.addhen.kanalytics.KAnalyticsEvent copy(optional String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,?> properties);
     method public String? getEventDescription();
     method public String getEventName();
     method public java.util.Map<java.lang.String,java.lang.Object> getProperties();
