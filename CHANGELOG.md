@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+- TBA
+
+## [1.1.0] - 2025-02-22
+
 ### Changed
 
 - Made `KAnalyticsEvent#properties` a `Map` instead of a `MutableMap` -- Breaking change.
@@ -16,5 +20,6 @@
 
 See documentation for more details: https://addhen.github.io/kanalytics/
 
-[unreleased]: https://github.com/addhen/kanalytics/compare/v1.0.0...HEAD
-[1.0.0]: https://github.com/addhen/kanalytics/compare/v1.0.0...v1.1.0
+[unreleased]: https://github.com/addhen/kanalytics/compare/v1.1.0...HEAD
+[1.0.0]: https://github.com/addhen/kanalytics/releases/tag/v1.0.0
+[1.1.0]: https://github.com/addhen/kanalytics/releases/tag/v1.1.0
