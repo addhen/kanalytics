@@ -2,7 +2,11 @@
 
 ### Changed
 
-- Made `KAnalyticsEvent#properties` a `Map` instead of a `MutableMap`.
+- Made `KAnalyticsEvent#properties` a `Map` instead of a `MutableMap` -- Breaking change.
+- Updated `KAnalyticsEvent#copy` function's `parameters` name to `properties` of type `Map` instead of `MutableMap` -- Breaking change.
+- Renamed `KAnalyticsEvent#addParameter` to `KAnalyticsEvent#addProperty` -- Breaking change.
+- Renamed `KAnalyticsEvent#addParameters` to `KAnalyticsEvent#addProperties` -- Breaking change.
+
 
 ## [1.0.0] - 2025-02-21
 

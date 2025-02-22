@@ -60,7 +60,7 @@ public class KAnalytics internal constructor(builder: Builder) {
    */
   public fun send(eventName: String, fieldName: String, fieldValue: Any?) {
     val event = KAnalyticsEvent(eventName = eventName).apply {
-      addParameter(fieldName, fieldValue)
+      addProperty(fieldName, fieldValue)
     }
     send(event)
   }
