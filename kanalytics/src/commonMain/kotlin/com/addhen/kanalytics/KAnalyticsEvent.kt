@@ -13,7 +13,7 @@ package com.addhen.kanalytics
 public class KAnalyticsEvent(
   public val eventName: String,
   public val eventDescription: String? = null,
-  properties: Map<String, Any?> = emptyMap()
+  properties: Map<String, Any?> = emptyMap(),
 ) {
 
   private val _properties = properties.toMutableMap()
