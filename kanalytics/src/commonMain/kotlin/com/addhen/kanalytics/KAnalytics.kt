@@ -77,8 +77,8 @@ public class KAnalytics internal constructor(builder: Builder) {
    * @param enabled True to enable event sending, false to disable
    * @return This KAnalytics instance with the new sending enabled state
    */
-  public fun setEventSendingEnabled(enabled: Boolean): KAnalytics =
-    newBuilder().setEventSendingEnabled(enabled).build()
+  public fun enabled(enabled: Boolean): KAnalytics =
+    newBuilder().enabled(enabled).build()
 
   private fun send(kTrackers: List<KTracker>, event: KAnalyticsEvent) {
     if (!sendingEnabled) return
@@ -134,7 +134,7 @@ public class KAnalytics internal constructor(builder: Builder) {
      *
      * @param enabled True to enable event sending, false to disable
      */
-    public fun setEventSendingEnabled(enabled: Boolean): Builder = apply {
+    public fun enabled(enabled: Boolean): Builder = apply {
       sendingEnabled = enabled
     }
 

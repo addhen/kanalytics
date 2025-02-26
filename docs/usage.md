@@ -81,6 +81,18 @@ kAnalytics.send(event)  // Sends to all trackers
 kAnalytics.send(event, FirebaseTracker::class, AmplitudeTracker::class)  // Sends only to Firebase and Amplitude
 ```
 
+## Toggle Sending Events off
+
+```kotlin linenums="1"
+val kAnalytics = KAnalytics.Builder()
+  .addTracker(FirebaseTracker(App.applicationContext()))
+  .addTracker(AmplitudeTracker())
+  .addInterceptor(LogInterceptor())
+  .enabled(false)  // Turns off sending events
+  .build()
+kAnalytics.toggleSendingEvents(false)  // Turns off sending events
+```
+
 # Debug Tools
 
 ## KAnalyticsViewer Setup

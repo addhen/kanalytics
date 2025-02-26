@@ -184,7 +184,7 @@ class KAnalyticsTest {
       .addTracker(adjustTracker)
       .addInterceptor(mockTrackerIntercept)
       .addInterceptor(mockTrackerIntercept2)
-      .setEventSendingEnabled(false)
+      .enabled(false)
       .build()
 
     val event = KAnalyticsEvent(EVENT_NAME).apply {
