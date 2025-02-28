@@ -177,6 +177,32 @@ class KAnalyticsTest {
     }
   }
 
+  @Test
+  fun `should not send events when disabled`() {
+    kanalytics = KAnalytics.Builder()
+      .addTracker(firebaseTracker)
+      .addTracker(adjustTracker)
+      .addInterceptor(mockTrackerIntercept)
+      .addInterceptor(mockTrackerIntercept2)
+      .enabled(false)
+      .build()
+
+    val event = KAnalyticsEvent(EVENT_NAME).apply {
+      addProperties(
+        mapOf(
+          SCREEN_NAME to SCREEN_NAME,
+          KEY_ONE to VALUE_ONE,
+          KEY_TWO to VALUE_TWO,
+        ),
+      )
+    }
+
+    kanalytics.send(event)
+
+    assertTrue(firebaseTracker.analyticsEvents.isEmpty())
+    assertTrue(firebaseTracker.analyticsEvents.isEmpty())
+  }
+
   private fun assertHasEvent(event: KAnalyticsEvent) {
     assertEquals(EVENT_NAME, event.eventName)
     assertEquals(3, event.properties.size)

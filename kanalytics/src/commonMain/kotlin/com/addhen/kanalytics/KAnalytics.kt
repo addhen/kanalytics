@@ -24,6 +24,7 @@ public class KAnalytics internal constructor(builder: Builder) {
 
   private val kTrackers: ImmutableList<KTracker> = builder.kTrackers.toImmutableList()
   private val interceptors: ImmutableList<Interceptor> = builder.interceptors.toImmutableList()
+  private val sendingEnabled: Boolean = builder.sendingEnabled
 
   public constructor() : this(Builder())
 
@@ -70,7 +71,17 @@ public class KAnalytics internal constructor(builder: Builder) {
    */
   public fun newBuilder(): Builder = Builder(this)
 
+  /**
+   * Sets whether event sending is enabled
+   *
+   * @param enabled True to enable event sending, false to disable
+   * @return This KAnalytics instance with the new sending enabled state
+   */
+  public fun enabled(enabled: Boolean): KAnalytics = newBuilder().enabled(enabled).build()
+
   private fun send(kTrackers: List<KTracker>, event: KAnalyticsEvent) {
+    if (!sendingEnabled) return
+
     if (kTrackers.isEmpty()) return
 
     if (!interceptors.isEmpty()) {
@@ -95,10 +106,12 @@ public class KAnalytics internal constructor(builder: Builder) {
   public class Builder() {
     internal val kTrackers = mutableListOf<KTracker>()
     internal val interceptors = mutableListOf<Interceptor>()
+    internal var sendingEnabled = true
 
     internal constructor(kAnalytics: KAnalytics) : this() {
       this.kTrackers += kAnalytics.kTrackers
       this.interceptors += kAnalytics.interceptors
+      this.sendingEnabled = kAnalytics.sendingEnabled
     }
 
     /**
@@ -113,6 +126,15 @@ public class KAnalytics internal constructor(builder: Builder) {
      */
     public fun addInterceptor(interceptor: Interceptor): Builder = apply {
       interceptors.add(interceptor)
+    }
+
+    /**
+     * Set whether event sending is enabled
+     *
+     * @param enabled True to enable event sending, false to disable
+     */
+    public fun enabled(enabled: Boolean): Builder = apply {
+      sendingEnabled = enabled
     }
 
     /**
