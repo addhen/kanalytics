@@ -165,7 +165,8 @@ internal fun EventDetailsScreen(
             Spacer(modifier = Modifier.width(2.dp))
 
             Text(
-              text = "${searchState.selectedResult}/${searchState.totalResults}",
+              text = "${searchState.selectedResultIndex?.let { it + 1 } ?: 0}/" +
+                "${searchState.totalResults}",
               color = MaterialTheme.colorScheme.outline,
             )
           }
