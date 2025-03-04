@@ -292,7 +292,7 @@ class KAnalyticsTest {
     override fun send(event: KAnalyticsEvent) {
       println("firebase: $event")
       // Send event to firebase
-      if(event.userProperties.isNotEmpty()) {
+      if (event.userProperties.isNotEmpty()) {
         userProperties.add(event)
       }
       if (event.properties.isNotEmpty()) {

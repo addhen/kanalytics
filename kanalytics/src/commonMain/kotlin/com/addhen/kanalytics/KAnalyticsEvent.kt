@@ -46,9 +46,9 @@ public class KAnalyticsEvent(
    *
    * @param map A map of user properties to add.
    */
-    public fun addUserProperties(map: Map<String, Any?>): KAnalyticsEvent = apply {
-      _userProperties.putAll(map)
-    }
+  public fun addUserProperties(map: Map<String, Any?>): KAnalyticsEvent = apply {
+    _userProperties.putAll(map)
+  }
 
   /**
    * Adds a user property to the event.
@@ -56,9 +56,9 @@ public class KAnalyticsEvent(
    * @param propertyName The name of the property.
    * @param value The value of the property.
    */
-    public fun addUserProperty(propertyName: String, value: Any?): KAnalyticsEvent = apply {
-      _userProperties[propertyName] = value
-    }
+  public fun addUserProperty(propertyName: String, value: Any?): KAnalyticsEvent = apply {
+    _userProperties[propertyName] = value
+  }
 
   /**
    * Creates a copy of the event with the specified properties.
@@ -76,7 +76,7 @@ public class KAnalyticsEvent(
     eventName,
     eventDescription,
     properties,
-    userProperties
+    userProperties,
   )
 
   /**
