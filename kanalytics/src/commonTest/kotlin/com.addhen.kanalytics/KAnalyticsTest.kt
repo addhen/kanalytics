@@ -203,6 +203,43 @@ class KAnalyticsTest {
     assertTrue(firebaseTracker.analyticsEvents.isEmpty())
   }
 
+  @Test
+  fun `should send user properties to all trackers`() {
+    val event = KAnalyticsEvent(EVENT_NAME).apply {
+      addUserProperties(
+        mapOf(
+          KEY_ONE to VALUE_ONE,
+          KEY_TWO to VALUE_TWO,
+        ),
+      )
+    }
+
+    kanalytics.send(event)
+
+    assertEquals(0, firebaseTracker.analyticsEvents.size)
+    assertEquals(0, adjustTracker.analyticsEvents.size)
+    assertEquals(1, firebaseTracker.userProperties.size)
+    assertEquals(1, adjustTracker.userProperties.size)
+    assertNull(mockTrackerIntercept.event)
+    assertHasUserPropertiesEvent(firebaseTracker.userProperties)
+    assertHasUserPropertiesEvent(adjustTracker.userProperties)
+  }
+
+  @Test
+  fun `should send user properties event to a specific tracker`() {
+    val event = KAnalyticsEvent(EVENT_NAME).apply {
+      addUserProperty(KEY_ONE, VALUE_ONE)
+      addUserProperty(KEY_TWO, VALUE_TWO)
+    }
+
+    kanalytics.send(event, FirebaseTracker::class)
+
+    assertEquals(0, adjustTracker.analyticsEvents.size)
+    assertEquals(1, firebaseTracker.userProperties.size)
+    assertNull(mockTrackerIntercept.event)
+    assertHasUserPropertiesEvent(firebaseTracker.userProperties)
+  }
+
   private fun assertHasEvent(event: KAnalyticsEvent) {
     assertEquals(EVENT_NAME, event.eventName)
     assertEquals(3, event.properties.size)
@@ -226,23 +263,57 @@ class KAnalyticsTest {
     }
   }
 
+  private fun assertHasUserPropertiesEvent(events: List<KAnalyticsEvent>) {
+    assertTrue(events.isNotEmpty())
+    events.forEach { event -> assertHasUserPropertiesEvent(event) }
+  }
+
+  private fun assertUserPropertiesEvent(events: List<KAnalyticsEvent>) {
+    assertTrue(events.isNotEmpty())
+    events.forEach { event ->
+      assertEquals(EVENT_NAME, event.eventName)
+      assertEquals(2, event.userProperties.size)
+      assertEquals(VALUE_ONE, event.userProperties[KEY_ONE])
+    }
+  }
+
+  private fun assertHasUserPropertiesEvent(event: KAnalyticsEvent) {
+    assertEquals(EVENT_NAME, event.eventName)
+    assertEquals(2, event.userProperties.size)
+    assertEquals(VALUE_ONE, event.userProperties[KEY_ONE])
+    assertEquals(VALUE_TWO, event.userProperties[KEY_TWO])
+  }
+
   inner class FirebaseTracker : KTracker {
 
     val analyticsEvents = mutableListOf<KAnalyticsEvent>()
+    val userProperties = mutableListOf<KAnalyticsEvent>()
 
     override fun send(event: KAnalyticsEvent) {
+      println("firebase: $event")
       // Send event to firebase
-      analyticsEvents.add(event)
+      if (event.userProperties.isNotEmpty()) {
+        userProperties.add(event)
+      }
+      if (event.properties.isNotEmpty()) {
+        analyticsEvents.add(event)
+      }
     }
   }
 
   inner class AdjustTracker : KTracker {
 
     val analyticsEvents = mutableListOf<KAnalyticsEvent>()
+    val userProperties = mutableListOf<KAnalyticsEvent>()
 
     override fun send(event: KAnalyticsEvent) {
-      // Send event to adjust
-      analyticsEvents.add(event)
+      if (event.userProperties.isNotEmpty()) {
+        userProperties.add(event)
+      }
+      if (event.properties.isNotEmpty()) {
+        // Send event to adjust
+        analyticsEvents.add(event)
+      }
     }
   }
 

@@ -14,14 +14,17 @@ public class KAnalyticsEvent(
   public val eventName: String,
   public val eventDescription: String? = null,
   properties: Map<String, Any?> = emptyMap(),
+  userProperties: Map<String, Any?> = emptyMap(),
 ) {
 
   private val _properties = properties.toMutableMap()
+  private val _userProperties = userProperties.toMutableMap()
 
   public val properties: Map<String, Any?> = _properties
+  public val userProperties: Map<String, Any?> = _userProperties
 
   /**
-   * Adds a property to the event.
+   * Adds a custom event property to the event.
    * @param propertyName The name of the property.
    * @param value The value of the property.
    */
@@ -30,12 +33,31 @@ public class KAnalyticsEvent(
   }
 
   /**
-   * Adds multiple properties to the event.
+   * Adds custom event properties to the event.
    *
    * @param map A map of properties to add.
    */
   public fun addProperties(map: Map<String, Any?>): KAnalyticsEvent = apply {
     _properties.putAll(map)
+  }
+
+  /**
+   * Adds user properties to the event.
+   *
+   * @param map A map of user properties to add.
+   */
+  public fun addUserProperties(map: Map<String, Any?>): KAnalyticsEvent = apply {
+    _userProperties.putAll(map)
+  }
+
+  /**
+   * Adds a user property to the event.
+
+   * @param propertyName The name of the property.
+   * @param value The value of the property.
+   */
+  public fun addUserProperty(propertyName: String, value: Any?): KAnalyticsEvent = apply {
+    _userProperties[propertyName] = value
   }
 
   /**
@@ -49,7 +71,13 @@ public class KAnalyticsEvent(
     eventName: String = this.eventName,
     eventDescription: String? = this.eventDescription,
     properties: Map<String, Any?> = this.properties,
-  ): KAnalyticsEvent = KAnalyticsEvent(eventName, eventDescription, properties)
+    userProperties: Map<String, Any?> = this.userProperties,
+  ): KAnalyticsEvent = KAnalyticsEvent(
+    eventName,
+    eventDescription,
+    properties,
+    userProperties,
+  )
 
   /**
    * Returns a string representation of the event.
@@ -58,5 +86,6 @@ public class KAnalyticsEvent(
     "eventName='$eventName', " +
     "eventDescription='$eventDescription', " +
     "properties=$properties" +
+    "userProperties=$userProperties" +
     ")"
 }

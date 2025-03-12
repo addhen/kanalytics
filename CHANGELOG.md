@@ -3,6 +3,7 @@
 ### Added
 
 - Add ability to toggle sending of analytics events to tracking tools. Useful for GDPR compliance.
+- Add support for sending user properties to analytics trackers.
 
 ## [1.1.0] - 2025-02-22
 
