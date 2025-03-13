@@ -6,11 +6,11 @@
 - Add support for sending user properties to analytics trackers.
 
 ### Dependencies
-- Bump data-table-material3 to v0.11.3
-- Bump activity-compose to v1.10.1
-- Bump jsontree to v2.5.0
-- Bump agp to v8.9.0
-- Bump dev.mokkery to v2.7.1
+- Bump data-table-material3 to `v0.11.3`
+- Bump activity-compose to `v1.10.1`
+- Bump jsontree to `v2.5.0`
+- Bump agp to `v8.9.0`
+- Bump dev.mokkery to `v2.7.1`
 
 ## [1.1.0] - 2025-02-22
 
