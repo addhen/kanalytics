@@ -8,7 +8,7 @@
 2. Run release script:
 
    ```
-   $ make release <current-version> <next-version>
+   $ make release <release-version> <next-development-version-SNAPSHOT>
    ```
 If it successfully finishes running it will trigger a `GitHub Action` workflow which will create a
 GitHub release and push to Maven Central.
