@@ -65,9 +65,9 @@ jobs:
       - name: Deploy dev docs with mike
         if: ${{ success() && contains(env.VERSION_NAME, '-SNAPSHOT') }}
         env:
-          KANALYTICS_VERSION: dev
+          KANALYTICS_VERSION: snapshot
           DYLD_FALLBACK_LIBRARY_PATH: /opt/homebrew/lib
-        run: mike deploy -u --push dev
+        run: mike deploy -u --push snapshot
 
       - name: Deploy release docs with mike
         if: ${{ success() && !contains(env.VERSION_NAME, '-SNAPSHOT') }}
