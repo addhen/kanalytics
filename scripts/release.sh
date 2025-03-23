@@ -7,14 +7,22 @@ set -exo pipefail
 # If the snapshot version is not provided, it will use the current snapshot version.
 # Example: ./scripts/release.sh 1.0.0 1.0.1-SNAPSHOT
 
-# Gets the current version of the library
-function getVersion() {
-  ./gradlew -q --no-configuration-cache  printVersionName
+# Gets the current version of the library from the kanalytics entry in the toml file
+function getKanalyticsVersion() {
+  # Look for a line that starts with "kanalytics" followed by "=" and extract the version
+  grep -E "^kanalytics[ ]*=[ ]*\"?[0-9]" gradle/libs.versions.toml | head -n 1 | sed -E 's/kanalytics[ ]*=[ ]*"?([^"]+)"?.*/\1/'
+}
+
+# Determines the format of the kanalytics line (with or without quotes, spaces)
+function getKanalyticsFormat() {
+  # Look for a line that starts with "kanalytics" followed by "=" and a version number
+  grep -E "^kanalytics[ ]*=[ ]*\"?[0-9]" gradle/libs.versions.toml | head -n 1
 }
 
 NEW_VERSION=$1
 NEW_SNAPSHOT_VERSION=$2
-CUR_SNAPSHOT_VERSION=$(getVersion)
+CUR_SNAPSHOT_VERSION=$(getKanalyticsVersion)
+KANALYTICS_LINE=$(getKanalyticsFormat)
 
 if [ -z "$NEW_SNAPSHOT_VERSION" ]; then
   # If no snapshot version was provided, use the current value
@@ -23,8 +31,15 @@ fi
 
 echo "Publishing v$NEW_VERSION"
 
-# Prepare release
-sed -i.bak "s/${CUR_SNAPSHOT_VERSION}/${NEW_VERSION}/g" gradle/libs.versions.toml
+# Check if the version is quoted in the file
+if [[ "$KANALYTICS_LINE" == *"\""* ]]; then
+  # Version is quoted
+  sed -i.bak -E "s/(kanalytics[ ]*=[ ]*\"?)${CUR_SNAPSHOT_VERSION}(\"?)/\1${NEW_VERSION}\2/g" gradle/libs.versions.toml
+else
+  # Version is not quoted
+  sed -i.bak -E "s/(kanalytics[ ]*=[ ]*)${CUR_SNAPSHOT_VERSION}/\1${NEW_VERSION}/g" gradle/libs.versions.toml
+fi
+
 git add gradle/libs.versions.toml
 echo "Prepare for release v$NEW_VERSION"
 git commit -m "Prepare for release v$NEW_VERSION"
@@ -36,8 +51,17 @@ git commit -m "Prepare for release v$NEW_VERSION"
 echo "Add new version v$NEW_VERSION"
 git tag "v$NEW_VERSION"
 # Prepare next snapshot
+
 echo "Setting next snapshot version $NEW_SNAPSHOT_VERSION"
-sed -i.bak "s/${NEW_VERSION}/${NEW_SNAPSHOT_VERSION}/g" gradle/libs.versions.toml
+# Check if the version is quoted in the file
+if [[ "$KANALYTICS_LINE" == *"\""* ]]; then
+  # Version is quoted
+  sed -i.bak -E "s/(kanalytics[ ]*=[ ]*\"?)${NEW_VERSION}(\"?)/\1${NEW_SNAPSHOT_VERSION}\2/g" gradle/libs.versions.toml
+else
+  # Version is not quoted
+  sed -i.bak -E "s/(kanalytics[ ]*=[ ]*)${NEW_VERSION}/\1${NEW_SNAPSHOT_VERSION}/g" gradle/libs.versions.toml
+fi
+
 git add gradle/libs.versions.toml
 git commit -m "Prepare next development version"
 
