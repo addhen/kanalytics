@@ -65,14 +65,14 @@ jobs:
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git fetch origin gh-pages --depth=1
+          #git fetch origin gh-pages --depth=1
 
       - name: Deploy dev docs with mike
         if: ${{ success() && contains(steps.version.outputs.VERSION_NAME, 'SNAPSHOT') }}
         env:
-          KANALYTICS_VERSION: snapshot
+          KANALYTICS_VERSION: dev
           DYLD_FALLBACK_LIBRARY_PATH: /opt/homebrew/lib
-        run: mike deploy -u --push snapshot
+        run: mike deploy -u --push dev
 
       - name: Deploy release docs with mike
         if: ${{ success() && !contains(steps.version.outputs.VERSION_NAME , 'SNAPSHOT') }}
