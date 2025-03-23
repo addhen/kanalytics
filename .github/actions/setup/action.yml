@@ -36,3 +36,4 @@ runs:
       shell: bash
       run: |
         echo "VERSION_NAME=$(./gradlew -q --no-configuration-cache  printVersionName)" >> $GITHUB_ENV
+      id: version
