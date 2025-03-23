@@ -41,7 +41,7 @@ jobs:
         run: |
           brew install cairo freetype libffi libjpeg libpng zlib
           python3 -m pip install --upgrade pip
-          python3 -m pip install mkdocs mkdocs-material mkdocs-video "mkdocs-material[imaging]"
+          python3 -m pip install mike mkdocs mkdocs-material mkdocs-video "mkdocs-material[imaging]"
 
       - name: Copy files for the documentation site
         run: |
