@@ -1,5 +1,10 @@
 [
   {
+    "version": "snapshot",
+    "title": "snapshot",
+    "aliases": []
+  },
+  {
     "version": "dev",
     "title": "dev",
     "aliases": []
