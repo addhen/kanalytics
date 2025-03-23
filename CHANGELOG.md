@@ -5,6 +5,9 @@
 - Add ability to toggle sending of analytics events to tracking tools. Useful for GDPR compliance.
 - Add support for sending user properties to analytics trackers.
 
+### Documentation
+- Add multi-version support to the project documentation based on the library version. Now you should be able to select the documentation for the library version.
+
 ### Dependencies
 - Bump data-table-material3 to `v0.11.3`
 - Bump activity-compose to `v1.10.1`
