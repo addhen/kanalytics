@@ -35,5 +35,9 @@ runs:
     - name: Setup App Version Number
       shell: bash
       run: |
+        VERSION=$(./gradlew -q --no-configuration-cache printVersionName)
+        echo "VERSION: $VERSION"
         echo "VERSION_NAME=$(./gradlew -q --no-configuration-cache  printVersionName)" >> $GITHUB_ENV
+        echo "VERSION_NAME=$VERSION" >> $GITHUB_ENV
+        echo "VERSION_NAME=$VERSION" >> $GITHUB_OUTPUT
       id: version

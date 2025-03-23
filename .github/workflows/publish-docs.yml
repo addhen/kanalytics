@@ -63,18 +63,18 @@ jobs:
           git fetch origin gh-pages --depth=1
 
       - name: Deploy dev docs with mike
-        if: ${{ success() && contains(steps.version.outputs.VERSION_NAME, '-SNAPSHOT') }}
+        if: ${{ success() && contains(env.VERSION_NAME, '-SNAPSHOT') }}
         env:
           KANALYTICS_VERSION: dev
           DYLD_FALLBACK_LIBRARY_PATH: /opt/homebrew/lib
         run: mike deploy -u --push dev
 
       - name: Deploy release docs with mike
-        if: ${{ success() && !contains(steps.version.outputs.VERSION_NAME , '-SNAPSHOT') }}
+        if: ${{ success() && !contains(env.VERSION_NAME, '-SNAPSHOT') }}
         env:
-          KANALYTICS_VERSION: ${{ steps.version.outputs.VERSION_NAME }}
+          KANALYTICS_VERSION: ${{ env.VERSION_NAME }}
           DYLD_FALLBACK_LIBRARY_PATH: /opt/homebrew/lib
-        run: mike deploy -u --push ${{ steps.version.outputs.VERSION_NAME }} latest
+        run: mike deploy -u --push ${{ env.VERSION_NAME }} latest
 
       - name: Delete old doc versions
         run: |
