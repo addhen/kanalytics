@@ -10,9 +10,16 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.JetBrainsMono_Italic_VariableFont_wght
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.JetBrainsMono_VariableFont_wght
+import com.addhen.kanalytics.kanalytics_viewer.generated.resources.Res
+import org.jetbrains.compose.resources.Font
 
 @Composable
-internal expect fun jetbrainsMonoFontFamily(): FontFamily
+internal fun jetbrainsMonoFontFamily() = FontFamily(
+  Font(Res.font.JetBrainsMono_VariableFont_wght),
+  Font(Res.font.JetBrainsMono_Italic_VariableFont_wght),
+)
 
 @Composable
 internal fun appTypography(fontFamily: FontFamily?): Typography = remember(fontFamily) {
