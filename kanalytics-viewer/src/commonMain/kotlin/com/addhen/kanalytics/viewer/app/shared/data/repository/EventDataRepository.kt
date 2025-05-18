@@ -25,10 +25,13 @@ public class EventDataRepository(private val eventDataDao: EventDataDao) : Event
     )
   }
 
-  override suspend fun deleteAll(): Unit = eventDataDao.deleteAll()
+  override suspend fun deleteAll() {
+    eventDataDao.deleteAll().await()
+  }
 
-  override suspend fun deleteAllOlderThan(date: Instant): Unit =
-    eventDataDao.deleteAllOlderThan(date)
+  override suspend fun deleteAllOlderThan(date: Instant) {
+    eventDataDao.deleteAllOlderThan(date).await()
+  }
 
   override fun getAll(): Flow<List<EventData>> = eventDataDao.getEvents().map { eventDataEntities ->
     eventDataEntities.map { eventDataEntity ->
