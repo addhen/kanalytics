@@ -1,13 +1,33 @@
 ## [Unreleased]
 
 ### Added
+- Migrated from using OSSRH to Sonatype Central Portal(#64).
+
+### Documentation
+- Update documentation with Sonatype Central Portal URLs.
+
+### Dependencies
+- Bump sqldelight to `v2.1.0` (#62)
+- Bump kotlinx collections immutable to `v0.4.0` (#61)
+- Bump kotlin to `v2.1.21` (#60)
+- Bump agp to `v8.10.0` (#58)
+- Bump compose multiplatform to `v1.8.0` (#57)
+- Bump gradle to `v8.14` (#56)
+- Bump kotlinx coroutines to `v1.10.2` (#53)
+- Bump kotlinx serialization json to `v1.8.1` (#51)
+- Bump androidx benchmark marco junit4 to `v1.3.4` (#50)
+- Bump jsontree androidx baseline profile to `v1.3.4`  (#49)
+- Bump dev.mokkery to `v2.7.2` (#47)
+
+## [1.2.0] - 2025-03-23
+
+### Added
 
 - Add ability to toggle sending of analytics events to tracking tools. Useful for GDPR compliance.
 - Add support for sending user properties to analytics trackers.
 
 ### Documentation
 - Add multi-version support to the project documentation based on the library version. Now you should be able to select the documentation for the library version.
-- Update documentation with Sonatype Central Portal URLs(#64).
 
 ### Dependencies
 - Bump data-table-material3 to `v0.11.3`
