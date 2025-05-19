@@ -26,6 +26,9 @@
 - Add ability to toggle sending of analytics events to tracking tools. Useful for GDPR compliance.
 - Add support for sending user properties to analytics trackers.
 
+### Fixed
+- Fix the issue of custom fonts not loading on iOS devices and instead loading the default system font(#63).
+
 ### Documentation
 - Add multi-version support to the project documentation based on the library version. Now you should be able to select the documentation for the library version.
 
