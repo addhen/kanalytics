@@ -7,7 +7,7 @@
 
 ### Documentation
 - Add multi-version support to the project documentation based on the library version. Now you should be able to select the documentation for the library version.
-- Update documentation with Sonatype Central Portal URLs.
+- Update documentation with Sonatype Central Portal URLs(#64).
 
 ### Dependencies
 - Bump data-table-material3 to `v0.11.3`
