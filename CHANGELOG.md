@@ -1,26 +1,26 @@
 ## [Unreleased]
 
 ### Added
-- Migrated from using OSSRH to Sonatype Central Portal(#64).
+- Migrated from using OSSRH to Sonatype Central Portal([#64](https://github.com/addhen/kanalytics/pull/64)).
 
 ### Fixed
 - Fix the issue of custom fonts not loading on iOS devices and instead loading the default system font(#63).
 
 ### Documentation
-- Update documentation with Sonatype Central Portal URLs.
+- Update documentation with Sonatype Central Portal's URLs.
 
 ### Dependencies
-- Bump sqldelight to `v2.1.0` (#62)
-- Bump kotlinx collections immutable to `v0.4.0` (#61)
-- Bump kotlin to `v2.1.21` (#60)
-- Bump agp to `v8.10.0` (#58)
-- Bump compose multiplatform to `v1.8.0` (#57)
-- Bump gradle to `v8.14` (#56)
-- Bump kotlinx coroutines to `v1.10.2` (#53)
-- Bump kotlinx serialization json to `v1.8.1` (#51)
-- Bump androidx benchmark marco junit4 to `v1.3.4` (#50)
-- Bump jsontree androidx baseline profile to `v1.3.4`  (#49)
-- Bump dev.mokkery to `v2.7.2` (#47)
+- Bump sqldelight to `v2.1.0` ([#62](https://github.com/addhen/kanalytics/pull/62))
+- Bump kotlinx collections immutable to `v0.4.0` ([#61](https://github.com/addhen/kanalytics/pull/61))
+- Bump kotlin to `v2.1.21` ([#60](https://github.com/addhen/kanalytics/pull/60))
+- Bump agp to `v8.10.0` ([#58](https://github.com/addhen/kanalytics/pull/58))
+- Bump compose multiplatform to `v1.8.0` ([#57](https://github.com/addhen/kanalytics/pull/57))
+- Bump gradle to `v8.14` ([#56](https://github.com/addhen/kanalytics/pull/56))
+- Bump kotlinx coroutines to `v1.10.2` ([#53](https://github.com/addhen/kanalytics/pull/53))
+- Bump kotlinx serialization json to `v1.8.1` ([#51](https://github.com/addhen/kanalytics/pull/51))
+- Bump androidx benchmark marco junit4 to `v1.3.4` ([#50](https://github.com/addhen/kanalytics/pull/50))
+- Bump jsontree androidx baseline profile to `v1.3.4`  ([#49](https://github.com/addhen/kanalytics/pull/49))
+- Bump dev.mokkery to `v2.7.2` ([#47](https://github.com/addhen/kanalytics/pull/47))
 
 ## [1.2.0] - 2025-03-23
 
@@ -57,6 +57,7 @@
 
 See documentation for more details: https://addhen.github.io/kanalytics/
 
-[unreleased]: https://github.com/addhen/kanalytics/compare/v1.1.0...HEAD
-[1.0.0]: https://github.com/addhen/kanalytics/releases/tag/v1.0.0
+[unreleased]: https://github.com/addhen/kanalytics/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/addhen/kanalytics/releases/tag/v1.2.0
 [1.1.0]: https://github.com/addhen/kanalytics/releases/tag/v1.1.0
+[1.0.0]: https://github.com/addhen/kanalytics/releases/tag/v1.0.0
