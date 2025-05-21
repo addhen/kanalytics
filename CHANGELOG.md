@@ -3,6 +3,9 @@
 ### Added
 - Migrated from using OSSRH to Sonatype Central Portal(#64).
 
+### Fixed
+- Fix the issue of custom fonts not loading on iOS devices and instead loading the default system font(#63).
+
 ### Documentation
 - Update documentation with Sonatype Central Portal URLs.
 
