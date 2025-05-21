@@ -1,5 +1,9 @@
 ## [Unreleased]
 
+TBA
+
+## [1.3.0] - 2025-05-21
+
 ### Added
 - Migrated from using OSSRH to Sonatype Central Portal([#64](https://github.com/addhen/kanalytics/pull/64)).
 
@@ -57,7 +61,8 @@
 
 See documentation for more details: https://addhen.github.io/kanalytics/
 
-[unreleased]: https://github.com/addhen/kanalytics/compare/v1.2.0...HEAD
+[unreleased]: https://github.com/addhen/kanalytics/compare/v1.3.0...HEAD
+[1.3.0]: https://github.com/addhen/kanalytics/releases/tag/v1.3.0
 [1.2.0]: https://github.com/addhen/kanalytics/releases/tag/v1.2.0
 [1.1.0]: https://github.com/addhen/kanalytics/releases/tag/v1.1.0
 [1.0.0]: https://github.com/addhen/kanalytics/releases/tag/v1.0.0
