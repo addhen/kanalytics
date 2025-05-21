@@ -49,7 +49,7 @@ git commit -m "Prepare for release v$NEW_VERSION"
 
 # Add git tag
 echo "Add new version v$NEW_VERSION"
-git tag "v$NEW_VERSION"
+git tag "v$NEW_VERSION" -m "Release v$NEW_VERSION"
 # Prepare next snapshot
 
 echo "Setting next snapshot version $NEW_SNAPSHOT_VERSION"
