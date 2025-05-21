@@ -24,6 +24,13 @@ NEW_SNAPSHOT_VERSION=$2
 CUR_SNAPSHOT_VERSION=$(getKanalyticsVersion)
 KANALYTICS_LINE=$(getKanalyticsFormat)
 
+# Input validation: Ensure NEW_VERSION is provided
+if [ -z "$NEW_VERSION" ]; then
+  echo "Error: NEW_VERSION argument is required."
+  echo "Usage: $0 <NEW_VERSION> [NEW_SNAPSHOT_VERSION]"
+  exit 1
+fi
+
 if [ -z "$NEW_SNAPSHOT_VERSION" ]; then
   # If no snapshot version was provided, use the current value
   NEW_SNAPSHOT_VERSION=$CUR_SNAPSHOT_VERSION
