@@ -41,7 +41,7 @@ publishing {
     // Provide artifacts information required by Maven Central
     pom {
       name.set("kanalytics-viewer-no-op")
-      description.set("A no-op kotlin multiplatform library for getting a device's location")
+      description.set("A no-op kotlin multiplatform library for kanalytics viewer")
     }
   }
 }
