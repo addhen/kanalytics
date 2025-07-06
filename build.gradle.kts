@@ -4,7 +4,6 @@
 
 plugins {
   id("convention.plugin.root")
-  id("convention.plugin.nexus.publication")
   alias(libs.plugins.android.application) apply false
   alias(libs.plugins.android.library).apply(false)
   alias(libs.plugins.kotlin.multiplatform) apply false
