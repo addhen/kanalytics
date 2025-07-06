@@ -7,7 +7,6 @@ targetSdk = "35"
 compileSdk = "35"
 agp = "8.11.0"
 kotlin = "2.2.0"
-nexus-publish = "2.0.0"
 spotless = "7.0.4"
 metalava = "0.3.5"
 compose-multiplatform = "1.8.2"
@@ -47,6 +46,7 @@ espressoCore = "3.6.1"
 uiautomator = "2.3.0"
 benchmarkMacroJunit4 = "1.3.4"
 profileinstaller = "1.4.1"
+maven-publish = "0.33.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -54,7 +54,7 @@ kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotl
 android-gradlePlugin = { module = "com.android.tools.build:gradle", version.ref = "agp" }
 kotlin-gradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 spotless-gradlePlugin = { module = "com.diffplug.spotless:spotless-plugin-gradle", version.ref = "spotless" }
-nexus-publish-gradlePlugin = { module = "io.github.gradle-nexus.publish-plugin:io.github.gradle-nexus.publish-plugin.gradle.plugin", version.ref = "nexus-publish" }
+maven-publish-gradlePlugin = { module = "com.vanniktech.maven.publish:com.vanniktech.maven.publish.gradle.plugin", version.ref = "maven-publish" }
 metalava-gradlePlugin = { module = "me.tylerbwong.gradle.metalava:plugin", version.ref = "metalava" }
 compose-gradlePlugin = { module = "org.jetbrains.compose:compose-gradle-plugin", version.ref = "compose-multiplatform" }
 kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -93,7 +93,7 @@ android-test = { id = "com.android.test", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
 spotless = { id = "com.diffplug.spotless", version.ref = "spotless" }
-nexus-publish = { id = "io.github.gradle-nexus.publish-plugin", version.ref = "nexus-publish" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
 metalava = { id = "me.tylerbwong.gradle.metalava", version.ref = "metalava" }
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }

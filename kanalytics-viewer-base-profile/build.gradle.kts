@@ -29,7 +29,7 @@ android {
   @Suppress("UnstableApiUsage")
   testOptions {
     managedDevices {
-      devices {
+      allDevices {
         create<ManagedVirtualDevice>("api34") {
           device = "Pixel 6"
           apiLevel = 34
@@ -54,7 +54,7 @@ androidComponents {
     val artifactsLoader = v.artifacts.getBuiltArtifactsLoader()
     v.instrumentationRunnerArguments.put(
       "targetAppId",
-      v.testedApks.map { artifactsLoader.load(it)?.applicationId },
+      v.testedApks.map { artifactsLoader.load(it)?.applicationId ?: "" },
     )
   }
 }
