@@ -1,6 +1,21 @@
 ## [Unreleased]
 
-TBA
+### Added
+- Migrated from Gradle Nexus publishing library to Gradle Maven Publish Plugin([#86](https://github.com/addhen/kanalytics/pull/86)).
+
+### Dependencies
+- Bumped gradle to `v8.14.3` ([#85](https://github.com/addhen/kanalytics/pull/85))
+- Bumped kotlinx-serialization-json to `v1.9.0` ([#84](https://github.com/addhen/kanalytics/pull/84))
+- Bumped atomicfu to `v0.29.0` ([#83](https://github.com/addhen/kanalytics/pull/83))
+- Bumped AGP to `v8.11.0` ([#81](https://github.com/addhen/kanalytics/pull/81))
+- Bumped dev.mokkery to `v2.9.0` ([#80](https://github.com/addhen/kanalytics/pull/80))
+- Bumped kotlin to `v2.2.0` ([#79](https://github.com/addhen/kanalytics/pull/79))
+- Bumped lifecycle-viewmodel-compose to `v2.9.1` ([#78](https://github.com/addhen/kanalytics/pull/78))
+- Bumped compose-gradle-plugin to `v1.8.2` ([#77](https://github.com/addhen/kanalytics/pull/77))
+- Bumped kermit to `v2.0.6` ([#75](https://github.com/addhen/kanalytics/pull/75))
+- Bumped appcompat to `v1.7.1` ([#72](https://github.com/addhen/kanalytics/pull/72))
+- Bumped data-table-material3 to `v0.11.4` ([#70](https://github.com/addhen/kanalytics/pull/70))
+- Bumped lifecycle-viewmodel-compose to `v2.9.0` ([#66](https://github.com/addhen/kanalytics/pull/66))
 
 ## [1.3.0] - 2025-05-21
 
