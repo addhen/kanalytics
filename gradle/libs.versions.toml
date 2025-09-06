@@ -15,7 +15,7 @@ dokka = "2.0.0"
 coroutines = "1.10.2"
 androidx-core-ktx = "1.16.0"
 androidx-activity-compose = "1.10.1"
-material = "1.12.0"
+material = "1.13.0"
 appcompat = "1.7.1"
 
 # Version 2.8.0-alpha13 causes this issue on iOS builds:
