@@ -10,11 +10,11 @@ import com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventDataRepository
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
+import kotlin.time.Instant
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Instant
 
 public class KAnalyticsCollector(
   showShortcut: Boolean = true,
