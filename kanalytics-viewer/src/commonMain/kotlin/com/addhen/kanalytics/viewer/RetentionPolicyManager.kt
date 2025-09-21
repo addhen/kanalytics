@@ -5,8 +5,8 @@ package com.addhen.kanalytics.viewer
 
 import com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository
 import kotlin.jvm.JvmInline
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 public class RetentionPolicyManager(
   private val clock: Clock = Clock.System,
@@ -18,7 +18,11 @@ public class RetentionPolicyManager(
     val daysInMillis = dayDuration.numberOfDays * 24 * 60 * 60 * 1000L
     val currentTimeInMillis = clock.now().toEpochMilliseconds()
     val retentionDeadlineInMillis = currentTimeInMillis - daysInMillis
-    repository.deleteAllOlderThan(Instant.fromEpochMilliseconds(retentionDeadlineInMillis))
+    repository.deleteAllOlderThan(
+      Instant.fromEpochMilliseconds(
+        retentionDeadlineInMillis,
+      ),
+    )
   }
 
   @JvmInline

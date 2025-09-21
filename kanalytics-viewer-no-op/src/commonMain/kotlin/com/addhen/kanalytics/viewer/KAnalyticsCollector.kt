@@ -5,7 +5,7 @@ package com.addhen.kanalytics.viewer
 
 import com.addhen.kanalytics.KAnalyticsEvent
 import com.addhen.kanalytics.KTrackerName
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class KAnalyticsCollector(
   private val showNotification: Boolean = false,

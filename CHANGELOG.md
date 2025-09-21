@@ -4,7 +4,7 @@
 - Migrated from Gradle Nexus publishing library to Gradle Maven Publish Plugin([#86](https://github.com/addhen/kanalytics/pull/86)).
 
 ### Dependencies
-- Bumped gradle to `v8.14.3` ([#85](https://github.com/addhen/kanalytics/pull/85))
+- Bumped gradle to `v8.14.3` ([#85](https://github.com/addhen/kanalytics/pull/85))cc1
 - Bumped kotlinx-serialization-json to `v1.9.0` ([#84](https://github.com/addhen/kanalytics/pull/84))
 - Bumped atomicfu to `v0.29.0` ([#83](https://github.com/addhen/kanalytics/pull/83))
 - Bumped AGP to `v8.11.0` ([#81](https://github.com/addhen/kanalytics/pull/81))

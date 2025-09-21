@@ -4,8 +4,8 @@
 package com.addhen.kanalytics.viewer.app.shared.data.repository
 
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
+import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
-import kotlinx.datetime.Instant
 
 public interface EventRepository {
 

@@ -6,9 +6,9 @@ package com.addhen.kanalytics.viewer.app.shared.data.repository
 import com.addhen.kanalytics.viewer.app.shared.data.database.EventDataDao
 import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataEntity
 import com.addhen.kanalytics.viewer.app.shared.data.model.EventData
+import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
-import kotlinx.datetime.Instant
 
 public class EventDataRepository(private val eventDataDao: EventDataDao) : EventRepository {
 

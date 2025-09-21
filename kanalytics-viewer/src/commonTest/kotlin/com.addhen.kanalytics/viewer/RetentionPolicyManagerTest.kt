@@ -13,9 +13,9 @@ import dev.mokkery.verifySuspend
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
+import kotlin.time.Clock
+import kotlin.time.Instant
 import kotlinx.coroutines.test.runTest
-import kotlinx.datetime.Clock
-import kotlinx.datetime.Instant
 
 class RetentionPolicyManagerTest {
   private lateinit var clock: TestClock
@@ -43,7 +43,11 @@ class RetentionPolicyManagerTest {
     manager.processDataRetention()
 
     verifySuspend {
-      repository.deleteAllOlderThan(Instant.fromEpochMilliseconds(expectedRetentionDeadline))
+      repository.deleteAllOlderThan(
+        kotlin.time.Instant.fromEpochMilliseconds(
+          expectedRetentionDeadline,
+        ),
+      )
     }
   }
 
