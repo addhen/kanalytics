@@ -3,8 +3,8 @@
 # If it's changed, update the one in the script as well.
 kanalytics = "1.4.0-SNAPSHOT"
 minSdk = "24"
-targetSdk = "35"
-compileSdk = "35"
+targetSdk = "36"
+compileSdk = "36"
 agp = "8.13.0"
 kotlin = "2.2.20"
 spotless = "7.2.1"
