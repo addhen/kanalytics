@@ -3,7 +3,7 @@
 
 package com.addhen.kanalytics.viewer.app.shared.data.model
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 public class EventData(
   public val id: Long?,

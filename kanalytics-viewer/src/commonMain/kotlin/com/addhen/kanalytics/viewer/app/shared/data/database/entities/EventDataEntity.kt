@@ -3,13 +3,11 @@
 
 package com.addhen.kanalytics.viewer.app.shared.data.database.entities
 
-import kotlinx.datetime.Instant
-
 internal class EventDataEntity(
   val id: Long?,
   val name: String,
   val trackerName: String,
   val description: String?,
-  val createdAt: Instant,
+  val createdAt: kotlin.time.Instant,
   val properties: Map<String, Any>,
 )

@@ -4,11 +4,11 @@
 package com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.adapters
 
 import app.cash.sqldelight.ColumnAdapter
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 internal val instantAdapter = object : ColumnAdapter<Instant, String> {
 
-  override fun decode(databaseValue: String): Instant = Instant.parse(databaseValue)
+  override fun decode(databaseValue: String): Instant = kotlin.time.Instant.parse(databaseValue)
 
   override fun encode(value: Instant): String = value.toString()
 }

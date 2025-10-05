@@ -5,7 +5,7 @@ package com.addhen.kanalytics.viewer
 
 import com.addhen.kanalytics.Interceptor
 import com.addhen.kanalytics.KAnalyticsEvent
-import kotlinx.datetime.Clock
+import kotlin.time.Clock
 
 public class KAnalyticsInterceptor(
   private val collector: KAnalyticsCollector = KAnalyticsCollector(),

@@ -8,11 +8,11 @@ import com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers
 import com.addhen.kanalytics.viewer.app.shared.data.database.entities.EventDataEntity
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.EventViewerDatabase
 import com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.createDatabase
+import kotlin.time.Instant
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
-import kotlinx.datetime.Instant
 
 public class EventDataDao(
   private val database: EventViewerDatabase,
