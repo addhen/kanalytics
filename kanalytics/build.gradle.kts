@@ -5,7 +5,7 @@
 plugins {
   id("convention.plugin.android.library")
   id("convention.plugin.kotlin.multiplatform")
-  id("org.jetbrains.dokka")
+  alias(libs.plugins.dokka)
   id("convention.plugin.maven.publication")
   id("convention.plugin.metalava")
 }
