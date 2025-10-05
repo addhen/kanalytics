@@ -34,6 +34,12 @@ android {
   }
 }
 
+// Configure test tasks to not fail when no tests are discovered
+// This is appropriate for this no-op module that doesn't need tests
+tasks.withType<Test> {
+  failOnNoDiscoveredTests = false
+}
+
 publishing {
   // Configure all publications
   publications.withType<MavenPublication> {
