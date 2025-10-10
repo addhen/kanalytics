@@ -33,6 +33,7 @@ include(
   ":kanalytics-viewer",
   ":kanalytics-viewer-no-op",
   ":kanalytics-viewer-base-profile",
+  ":dokka",
   ":android-common-test",
   ":sample:android",
   ":sample:shared",
