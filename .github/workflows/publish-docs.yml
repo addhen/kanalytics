@@ -49,12 +49,11 @@ jobs:
         env:
           DYLD_FALLBACK_LIBRARY_PATH: /opt/homebrew/lib
 
-      - uses: gradle/gradle-build-action@v3
       - run: |
-          ./gradlew --no-configuration-cache :dokka:dokkaGeneratePublicationHtml
+          ./gradlew --no-configuration-cache --stacktrace :dokka:dokkaGeneratePublicationHtml
 
       - name: Copy Dokka output to site
-        run: cp -r dokka/build/html/ docs/api/
+        run: cp -r dokka/build/dokka/html/ docs/api/
 
       - name: Configure git for mike
         run: |
