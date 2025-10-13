@@ -1,5 +1,7 @@
 ## [Unreleased]
 
+## [1.4.0] - 2025-10-10
+
 ### Added
 - Migrated from Gradle Nexus publishing library to Gradle Maven Publish Plugin([#86](https://github.com/addhen/kanalytics/pull/86)).
 
@@ -76,7 +78,8 @@
 
 See documentation for more details: https://addhen.github.io/kanalytics/
 
-[unreleased]: https://github.com/addhen/kanalytics/compare/v1.3.0...HEAD
+[unreleased]: https://github.com/addhen/kanalytics/compare/v1.4.0...HEAD
+[1.4.0]: https://github.com/addhen/kanalytics/releases/tag/v1.4.0
 [1.3.0]: https://github.com/addhen/kanalytics/releases/tag/v1.3.0
 [1.2.0]: https://github.com/addhen/kanalytics/releases/tag/v1.2.0
 [1.1.0]: https://github.com/addhen/kanalytics/releases/tag/v1.1.0
