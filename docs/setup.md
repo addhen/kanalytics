@@ -30,8 +30,8 @@ dependencies {
   }
 
   //On Android, it will simply be
-  debugimplementation("com.addhen.kanalytics:kanalytics-viewer:x.y.z")
-  releaseimplementation("com.addhen.kanalytics:kanalytics-viewer-no-op:x.y.z")
+  debugImplementation("com.addhen.kanalytics:kanalytics-viewer:x.y.z")
+  releaseImplementation("com.addhen.kanalytics:kanalytics-viewer-no-op:x.y.z")
 }
 ```
 
