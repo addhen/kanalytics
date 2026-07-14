@@ -28,7 +28,7 @@ appcompat = "1.7.1"
 # it still works.
 navigation-compose = "2.9.1" # Make use of type-safe compose navigation
 kotlinx-serializer = "1.9.0"
-lifecycle-viewmodel-compose = "2.9.6"
+lifecycle-viewmodel-compose = "2.11.0"
 kermit = "2.0.8"
 kotlinx-collections-immutable = "0.4.0"
 kotlinx-datetime = "0.7.1-0.6.x-compat"
