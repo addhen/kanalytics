@@ -27,7 +27,7 @@ appcompat = "1.7.1"
 # Before you bump this version higher than 2.8.0-alpha13 check the iOS app to make
 # it still works.
 navigation-compose = "2.9.1" # Make use of type-safe compose navigation
-kotlinx-serializer = "1.9.0"
+kotlinx-serializer = "1.11.0"
 lifecycle-viewmodel-compose = "2.9.6"
 kermit = "2.0.8"
 kotlinx-collections-immutable = "0.4.0"
