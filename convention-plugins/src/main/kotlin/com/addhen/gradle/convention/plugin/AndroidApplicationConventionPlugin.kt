@@ -1,6 +1,6 @@
 package com.addhen.gradle.convention.plugin
 
-import com.addhen.gradle.convention.configureAndroid
+import com.addhen.gradle.convention.configureAndroidApplication
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -12,7 +12,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         apply("org.gradle.android.cache-fix")
       }
 
-      configureAndroid()
+      configureAndroidApplication()
     }
   }
 }

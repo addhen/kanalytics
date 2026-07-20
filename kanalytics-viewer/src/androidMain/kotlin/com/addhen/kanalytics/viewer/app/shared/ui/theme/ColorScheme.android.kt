@@ -16,9 +16,12 @@ internal actual fun colorScheme(useDarkColors: Boolean, useDynamicColors: Boolea
     Build.VERSION.SDK_INT >= 31 && useDynamicColors && useDarkColors -> {
       dynamicDarkColorScheme(LocalContext.current)
     }
+
     Build.VERSION.SDK_INT >= 31 && useDynamicColors && !useDarkColors -> {
       dynamicLightColorScheme(LocalContext.current)
     }
+
     useDarkColors -> lightScheme
+
     else -> darkScheme
   }

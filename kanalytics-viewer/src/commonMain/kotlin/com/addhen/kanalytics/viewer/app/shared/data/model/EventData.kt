@@ -1,6 +1,8 @@
 // Copyright 2024, Addhen Ltd and the kanalytics project contributors
 // SPDX-License-Identifier: Apache-2.0
 
+@file:OptIn(kotlin.time.ExperimentalTime::class)
+
 package com.addhen.kanalytics.viewer.app.shared.data.model
 
 import kotlin.time.Instant

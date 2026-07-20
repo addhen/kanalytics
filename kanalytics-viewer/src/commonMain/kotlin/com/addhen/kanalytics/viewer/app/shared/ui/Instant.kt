@@ -3,12 +3,14 @@
 
 import kotlin.time.Instant
 import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toInstant
 import kotlinx.datetime.toLocalDateTime
 
+@OptIn(kotlin.time.ExperimentalTime::class)
 internal fun Instant.toFormattedString(
   timezone: TimeZone = TimeZone.currentSystemDefault(),
 ): String {
-  val localDateTime = this.toLocalDateTime(timezone)
+  val localDateTime = kotlinx.datetime.Instant.parse(this.toString()).toLocalDateTime(timezone)
   return buildString {
     append(localDateTime.year.toString().padStart(4, '0'))
     append('-')

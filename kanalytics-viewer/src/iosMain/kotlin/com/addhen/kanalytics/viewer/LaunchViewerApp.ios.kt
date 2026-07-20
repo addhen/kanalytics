@@ -38,6 +38,7 @@ private fun getTopMostViewController(
 
   return when (base) {
     is UINavigationController -> getTopMostViewController(base.visibleViewController)
+
     is UITabBarController -> {
       base.selectedViewController?.let { getTopMostViewController(it) }
     }

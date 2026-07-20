@@ -45,6 +45,7 @@ public class SampleViewModel(private val kanalytics: KAnalytics) : ViewModel() {
       .map { action ->
         when (action) {
           is UiAction.TriggerAnalyticsEvent -> sendAnalyticsEvent()
+
           is UiAction.LoadEvent -> {
             // do nothing
           }

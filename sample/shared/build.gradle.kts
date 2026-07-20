@@ -3,17 +3,19 @@
 
 
 plugins {
-  id("convention.plugin.android.library")
+  alias(libs.plugins.androidKmpLibrary)
   id("convention.plugin.kotlin.multiplatform")
   id("convention.plugin.compose")
   alias(libs.plugins.kotlin.serialization)
 }
 
-android {
-  namespace = "com.addhen.kanalytics.sample.shared"
-}
-
 kotlin {
+  android {
+    namespace = "com.addhen.kanalytics.sample.shared"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    minSdk = libs.versions.minSdk.get().toInt()
+  }
+
   val isDebug = project.extra["kanalytics.sampleDebug"] == "debug"
   sourceSets {
     commonMain {
@@ -30,6 +32,7 @@ kotlin {
         implementation(compose.components.resources)
         implementation(libs.kotlinx.datetime)
         implementation(libs.lifecycle.viewmodel.compose)
+        implementation(libs.lifecycle.runtime.compose)
         implementation(libs.androidx.navigation.compose)
         implementation(libs.kotlinx.serialization)
         implementation(libs.kotlinx.serialization)

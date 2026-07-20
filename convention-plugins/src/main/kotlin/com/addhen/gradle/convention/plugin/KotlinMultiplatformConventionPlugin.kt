@@ -19,13 +19,7 @@ class KotlinMultiplatformConventionPlugin : Plugin<Project> {
 
     kotlin {
       applyDefaultHierarchyTemplate()
-      if (pluginManager.hasPlugin("com.android.library")) {
-        androidTarget {
-          publishLibraryVariants("release")
-        }
-      }
-
-      iosX64()
+      //iosX64()
       iosArm64()
       iosSimulatorArm64()
 

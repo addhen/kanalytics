@@ -6,24 +6,21 @@ package com.addhen.kanalytics.viewer {
     method public void setupShortcut(boolean show);
   }
 
-  public final class DefaultShortcutManager implements com.addhen.kanalytics.viewer.ShortcutManager {
-    ctor public DefaultShortcutManager();
-    method public void setupShortcut(boolean show);
-  }
-
   public final class KAnalyticsCollector {
-    ctor public KAnalyticsCollector(optional boolean showShortcut, optional int duration, optional com.addhen.kanalytics.viewer.ShortcutManager shortcutManager, optional boolean showNotification, optional kotlinx.coroutines.CoroutineScope scope, optional com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository repository, optional com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers appCoroutineDispatchers, optional com.addhen.kanalytics.viewer.app.NotificationManager notificationManager);
-    method public void onEventSent(com.addhen.kanalytics.KAnalyticsEvent kAnalyticsEvent, String kTrackerName, kotlinx.datetime.Instant onSentDate);
+    ctor public KAnalyticsCollector();
+    ctor @KotlinOnly public KAnalyticsCollector(optional boolean showShortcut, optional com.addhen.kanalytics.viewer.RetentionPolicyManager.DayDuration duration, optional com.addhen.kanalytics.viewer.ShortcutManager shortcutManager, optional boolean showNotification, optional kotlinx.coroutines.CoroutineScope scope, optional com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository repository, optional com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers appCoroutineDispatchers, optional com.addhen.kanalytics.viewer.app.NotificationManager notificationManager);
+    method @KotlinOnly public void onEventSent(com.addhen.kanalytics.KAnalyticsEvent kAnalyticsEvent, com.addhen.kanalytics.KTrackerName kTrackerName, kotlin.time.Instant onSentDate);
   }
 
   public final class KAnalyticsInterceptor implements com.addhen.kanalytics.Interceptor {
-    ctor public KAnalyticsInterceptor(optional com.addhen.kanalytics.viewer.KAnalyticsCollector collector, optional kotlinx.datetime.Clock clock);
+    ctor public KAnalyticsInterceptor();
+    ctor public KAnalyticsInterceptor(optional com.addhen.kanalytics.viewer.KAnalyticsCollector collector, optional kotlin.time.Clock clock);
     method public com.addhen.kanalytics.KAnalyticsEvent intercept(com.addhen.kanalytics.Interceptor.Chain chain);
   }
 
   public final class KAnalyticsViewerShorcutHandlerKt {
     method public static String getShortcutType();
-    method public static error.NonExistentClass! getUISceneConfiguration(error.NonExistentClass configurationForConnectingSceneSession);
+    method public static UISceneConfiguration getUISceneConfiguration(UISceneSession configurationForConnectingSceneSession);
   }
 
   public final class LaunchViewerApp_androidKt {
@@ -32,18 +29,19 @@ package com.addhen.kanalytics.viewer {
 
   public final class LaunchViewerApp_iosKt {
     method public static void launchViewerApp();
+    property public static String SHORTCUT_TYPE;
     field public static final String SHORTCUT_TYPE = "com.addhen.kanalytics.viewer.launch";
   }
 
   public final class RetentionPolicyManager {
-    ctor public RetentionPolicyManager(optional kotlinx.datetime.Clock clock, int dayDuration, com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository repository);
+    ctor @KotlinOnly public RetentionPolicyManager(optional kotlin.time.Clock clock, com.addhen.kanalytics.viewer.RetentionPolicyManager.DayDuration dayDuration, com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository repository);
     method public suspend Object? processDataRetention(kotlin.coroutines.Continuation<? super kotlin.Unit>);
   }
 
   @kotlin.jvm.JvmInline public static final value class RetentionPolicyManager.DayDuration {
-    ctor public RetentionPolicyManager.DayDuration(int numberOfDays);
-    method public int getNumberOfDays();
-    property public final int numberOfDays;
+    ctor @KotlinOnly public RetentionPolicyManager.DayDuration(int numberOfDays);
+    method @InaccessibleFromKotlin public int getNumberOfDays();
+    property public int numberOfDays;
   }
 
   public interface ShortcutManager {
@@ -72,6 +70,7 @@ package com.addhen.kanalytics.viewer.app.android {
 package com.addhen.kanalytics.viewer.app.shared {
 
   public final class AppCoroutineDispatchers {
+    ctor public AppCoroutineDispatchers();
     ctor public AppCoroutineDispatchers(optional kotlinx.coroutines.CoroutineDispatcher io, optional kotlinx.coroutines.CoroutineDispatcher default, optional kotlinx.coroutines.CoroutineDispatcher databaseRead, optional kotlinx.coroutines.CoroutineDispatcher databaseWrite, optional kotlinx.coroutines.CoroutineDispatcher computation, optional kotlinx.coroutines.CoroutineDispatcher main);
     method public kotlinx.coroutines.CoroutineDispatcher component1();
     method public kotlinx.coroutines.CoroutineDispatcher component2();
@@ -79,19 +78,19 @@ package com.addhen.kanalytics.viewer.app.shared {
     method public kotlinx.coroutines.CoroutineDispatcher component4();
     method public kotlinx.coroutines.CoroutineDispatcher component5();
     method public kotlinx.coroutines.CoroutineDispatcher component6();
-    method public com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers copy(kotlinx.coroutines.CoroutineDispatcher io, kotlinx.coroutines.CoroutineDispatcher default, kotlinx.coroutines.CoroutineDispatcher databaseRead, kotlinx.coroutines.CoroutineDispatcher databaseWrite, kotlinx.coroutines.CoroutineDispatcher computation, kotlinx.coroutines.CoroutineDispatcher main);
-    method public kotlinx.coroutines.CoroutineDispatcher getComputation();
-    method public kotlinx.coroutines.CoroutineDispatcher getDatabaseRead();
-    method public kotlinx.coroutines.CoroutineDispatcher getDatabaseWrite();
-    method public kotlinx.coroutines.CoroutineDispatcher getDefault();
-    method public kotlinx.coroutines.CoroutineDispatcher getIo();
-    method public kotlinx.coroutines.CoroutineDispatcher getMain();
-    property public final kotlinx.coroutines.CoroutineDispatcher computation;
-    property public final kotlinx.coroutines.CoroutineDispatcher databaseRead;
-    property public final kotlinx.coroutines.CoroutineDispatcher databaseWrite;
-    property public final kotlinx.coroutines.CoroutineDispatcher default;
-    property public final kotlinx.coroutines.CoroutineDispatcher io;
-    property public final kotlinx.coroutines.CoroutineDispatcher main;
+    method public com.addhen.kanalytics.viewer.app.shared.AppCoroutineDispatchers copy(optional kotlinx.coroutines.CoroutineDispatcher io, optional kotlinx.coroutines.CoroutineDispatcher default, optional kotlinx.coroutines.CoroutineDispatcher databaseRead, optional kotlinx.coroutines.CoroutineDispatcher databaseWrite, optional kotlinx.coroutines.CoroutineDispatcher computation, optional kotlinx.coroutines.CoroutineDispatcher main);
+    method @InaccessibleFromKotlin public kotlinx.coroutines.CoroutineDispatcher getComputation();
+    method @InaccessibleFromKotlin public kotlinx.coroutines.CoroutineDispatcher getDatabaseRead();
+    method @InaccessibleFromKotlin public kotlinx.coroutines.CoroutineDispatcher getDatabaseWrite();
+    method @InaccessibleFromKotlin public kotlinx.coroutines.CoroutineDispatcher getDefault();
+    method @InaccessibleFromKotlin public kotlinx.coroutines.CoroutineDispatcher getIo();
+    method @InaccessibleFromKotlin public kotlinx.coroutines.CoroutineDispatcher getMain();
+    property public kotlinx.coroutines.CoroutineDispatcher computation;
+    property public kotlinx.coroutines.CoroutineDispatcher databaseRead;
+    property public kotlinx.coroutines.CoroutineDispatcher databaseWrite;
+    property public kotlinx.coroutines.CoroutineDispatcher default;
+    property public kotlinx.coroutines.CoroutineDispatcher io;
+    property public kotlinx.coroutines.CoroutineDispatcher main;
   }
 
 }
@@ -104,22 +103,82 @@ package com.addhen.kanalytics.viewer.app.shared.data.database {
 
 }
 
+package com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight {
+
+  public interface EventViewerDatabase extends app.cash.sqldelight.Transacter {
+    method @InaccessibleFromKotlin public com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_dataQueries getEvent_dataQueries();
+    property public abstract com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_dataQueries event_dataQueries;
+    field public static final com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.EventViewerDatabase.Companion Companion;
+  }
+
+  public static final class EventViewerDatabase.Companion {
+    method @InaccessibleFromKotlin public app.cash.sqldelight.db.SqlSchema<app.cash.sqldelight.db.QueryResult.Value<kotlin.Unit>> getSchema();
+    method public operator com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.EventViewerDatabase invoke(app.cash.sqldelight.db.SqlDriver driver, com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_data.Adapter event_dataAdapter);
+    property public app.cash.sqldelight.db.SqlSchema<app.cash.sqldelight.db.QueryResult.Value<kotlin.Unit>> Schema;
+  }
+
+  public final class Event_data {
+    ctor public Event_data(long id, String event_name, String tracker_name, String? event_description, kotlin.time.Instant event_created_date, java.util.Map<java.lang.String,?> event_properties);
+    method public long component1();
+    method public String component2();
+    method public String component3();
+    method public String? component4();
+    method public kotlin.time.Instant component5();
+    method public java.util.Map<java.lang.String,java.lang.Object> component6();
+    method public com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_data copy(optional long id, optional String event_name, optional String tracker_name, optional String? event_description, optional kotlin.time.Instant event_created_date, optional java.util.Map<java.lang.String,?> event_properties);
+    method @InaccessibleFromKotlin public kotlin.time.Instant getEvent_created_date();
+    method @InaccessibleFromKotlin public String? getEvent_description();
+    method @InaccessibleFromKotlin public String getEvent_name();
+    method @InaccessibleFromKotlin public java.util.Map<java.lang.String,java.lang.Object> getEvent_properties();
+    method @InaccessibleFromKotlin public long getId();
+    method @InaccessibleFromKotlin public String getTracker_name();
+    property public kotlin.time.Instant event_created_date;
+    property public String? event_description;
+    property public String event_name;
+    property public java.util.Map<java.lang.String,java.lang.Object> event_properties;
+    property public long id;
+    property public String tracker_name;
+  }
+
+  public static final class Event_data.Adapter {
+    ctor public Event_data.Adapter(app.cash.sqldelight.ColumnAdapter<kotlin.time.Instant,java.lang.String> event_created_dateAdapter, app.cash.sqldelight.ColumnAdapter<java.util.Map<java.lang.String,java.lang.Object>,java.lang.String> event_propertiesAdapter);
+    method @InaccessibleFromKotlin public app.cash.sqldelight.ColumnAdapter<kotlin.time.Instant,java.lang.String> getEvent_created_dateAdapter();
+    method @InaccessibleFromKotlin public app.cash.sqldelight.ColumnAdapter<java.util.Map<java.lang.String,java.lang.Object>,java.lang.String> getEvent_propertiesAdapter();
+    property public app.cash.sqldelight.ColumnAdapter<kotlin.time.Instant,java.lang.String> event_created_dateAdapter;
+    property public app.cash.sqldelight.ColumnAdapter<java.util.Map<java.lang.String,java.lang.Object>,java.lang.String> event_propertiesAdapter;
+  }
+
+  public final class Event_dataQueries extends app.cash.sqldelight.TransacterImpl {
+    ctor public Event_dataQueries(app.cash.sqldelight.db.SqlDriver driver, com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_data.Adapter event_dataAdapter);
+    method public app.cash.sqldelight.db.QueryResult<java.lang.Long> deleteAllEventData();
+    method public app.cash.sqldelight.db.QueryResult<java.lang.Long> deleteAllEventDataOlderThan(kotlin.time.Instant date);
+    method public app.cash.sqldelight.Query<com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_data> getAllEventData();
+    method public <T> app.cash.sqldelight.Query<T> getAllEventData(kotlin.jvm.functions.Function6<? super java.lang.Long,? super java.lang.String,? super java.lang.String,? super java.lang.String?,? super kotlin.time.Instant,? super java.util.Map<java.lang.String,?>,? extends T> mapper);
+    method public app.cash.sqldelight.Query<com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_data> getEventDataById(long id);
+    method public <T> app.cash.sqldelight.Query<T> getEventDataById(long id, kotlin.jvm.functions.Function6<? super java.lang.Long,? super java.lang.String,? super java.lang.String,? super java.lang.String?,? super kotlin.time.Instant,? super java.util.Map<java.lang.String,?>,? extends T> mapper);
+    method public app.cash.sqldelight.db.QueryResult<java.lang.Long> insertEventData(String event_name, String? event_description, String tracker_name, kotlin.time.Instant event_created_date, java.util.Map<java.lang.String,?> event_properties);
+    method public app.cash.sqldelight.Query<com.addhen.kanalytics.viewer.app.shared.data.database.sqlidelight.Event_data> searchEvents(String query);
+    method public <T> app.cash.sqldelight.Query<T> searchEvents(String query, kotlin.jvm.functions.Function6<? super java.lang.Long,? super java.lang.String,? super java.lang.String,? super java.lang.String?,? super kotlin.time.Instant,? super java.util.Map<java.lang.String,?>,? extends T> mapper);
+  }
+
+}
+
 package com.addhen.kanalytics.viewer.app.shared.data.model {
 
   public final class EventData {
-    ctor public EventData(Long? id, String name, String trackerName, String? description, kotlinx.datetime.Instant createdAt, java.util.Map<java.lang.String,?> properties);
-    method public kotlinx.datetime.Instant getCreatedAt();
-    method public String? getDescription();
-    method public Long? getId();
-    method public String getName();
-    method public java.util.Map<java.lang.String,java.lang.Object> getProperties();
-    method public String getTrackerName();
-    property public final kotlinx.datetime.Instant createdAt;
-    property public final String? description;
-    property public final Long? id;
-    property public final String name;
-    property public final java.util.Map<java.lang.String,java.lang.Object> properties;
-    property public final String trackerName;
+    ctor public EventData(Long? id, String name, String trackerName, String? description, kotlin.time.Instant createdAt, java.util.Map<java.lang.String,?> properties);
+    method @InaccessibleFromKotlin public kotlin.time.Instant getCreatedAt();
+    method @InaccessibleFromKotlin public String? getDescription();
+    method @InaccessibleFromKotlin public Long? getId();
+    method @InaccessibleFromKotlin public String getName();
+    method @InaccessibleFromKotlin public java.util.Map<java.lang.String,java.lang.Object> getProperties();
+    method @InaccessibleFromKotlin public String getTrackerName();
+    property public kotlin.time.Instant createdAt;
+    property public String? description;
+    property public Long? id;
+    property public String name;
+    property public java.util.Map<java.lang.String,java.lang.Object> properties;
+    property public String trackerName;
   }
 
 }
@@ -129,7 +188,7 @@ package com.addhen.kanalytics.viewer.app.shared.data.repository {
   public final class EventDataRepository implements com.addhen.kanalytics.viewer.app.shared.data.repository.EventRepository {
     ctor public EventDataRepository(com.addhen.kanalytics.viewer.app.shared.data.database.EventDataDao eventDataDao);
     method public suspend Object? deleteAll(kotlin.coroutines.Continuation<? super kotlin.Unit>);
-    method public suspend Object? deleteAllOlderThan(kotlinx.datetime.Instant date, kotlin.coroutines.Continuation<? super kotlin.Unit>);
+    method public suspend Object? deleteAllOlderThan(kotlin.time.Instant date, kotlin.coroutines.Continuation<? super kotlin.Unit>);
     method public kotlinx.coroutines.flow.Flow<java.util.List<com.addhen.kanalytics.viewer.app.shared.data.model.EventData>> getAll();
     method public kotlinx.coroutines.flow.Flow<com.addhen.kanalytics.viewer.app.shared.data.model.EventData> getEventById(long id);
     method public suspend Object? insert(com.addhen.kanalytics.viewer.app.shared.data.model.EventData eventData, kotlin.coroutines.Continuation<? super kotlin.Unit>);
@@ -138,7 +197,7 @@ package com.addhen.kanalytics.viewer.app.shared.data.repository {
 
   public interface EventRepository {
     method public suspend Object? deleteAll(kotlin.coroutines.Continuation<? super kotlin.Unit>);
-    method public suspend Object? deleteAllOlderThan(kotlinx.datetime.Instant date, kotlin.coroutines.Continuation<? super kotlin.Unit>);
+    method public suspend Object? deleteAllOlderThan(kotlin.time.Instant date, kotlin.coroutines.Continuation<? super kotlin.Unit>);
     method public kotlinx.coroutines.flow.Flow<java.util.List<com.addhen.kanalytics.viewer.app.shared.data.model.EventData>> getAll();
     method public kotlinx.coroutines.flow.Flow<com.addhen.kanalytics.viewer.app.shared.data.model.EventData> getEventById(long id);
     method public suspend Object? insert(com.addhen.kanalytics.viewer.app.shared.data.model.EventData eventData, kotlin.coroutines.Continuation<? super kotlin.Unit>);
@@ -158,11 +217,11 @@ package com.addhen.kanalytics.viewer.app.shared.ui {
   }
 
   public final class ViewerAppKt {
-    method @androidx.compose.runtime.Composable public static void ViewerApp(optional androidx.navigation.NavHostController navController);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void ViewerApp(optional androidx.navigation.NavHostController navController);
   }
 
   public final class ViewerAppScaffoldKt {
-    method @androidx.compose.runtime.Composable public static void ViewerAppScaffold(String title, optional kotlin.jvm.functions.Function0<kotlin.Unit> navigationIcon, optional kotlin.jvm.functions.Function1<? super androidx.compose.foundation.layout.RowScope,kotlin.Unit> actions, optional kotlin.jvm.functions.Function0<kotlin.Unit> searchTopBar, optional kotlin.jvm.functions.Function0<kotlin.Unit> topBar, androidx.compose.material3.SnackbarHostState snackbarHostState, kotlin.jvm.functions.Function1<? super androidx.compose.foundation.layout.BoxScope,kotlin.Unit> content);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void ViewerAppScaffold(String title, optional kotlin.jvm.functions.Function0<kotlin.Unit> navigationIcon, optional kotlin.jvm.functions.Function1<androidx.compose.foundation.layout.RowScope,kotlin.Unit> actions, optional kotlin.jvm.functions.Function0<kotlin.Unit> searchTopBar, optional kotlin.jvm.functions.Function0<kotlin.Unit> topBar, androidx.compose.material3.SnackbarHostState snackbarHostState, kotlin.jvm.functions.Function1<androidx.compose.foundation.layout.BoxScope,kotlin.Unit> content);
   }
 
 }
@@ -170,21 +229,21 @@ package com.addhen.kanalytics.viewer.app.shared.ui {
 package com.addhen.kanalytics.viewer.app.shared.ui.component {
 
   public final class AppSnackbarHostKt {
-    method @androidx.compose.runtime.Composable public static void AppSnackbarHost(androidx.compose.material3.SnackbarHostState hostState, optional androidx.compose.ui.Modifier modifier, optional kotlin.jvm.functions.Function1<? super androidx.compose.material3.SnackbarData,kotlin.Unit> snackbar);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void AppSnackbarHost(androidx.compose.material3.SnackbarHostState hostState, optional androidx.compose.ui.Modifier modifier, optional kotlin.jvm.functions.Function1<androidx.compose.material3.SnackbarData,kotlin.Unit> snackbar);
   }
 
   public final class AppSurfaceKt {
-    method @androidx.compose.runtime.Composable public static void AppSurface(kotlin.jvm.functions.Function0<kotlin.Unit> appNavHost);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void AppSurface(kotlin.jvm.functions.Function0<kotlin.Unit> appNavHost);
   }
 
   public final class EmptyKt {
-    method @androidx.compose.runtime.Composable public static void EmptyContent(optional androidx.compose.ui.Modifier modifier, kotlin.jvm.functions.Function0<kotlin.Unit> title);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void EmptyContent(optional androidx.compose.ui.Modifier modifier, kotlin.jvm.functions.Function0<kotlin.Unit> title);
   }
 
   public final class PreferenceKt {
-    method @androidx.compose.runtime.Composable public static void CheckboxPreference(boolean checked, kotlin.jvm.functions.Function0<kotlin.Unit> onCheckClicked, String title, optional androidx.compose.ui.Modifier modifier, optional kotlin.jvm.functions.Function0<kotlin.Unit> onClick, optional kotlin.jvm.functions.Function0<kotlin.Unit>? beforeControl, optional String? summaryOff, optional String? summaryOn);
-    method @androidx.compose.runtime.Composable public static void Preference(String title, optional androidx.compose.ui.Modifier modifier, optional kotlin.jvm.functions.Function0<kotlin.Unit> onClick, optional kotlin.jvm.functions.Function0<kotlin.Unit>? summary, optional kotlin.jvm.functions.Function1<? super androidx.compose.foundation.layout.RowScope,kotlin.Unit>? control);
-    method @androidx.compose.runtime.Composable public static void PreferenceHeader(String title, optional androidx.compose.ui.Modifier modifier, optional float tonalElevation);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void CheckboxPreference(boolean checked, kotlin.jvm.functions.Function0<kotlin.Unit> onCheckClicked, String title, optional androidx.compose.ui.Modifier modifier, optional kotlin.jvm.functions.Function0<kotlin.Unit> onClick, optional kotlin.jvm.functions.Function0<kotlin.Unit>? beforeControl, optional String? summaryOff, optional String? summaryOn);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void Preference(String title, optional androidx.compose.ui.Modifier modifier, optional kotlin.jvm.functions.Function0<kotlin.Unit> onClick, optional kotlin.jvm.functions.Function0<kotlin.Unit>? summary, optional kotlin.jvm.functions.Function1<androidx.compose.foundation.layout.RowScope,kotlin.Unit>? control);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void PreferenceHeader(String title, optional androidx.compose.ui.Modifier modifier, optional androidx.compose.ui.unit.Dp tonalElevation);
   }
 
 }
@@ -192,7 +251,7 @@ package com.addhen.kanalytics.viewer.app.shared.ui.component {
 package com.addhen.kanalytics.viewer.app.shared.ui.eventlist {
 
   public final class EventViewerScreenKt {
-    method @androidx.compose.runtime.Composable public static void EventViewerScreen(kotlin.jvm.functions.Function0<kotlin.Unit> navigateToSettings, kotlin.jvm.functions.Function2<? super java.lang.Long,? super java.lang.String,kotlin.Unit> onNavigateToDetail);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void EventViewerScreen(kotlin.jvm.functions.Function0<kotlin.Unit> navigateToSettings, kotlin.jvm.functions.Function2<java.lang.Long,java.lang.String,kotlin.Unit> onNavigateToDetail);
   }
 
 }
@@ -200,7 +259,7 @@ package com.addhen.kanalytics.viewer.app.shared.ui.eventlist {
 package com.addhen.kanalytics.viewer.app.shared.ui.navigation {
 
   public final class NavGraphKt {
-    method @androidx.compose.runtime.Composable public static void AppNavGraph(androidx.navigation.NavHostController navController, kotlin.reflect.KClass<?> startDestination);
+    method @KotlinOnly @androidx.compose.runtime.Composable public static void AppNavGraph(androidx.navigation.NavHostController navController, kotlin.reflect.KClass<? extends java.lang.Object?> startDestination);
     method public static androidx.navigation.NavOptions buildNavOptions(androidx.navigation.NavController);
   }
 
@@ -210,8 +269,8 @@ package com.addhen.kanalytics.viewer.app.shared.ui.settings {
 
   public interface Preference<T> {
     method public suspend Object? get(kotlin.coroutines.Continuation<? super T>);
-    method public T getDefaultValue();
-    method public kotlinx.coroutines.flow.Flow<T> getFlow();
+    method @InaccessibleFromKotlin public T getDefaultValue();
+    method @InaccessibleFromKotlin public kotlinx.coroutines.flow.Flow<T> getFlow();
     method public suspend Object? set(T value, kotlin.coroutines.Continuation<? super kotlin.Unit>);
     property public abstract T defaultValue;
     property public abstract kotlinx.coroutines.flow.Flow<T> flow;
@@ -222,15 +281,13 @@ package com.addhen.kanalytics.viewer.app.shared.ui.settings {
   }
 
   public interface ViewerAppPreferences {
-    method public com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference<com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme> getTheme();
-    method public com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference<java.lang.Boolean> getUseDynamicColors();
+    method @InaccessibleFromKotlin public com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference<com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme> getTheme();
+    method @InaccessibleFromKotlin public com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference<java.lang.Boolean> getUseDynamicColors();
     property public abstract com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference<com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme> theme;
     property public abstract com.addhen.kanalytics.viewer.app.shared.ui.settings.Preference<java.lang.Boolean> useDynamicColors;
   }
 
   public enum ViewerAppPreferences.Theme {
-    method public static com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme valueOf(String value) throws java.lang.IllegalArgumentException, java.lang.NullPointerException;
-    method public static com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme[] values();
     enum_constant public static final com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme DARK;
     enum_constant public static final com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme LIGHT;
     enum_constant public static final com.addhen.kanalytics.viewer.app.shared.ui.settings.ViewerAppPreferences.Theme SYSTEM;

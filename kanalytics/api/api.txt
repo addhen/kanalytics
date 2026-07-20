@@ -7,11 +7,10 @@ package com.addhen.kanalytics {
   }
 
   public static interface Interceptor.Chain {
-    method public com.addhen.kanalytics.KAnalyticsEvent getEvent();
-    method public String getKTrackerName();
+    method @InaccessibleFromKotlin public com.addhen.kanalytics.KAnalyticsEvent getEvent();
     method public com.addhen.kanalytics.KAnalyticsEvent proceed(com.addhen.kanalytics.KAnalyticsEvent event);
     property public abstract com.addhen.kanalytics.KAnalyticsEvent event;
-    property public abstract String kTrackerName;
+    property public abstract com.addhen.kanalytics.KTrackerName kTrackerName;
   }
 
   public static final class Interceptor.Companion {
@@ -20,6 +19,7 @@ package com.addhen.kanalytics {
 
   public final class KAnalytics {
     ctor public KAnalytics();
+    method public com.addhen.kanalytics.KAnalytics enabled(boolean enabled);
     method public com.addhen.kanalytics.KAnalytics.Builder newBuilder();
     method public void send(com.addhen.kanalytics.KAnalyticsEvent event);
     method public void send(com.addhen.kanalytics.KAnalyticsEvent event, kotlin.reflect.KClass<? extends com.addhen.kanalytics.KTracker>... kTrackerNames);
@@ -31,19 +31,24 @@ package com.addhen.kanalytics {
     method public com.addhen.kanalytics.KAnalytics.Builder addInterceptor(com.addhen.kanalytics.Interceptor interceptor);
     method public com.addhen.kanalytics.KAnalytics.Builder addTracker(com.addhen.kanalytics.KTracker kTracker);
     method public com.addhen.kanalytics.KAnalytics build();
+    method public com.addhen.kanalytics.KAnalytics.Builder enabled(boolean enabled);
   }
 
   public final class KAnalyticsEvent {
-    ctor public KAnalyticsEvent(String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,?> properties);
-    method public com.addhen.kanalytics.KAnalyticsEvent addProperties(java.util.Map<java.lang.String,?> map);
+    ctor public KAnalyticsEvent(String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,? extends java.lang.Object?> properties, optional java.util.Map<java.lang.String,? extends java.lang.Object?> userProperties);
+    method public com.addhen.kanalytics.KAnalyticsEvent addProperties(java.util.Map<java.lang.String,? extends java.lang.Object?> map);
     method public com.addhen.kanalytics.KAnalyticsEvent addProperty(String propertyName, Object? value);
-    method public com.addhen.kanalytics.KAnalyticsEvent copy(optional String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,?> properties);
-    method public String? getEventDescription();
-    method public String getEventName();
-    method public java.util.Map<java.lang.String,java.lang.Object> getProperties();
-    property public final String? eventDescription;
-    property public final String eventName;
-    property public final java.util.Map<java.lang.String,java.lang.Object> properties;
+    method public com.addhen.kanalytics.KAnalyticsEvent addUserProperties(java.util.Map<java.lang.String,? extends java.lang.Object?> map);
+    method public com.addhen.kanalytics.KAnalyticsEvent addUserProperty(String propertyName, Object? value);
+    method public com.addhen.kanalytics.KAnalyticsEvent copy(optional String eventName, optional String? eventDescription, optional java.util.Map<java.lang.String,? extends java.lang.Object?> properties, optional java.util.Map<java.lang.String,? extends java.lang.Object?> userProperties);
+    method @InaccessibleFromKotlin public String? getEventDescription();
+    method @InaccessibleFromKotlin public String getEventName();
+    method @InaccessibleFromKotlin public java.util.Map<java.lang.String,java.lang.Object?> getProperties();
+    method @InaccessibleFromKotlin public java.util.Map<java.lang.String,java.lang.Object?> getUserProperties();
+    property public String? eventDescription;
+    property public String eventName;
+    property public java.util.Map<java.lang.String,java.lang.Object?> properties;
+    property public java.util.Map<java.lang.String,java.lang.Object?> userProperties;
   }
 
   public interface KTracker {
@@ -51,9 +56,9 @@ package com.addhen.kanalytics {
   }
 
   @kotlin.jvm.JvmInline public final value class KTrackerName {
-    ctor public KTrackerName(String value);
-    method public String getValue();
-    property public final String value;
+    ctor @KotlinOnly public KTrackerName(String value);
+    method @InaccessibleFromKotlin public String getValue();
+    property public String value;
   }
 
 }
