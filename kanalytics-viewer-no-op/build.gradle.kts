@@ -3,7 +3,7 @@
 
 
 plugins {
-  id("convention.plugin.android.library")
+  alias(libs.plugins.androidKmpLibrary)
   id("convention.plugin.kotlin.multiplatform")
   alias(libs.plugins.dokka)
   id("convention.plugin.maven.publication")
@@ -11,25 +11,18 @@ plugins {
 }
 
 kotlin {
+  android {
+    namespace = "com.addhen.kanalytics.viewer.noop"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    minSdk = libs.versions.minSdk.get().toInt()
+  }
+
   sourceSets {
     commonMain {
       dependencies {
         api(projects.kanalytics)
         implementation(libs.kotlinx.datetime)
       }
-    }
-  }
-}
-
-android {
-  namespace = "com.addhen.kanalytics.viewer"
-  defaultConfig {
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-  }
-
-  testOptions {
-    unitTests {
-      isIncludeAndroidResources = true
     }
   }
 }

@@ -152,6 +152,7 @@ internal fun eventHeaderTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) 
 @Composable
 internal fun eventNameTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = when {
   isDarkTheme -> EventNameColorScheme.Dark.textColor
+
   else -> {
     EventNameColorScheme.Light.textColor
   }
@@ -160,6 +161,7 @@ internal fun eventNameTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = 
 @Composable
 internal fun eventPropertiesTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = when {
   isDarkTheme -> EventPropertiesColorScheme.Dark.textColor
+
   else -> {
     EventPropertiesColorScheme.Light.textColor
   }
@@ -180,7 +182,9 @@ internal fun jsonTreeTextColor(isDarkTheme: Boolean = isSystemInDarkTheme()) = w
       highlightColor = searchHighlightDark,
       selectedHighlightColor = searchHighlightDark,
     )
-  } else -> {
+  }
+
+  else -> {
     TreeColors(
       keyColor = defaultLightColors.keyColor,
       stringValueColor = defaultLightColors.stringValueColor,

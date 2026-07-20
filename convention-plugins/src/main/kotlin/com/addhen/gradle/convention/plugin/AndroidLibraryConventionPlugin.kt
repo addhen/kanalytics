@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: Apache-2.0
 package com.addhen.gradle.convention.plugin
 
-import com.addhen.gradle.convention.configureAndroid
+import com.addhen.gradle.convention.configureAndroidLibrary
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
@@ -14,7 +14,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
         apply("org.gradle.android.cache-fix")
       }
 
-      configureAndroid()
+      configureAndroidLibrary()
     }
   }
 }

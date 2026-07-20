@@ -4,18 +4,18 @@
 kanalytics = "1.5.0-SNAPSHOT"
 minSdk = "24"
 targetSdk = "36"
-compileSdk = "36"
-agp = "8.13.2"
-kotlin = "2.3.21"
-spotless = "8.0.0"
-metalava = "0.3.5"
-compose-multiplatform = "1.10.0"
+compileSdk = "37"
+agp = "9.2.1"
+kotlin = "2.4.0"
+spotless = "8.6.0"
+metalava = "0.5.0"
+compose-multiplatform = "1.11.1"
 cacheFixPlugin = "3.0.3"
-dokka = "2.1.0"
-coroutines = "1.10.2"
-androidx-core-ktx = "1.17.0"
+dokka = "2.2.0"
+coroutines = "1.11.0"
+androidx-core-ktx = "1.19.0"
 androidx-activity-compose = "1.13.0"
-material = "1.13.0"
+material = "1.14.0"
 appcompat = "1.7.1"
 
 # Version 2.8.0-alpha13 causes this issue on iOS builds:
@@ -26,18 +26,18 @@ appcompat = "1.7.1"
 # accessed in module <org.jetbrains.compose.material3:material3>
 # Before you bump this version higher than 2.8.0-alpha13 check the iOS app to make
 # it still works.
-navigation-compose = "2.9.1" # Make use of type-safe compose navigation
-kotlinx-serializer = "1.9.0"
-lifecycle-viewmodel-compose = "2.9.6"
-kermit = "2.0.8"
+navigation-compose = "2.9.2" # Make use of type-safe compose navigation
+kotlinx-serializer = "1.11.0"
+lifecycle-viewmodel-compose = "2.10.0"
+kermit = "2.1.0"
 kotlinx-collections-immutable = "0.4.0"
-kotlinx-datetime = "0.7.1-0.6.x-compat"
-sqldelight = "2.1.0"
+kotlinx-datetime = "0.8.0"
+sqldelight = "2.3.2"
 startup-runtime = "1.2.0"
 composeDataTable = "0.11.4"
-mokkery = "2.10.2"
+mokkery = "3.4.1"
 json-tree = "2.6.0"
-kotlinx-atomicfu = "0.29.0"
+kotlinx-atomicfu = "0.33.0"
 multiplatformsettings = "1.3.0"
 androidx-preference = "1.2.1"
 baselineprofile = "1.4.1"
@@ -46,7 +46,7 @@ espressoCore = "3.7.0"
 uiautomator = "2.3.0"
 benchmarkMacroJunit4 = "1.4.1"
 profileinstaller = "1.4.1"
-maven-publish = "0.34.0"
+maven-publish = "0.36.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -65,6 +65,7 @@ androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version
 androidx-navigation-compose = { module = "org.jetbrains.androidx.navigation:navigation-compose", version.ref = "navigation-compose" }
 kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinx-serializer" }
 lifecycle-viewmodel-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
+lifecycle-runtime-compose = { module = "org.jetbrains.androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-viewmodel-compose" }
 touchlab-kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
 kotlinx-collections-immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version.ref = "kotlinx-collections-immutable" }
 kotlinx-datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinx-datetime" }
@@ -88,6 +89,7 @@ androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profi
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
+androidKmpLibrary = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 android-lint = { id = "com.android.lint", version.ref = "agp" }
 android-test = { id = "com.android.test", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
@@ -99,7 +101,6 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "compose-multiplatform" }
 cacheFixPlugin = { id = "org.gradle.android.cache-fix", version.ref = "cacheFixPlugin" }
 dokka = { id = "org.jetbrains.dokka", version.ref = "dokka" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 sqldelight = { id = "app.cash.sqldelight", version.ref = "sqldelight" }
 mokkery = { id = "dev.mokkery", version.ref = "mokkery" }

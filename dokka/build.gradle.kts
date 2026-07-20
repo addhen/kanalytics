@@ -3,7 +3,7 @@
 
 
 plugins {
-  id("convention.plugin.android.library")
+  alias(libs.plugins.androidKmpLibrary)
   id("convention.plugin.kotlin.multiplatform")
   alias(libs.plugins.dokka)
 }
@@ -14,10 +14,14 @@ dependencies {
   dokka(projects.kanalyticsViewerNoOp)
 }
 
-android {
-  namespace = "com.addhen.kanalytics.viewer.docs"
-}
-
 dokka {
   moduleName.set("KAnalytics")
+}
+
+kotlin {
+  android {
+    namespace = "com.addhen.kanalytics.viewer.docs"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    minSdk = libs.versions.minSdk.get().toInt()
+  }
 }

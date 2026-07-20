@@ -7,7 +7,6 @@ import com.android.build.api.dsl.ManagedVirtualDevice
 plugins {
   alias(libs.plugins.android.test)
   id("convention.plugin.kotlin.android")
-  alias(libs.plugins.androidx.baselineprofile)
 }
 
 android {
@@ -57,11 +56,4 @@ androidComponents {
       v.testedApks.map { artifactsLoader.load(it)?.applicationId ?: "" },
     )
   }
-}
-
-@Suppress("UnstableApiUsage")
-baselineProfile {
-  managedDevices += "api34"
-  useConnectedDevices = false
-  enableEmulatorDisplay = true
 }

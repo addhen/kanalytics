@@ -17,15 +17,11 @@ class MetalavaConventionPlugin : Plugin<Project> {
 
     metalava {
       filename.set("api/api.txt")
-      sourcePaths.setFrom(
-        target.kotlin.sourceSets
-          .filterNot { it.name.contains("test", ignoreCase = true) }
-          .flatMap { it.kotlin.sourceDirectories },
-      )
     }
 
     tasks.named { it.startsWith("metalavaCheckCompatibility") }.configureEach {
       dependsOn(tasks.named { it.startsWith("generateResourceAccessors") })
+      dependsOn(tasks.named { it.startsWith("generateActualResourceCollectors") })
     }
   }
 }

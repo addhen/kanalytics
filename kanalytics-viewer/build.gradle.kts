@@ -3,7 +3,7 @@
 
 
 plugins {
-  id("convention.plugin.android.library")
+  alias(libs.plugins.androidKmpLibrary)
   id("convention.plugin.kotlin.multiplatform")
   alias(libs.plugins.dokka)
   id("convention.plugin.maven.publication")
@@ -12,10 +12,18 @@ plugins {
   alias(libs.plugins.kotlin.serialization)
   alias(libs.plugins.sqldelight)
   alias(libs.plugins.mokkery)
-  alias(libs.plugins.androidx.baselineprofile)
 }
 
 kotlin {
+  android {
+    namespace = "com.addhen.kanalytics.viewer"
+    compileSdk = libs.versions.compileSdk.get().toInt()
+    minSdk = libs.versions.minSdk.get().toInt()
+    androidResources {
+      enable = true
+    }
+  }
+
   sourceSets {
     commonMain {
       dependencies {
@@ -29,6 +37,7 @@ kotlin {
         implementation(libs.kotlinx.datetime)
         implementation(libs.touchlab.kermit)
         implementation(libs.lifecycle.viewmodel.compose)
+        implementation(libs.lifecycle.runtime.compose)
         implementation(libs.androidx.navigation.compose)
         implementation(libs.kotlinx.serialization)
         implementation(libs.sqldelight.coroutines)
@@ -60,31 +69,6 @@ kotlin {
         implementation(libs.kotlin.test)
         implementation(libs.coroutines.test)
       }
-    }
-  }
-}
-
-android {
-  namespace = "com.addhen.kanalytics.viewer"
-  defaultConfig {
-    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-  }
-
-  testOptions {
-    unitTests {
-      isIncludeAndroidResources = true
-    }
-  }
-
-  dependencies {
-    baselineProfile(projects.kanalyticsViewerBaseProfile)
-  }
-
-  baselineProfile {
-    mergeIntoMain = true
-    saveInSrc = true
-    filter {
-      include("com.addhen.kanalytics.viewer.**")
     }
   }
 }
